@@ -74,6 +74,18 @@ class TestAccountRepository(unittest.TestCase):
         self.assertIsNotNone(retrievedAccount)
         self.assertEqual(retrievedAccount.getAccountId(), accountData["accountId"])
 
+    def testSameNameSaveAccount(self):
+        repository = AccountRepositoryImpl.getInstance()
+        account_data = {
+            "accountId": "test_user",
+            "password": "test_password"
+        }
+        account = Account(**account_data)
+
+        result = repository.save(account)
+
+        self.assertFalse(result)
+
 
 if __name__ == '__main__':
     unittest.main()
