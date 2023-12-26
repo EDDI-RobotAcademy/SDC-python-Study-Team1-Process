@@ -2,6 +2,7 @@ from account.repository.AccountRepositoryImpl import AccountRepositoryImpl
 from account.service.AccountService import AccountService
 from account.service.request.AccountRegisterRequest import AccountRegisterRequest
 from account.service.response.AccountRegisterResponse import AccountRegisterResponse
+from account.service.request.AccountDeleteRequest import AccountDeleteRequest
 
 
 class AccountServiceImpl(AccountService):
@@ -37,6 +38,6 @@ class AccountServiceImpl(AccountService):
     def deleteAccount(self, *args, **kwargs):
         cleanedElements = args[0]
 
-        accountRegisterRequest = AccountRegisterRequest(cleanedElements[0], cleanedElements[1])
-        storedAccount = self.__accountRepository.deleteByAccountId(accountRegisterRequest.toAccount())
+        accountDeleteRequest = AccountDeleteRequest(cleanedElements[0])
+        storedAccount = self.__accountRepository.deleteByAccountId(accountDeleteRequest.toDeleteAccount())
         return AccountRegisterResponse(storedAccount.getId())

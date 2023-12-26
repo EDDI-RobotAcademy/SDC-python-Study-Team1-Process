@@ -5,20 +5,21 @@ from mysql.MySQLDatabase import MySQLDatabase
 
 
 
-class TestAccountRepository(unittest.TestCase):
+class TestAccountService(unittest.TestCase):
 
-def testdelateaccount(self):
-    service = AccountServiceImpl.getInstance()
-    account_data = {
-        "accountId": "test_user",
-        "password": "test_password"
-    }
-    account = Account(**account_data)
+    def testdelateaccount(self):
 
-    result = service.deleteAccount(account)
+        service = AccountServiceImpl.getInstance()
 
-    self.assertTrue(result)
+        account_data = {
+            "accountId": "test_user",
+        }
+        account = Account(**account_data)
+
+        result = service.deleteAccount("test_user")
+        self.assertTrue(result)
 
 
 if __name__ == '__main__':
     unittest.main()
+
