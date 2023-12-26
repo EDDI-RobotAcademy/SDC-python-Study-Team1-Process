@@ -34,4 +34,9 @@ class AccountServiceImpl(AccountService):
 
         return AccountRegisterResponse(storedAccount.getId())
 
-    
+    def deleteAccount(self, *args, **kwargs):
+        cleanedElements = args[0]
+
+        accountRegisterRequest = AccountRegisterRequest(cleanedElements[0], cleanedElements[1])
+        storedAccount = self.__accountRepository.deleteByAccountId(accountRegisterRequest.toAccount())
+        return AccountRegisterResponse(storedAccount.getId())
