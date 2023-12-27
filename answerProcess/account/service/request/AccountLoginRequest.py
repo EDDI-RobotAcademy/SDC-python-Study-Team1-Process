@@ -8,6 +8,6 @@ class AccountLoginRequest:
     __accountId: str
     __password: str
 
-    def toAccount(self):
-        return Account(self.__accountId, self.__password)
+    def getPassword(self):
+        return self.__password
 

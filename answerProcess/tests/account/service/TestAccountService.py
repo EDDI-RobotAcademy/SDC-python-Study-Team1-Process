@@ -22,7 +22,7 @@ class TestAccountRepository(unittest.TestCase):
         initCustomProtocol()
         testInstance = CustomProtocolRepositoryImpl.getInstance()
         accountData = {
-            "accountId": "test_user444",
+            "accountId": "test_user111",
             "password": "test_password"
         }
 
@@ -43,6 +43,7 @@ class TestAccountRepository(unittest.TestCase):
         accountUnuqe = ('9')
         result = service.deleteAccount(accountUnuqe)
         self.assertIsNone(result)
+
 
 if __name__ == '__main__':
     unittest.main()

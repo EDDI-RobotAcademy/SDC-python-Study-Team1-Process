@@ -16,7 +16,7 @@ class TestAccountRepository(unittest.TestCase):
     def testSaveAccount(self):
         repository = AccountRepositoryImpl.getInstance()
         account_data = {
-            "accountId": "test_user444",
+            "accountId": "test_user111",
             "password": "test_password"
         }
         account = Account(**account_data)

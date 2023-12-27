@@ -3,5 +3,4 @@ from dataclasses import dataclass
 
 @dataclass
 class AccountRegisterResponse:
-    __id: int
-
+    __isSuccess: bool
