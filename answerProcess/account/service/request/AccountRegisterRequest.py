@@ -11,6 +11,4 @@ class AccountRegisterRequest:
     def toAccount(self):
         return Account(self.__accountId, self.__password)
 
-    def toDeleteAccount(self):
-        return Account(self.__accountId)
 
