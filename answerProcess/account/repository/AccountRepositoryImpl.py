@@ -30,7 +30,7 @@ class AccountRepositoryImpl(AccountRepository):
         dbSession = sessionmaker(bind=self.__instance.engine)
         session = dbSession()
 
-        if self.getBoolWithFindByAccountId(account.getAccountId()):
+        if self.getBoolWithFindByAccountId(account.getAccountId()) is False:
             try:
                 session.add(account)
                 session.commit()
@@ -44,6 +44,8 @@ class AccountRepositoryImpl(AccountRepository):
                 return None
         else:
             print("중복")
+            return None
+
     def update(self, account):
         dbSession = sessionmaker(bind=self.__instance.engine)
         session = dbSession()
@@ -79,6 +81,8 @@ class AccountRepositoryImpl(AccountRepository):
 
     def getBoolWithFindByAccountId(self, accountId):
         if self.findByAccountId(accountId) is not None:
-            return False
-        else:
             return True
+        else:
+            return False
+
+
