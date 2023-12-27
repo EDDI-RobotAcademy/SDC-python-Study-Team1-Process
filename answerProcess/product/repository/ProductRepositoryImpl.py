@@ -31,13 +31,12 @@ class ProductRepositoryImpl(ProductRepository):
     def save(self, product):
         dbSession = sessionmaker(bind=self.__instance.engine)
         session = dbSession()
-
         if self.getBoolWithFindByProductName(product.getProductName()):
             try:
                 session.add(product)
                 session.commit()
 
-                print(f"product - name: {product.getProductName()}")
+                print(f"상품 이름: {product.getProductName()}")
                 return product
 
             except SQLAlchemyError as exception:
@@ -64,13 +63,13 @@ class ProductRepositoryImpl(ProductRepository):
     #
     #     return session.query(Account).filter_by(_Account__id=id).first()
     #
-    def findByProductName(self, productName):
+    def findByProductNumber(self, productNumber):
+
         dbSession = sessionmaker(bind=self.__instance.engine)
         session = dbSession()
+        print(dir(productNumber))
 
-        print(dir(productName))
-
-        return session.query(Product).filter_by(_Product__productName=productName).first()
+        return session.query(Product).filter_by(_Product__productNumber=productNumber).first()
     #
     # def deleteByAccountId(self, accountId):
     #     dbSession = sessionmaker(bind=self.__instance.engine)

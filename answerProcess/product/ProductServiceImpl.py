@@ -1,6 +1,10 @@
+from account.entity.Account import Account
 from product.ProductService import ProductService
+from product.entity.Product import Product
 from product.repository.ProductRepositoryImpl import ProductRepositoryImpl
+from product.service.request.ProductReadRequest import ProductReadRequest
 from product.service.request.ProductRegisterRequest import ProductRegisterRequest
+from product.service.response.ProductReadResponse import ProductReadResponse
 from product.service.response.ProductRegisterResponse import ProductRegisterResponse
 
 
@@ -26,11 +30,30 @@ class ProductServiceImpl(ProductService):
     def registerProduct(self, *args, **kwargs):
         cleanedElements = args[0]
 
-        # for i, element in enumerate(cleanedElements):
-        #     print(f"각각의 요소 {i + 1}: {element}")
+        productRegisterRequest = ProductRegisterRequest(cleanedElements.getProductName(), cleanedElements.getDescription(), cleanedElements.getSeller(), cleanedElements.getPrice())
+        data = self.__productRepository.save(productRegisterRequest.toProduct())
 
-        productRegisterRequest = ProductRegisterRequest(cleanedElements[0], cleanedElements[1])
-        storedProduct = self.__productRepository.save(productRegisterRequest.toProduct())
+        return ProductRegisterResponse(data.getProductName(), data.getDescription(), data.getSeller(), data.getPrice())
 
-        return ProductRegisterResponse(storedProduct.getId())
+    def readProductDataByProductNumber(self, *args, **kwargs):
+        cleanedElements = args[0]
 
+        productReadRequest = ProductReadRequest(cleanedElements.getProductNumber())
+        data = self.__productRepository.findByProductNumber(productReadRequest.getProductNumber())
+
+        if data:
+            productReadResponse = ProductReadResponse(
+                data.getProductName(),
+                data.getDescription(),
+                data.getSeller(),
+                data.getPrice())
+
+            print(f"상품 이름: {data.getProductName()}")
+            print(f"상품 설명: {data.getDescription()}")
+            print(f"판매자: {data.getSeller()}")
+            print(f"상품 가격: {data.getPrice()}")
+
+            return productReadResponse
+        else:
+            print("상품을 찾을 수 없습니다.")
+            return None
