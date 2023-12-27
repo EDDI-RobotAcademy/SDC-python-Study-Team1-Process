@@ -81,6 +81,17 @@ class AccountRepositoryImpl(AccountRepository):
             session.delete(account)
             session.commit()
 
+    def deleteById(self, id):
+        dbSession = sessionmaker(bind=self.__instance.engine)
+        session = dbSession()
+        print("세션")
+
+        account = session.query(Account).filter_by(_Account__id=id).first()
+        print("해당 아이디정보 찾는")
+        if account:
+            session.delete(account)
+            session.commit()
+
     def getBoolWithFindByAccountId(self, accountId):
         if self.findByAccountId(accountId) is not None:
             return True

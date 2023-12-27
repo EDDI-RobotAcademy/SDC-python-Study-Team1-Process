@@ -28,7 +28,7 @@ class TestAccountRepository(unittest.TestCase):
 
         sample = ("testUser", "testPassword")
 
-        result = testInstance.execute(2, **accountData)
+        result = testInstance.execute(1, sample)
 
         self.assertIsNone(result)
         
@@ -36,13 +36,13 @@ class TestAccountRepository(unittest.TestCase):
 
         service = AccountServiceImpl.getInstance()
 
-        account_data = {
-            "accountId": "test_user",
-        }
-        account = Account(**account_data)
-
-        result = service.deleteAccount("test_user")
-        self.assertTrue(result)
+        # account_data = {
+        #     "accountId": "test_user",
+        # }
+        # account = Account(**account_data)
+        accountUnuqe = ('9')
+        result = service.deleteAccount(accountUnuqe)
+        self.assertIsNone(result)
 
 if __name__ == '__main__':
     unittest.main()

@@ -5,8 +5,12 @@ from account.entity.Account import Account
 
 @dataclass
 class AccountDeleteRequest:
-    __accountId: str
+    __id: int
 
-    def toDeleteAccount(self):
-        return Account(self.__accountId)
+
+    def __inint__(self, id: int):
+        self.__id = id
+
+    def getAccountId(self):
+        return self.__id
 

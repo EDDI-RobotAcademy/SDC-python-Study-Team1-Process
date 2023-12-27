@@ -60,6 +60,20 @@ class TestAccountRepository(unittest.TestCase):
         deletedAccount = repository.findByAccountId("delete_user")
         self.assertIsNone(deletedAccount)
 
+    def testDeleteById(self):
+        repository = AccountRepositoryImpl.getInstance()
+        # account_data = {
+        #     "accountId": "delete_user",
+        #     "password": "test_password"
+        # }
+        # account = Account(**account_data)
+        # repository.save(account)
+
+        repository.deleteById('7')
+
+        deletedAccount = repository.findById('7')
+        self.assertIsNone(deletedAccount)
+
     def testFindById(self):
         repository = AccountRepositoryImpl.getInstance()
         accountData = {
