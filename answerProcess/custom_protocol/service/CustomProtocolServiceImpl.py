@@ -25,4 +25,3 @@ class CustomProtocolServiceImpl(CustomProtocolService):
     def registerCustomProtocol(self, protocolNumber, pointerOfFunction):
         self.__customProtocolRepository.register(protocolNumber, pointerOfFunction)
 
-
