@@ -21,3 +21,6 @@ class AccountRegisterRequest:
     def createFromTuple(cls, inputTuple):
         return cls(*inputTuple)
 
+    def toDeleteAccount(self):
+        return Account(self.__accountId)
+

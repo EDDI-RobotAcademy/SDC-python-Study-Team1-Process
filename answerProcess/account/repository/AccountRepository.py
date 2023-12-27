@@ -14,3 +14,7 @@ class AccountRepository(abc.ABC):
     @abc.abstractmethod
     def findByAccountId(self, accountId):
         pass
+
+    @abc.abstractmethod
+    def deleteById(self, Id):
+        pass

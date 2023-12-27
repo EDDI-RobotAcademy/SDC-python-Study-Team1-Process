@@ -4,6 +4,8 @@ from account.service.request.AccountLoginRequest import AccountLoginRequest
 from account.service.request.AccountRegisterRequest import AccountRegisterRequest
 from account.service.response.AccountLoginResponse import AccountLoginResponse
 from account.service.response.AccountRegisterResponse import AccountRegisterResponse
+from account.service.request.AccountDeleteRequest import AccountDeleteRequest
+from account.service.response.AccountDeleteResponse import AccountDeleteResponse
 
 
 class AccountServiceImpl(AccountService):
@@ -38,6 +40,15 @@ class AccountServiceImpl(AccountService):
             return AccountRegisterResponse(True)
         return AccountRegisterResponse(False)
 
+
+    def deleteAccount(self, *args, **kwargs):
+        cleanedElements = args[0]
+        #accountDeleteRequest = AccountDeleteRequest()
+
+        storedAccount = self.__accountRepository.deleteById(int(cleanedElements[0]))
+        print("삭제")
+        #return AccountDeleteResponse(storedAccount.getId())
+
     def loginAccount(self, *args, **kwargs):
         cleanedElements = args[0]
 
@@ -51,4 +62,5 @@ class AccountServiceImpl(AccountService):
                 return AccountLoginResponse(databaseAccount.getId()).getId()
 
         return None
+
 
