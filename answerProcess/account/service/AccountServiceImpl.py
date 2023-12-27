@@ -1,6 +1,8 @@
 from account.repository.AccountRepositoryImpl import AccountRepositoryImpl
 from account.service.AccountService import AccountService
+from account.service.request.AccountLoginRequest import AccountLoginRequest
 from account.service.request.AccountRegisterRequest import AccountRegisterRequest
+from account.service.response.AccountLoginResponse import AccountLoginResponse
 from account.service.response.AccountRegisterResponse import AccountRegisterResponse
 from account.service.request.AccountDeleteRequest import AccountDeleteRequest
 
@@ -15,7 +17,7 @@ class AccountServiceImpl(AccountService):
         return cls.__instance
 
     def __init__(self, repository):
-        print("TaskManageServiceImpl 생성자 호출")
+        print("AccountRepositoryImpl 생성자 호출")
         self.__accountRepository = AccountRepositoryImpl()
 
     @classmethod
@@ -35,9 +37,28 @@ class AccountServiceImpl(AccountService):
 
         return AccountRegisterResponse(storedAccount.getId())
 
+
     def deleteAccount(self, *args, **kwargs):
         cleanedElements = args[0]
 
         accountDeleteRequest = AccountDeleteRequest(cleanedElements[0])
         storedAccount = self.__accountRepository.deleteByAccountId(accountDeleteRequest.toDeleteAccount())
         return AccountRegisterResponse(storedAccount.getId())
+
+    def loginAccount(self, *args, **kwargs):
+        cleanedElements = kwargs
+        accountLoginRequest = AccountLoginRequest(cleanedElements["accountId"], cleanedElements["password"])
+
+        storedAccount = accountLoginRequest.toAccount()
+
+        if self.__accountRepository.getBoolWithFindByAccountId(storedAccount.getAccountId()) is True:
+            print("아이디 일치")
+            databaseAccount = self.__accountRepository.findByAccountId(storedAccount.getAccountId())
+            print(databaseAccount.getId())
+            if storedAccount.getPassword() == databaseAccount.getPassword() is True:
+                print("비밀번호 일치")
+                return AccountLoginResponse(databaseAccount.getId())
+
+        return None
+
+
