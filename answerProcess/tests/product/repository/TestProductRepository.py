@@ -3,6 +3,7 @@ import unittest
 from account.entity.Account import Account
 from account.repository.AccountRepositoryImpl import AccountRepositoryImpl
 from mysql.MySQLDatabase import MySQLDatabase
+from product.ProductServiceImpl import ProductServiceImpl
 from product.entity.Product import Product
 from product.repository.ProductRepositoryImpl import ProductRepositoryImpl
 
@@ -16,26 +17,42 @@ class TestProductRepository(unittest.TestCase):
         # Clean up any resources after each test
         pass
 
-    def testSaveProduct(self):
-        repository = ProductRepositoryImpl.getInstance()
-        product_data = {
-            "productName": "test_product_5",
-            "description": "cabbages",
-            "seller": "junghwan"
-        }
-        product = Product(**product_data)
-
-        result = repository.save(product)
-
-        self.assertTrue(result)
-
-
-    # def testFindByAccountId(self):
+    # def testSaveProduct(self):
     #     repository = ProductRepositoryImpl.getInstance()
-    #     retrievedProduct = repository.findByProductName("test_product")
+    #     product_data = {
+    #         "productName": "test_product_12343",
+    #         "description": "cabbages",
+    #         "seller": "junghwan",
+    #         "price": "0"
+    #     }
+    #     product = Product(**product_data)
     #
-    #     self.assertIsNotNone(retrievedAccount)
-    #     self.assertEqual(retrievedAccount.getAccountId(), "test_user")
+    #     result = repository.save(product)
+    #
+    #     self.assertTrue(result)
+
+    # def testServiceSaveProduct(self):
+    #     service = ProductServiceImpl.getInstance()
+    #     product_data = {
+    #         "productName": "test_product_567890",
+    #         "description": "cabbages",
+    #         "seller": "junghwan",
+    #         "price": "0"
+    #     }
+    #     product = Product(**product_data)
+    #
+    #     result = service.registerProduct(product)
+    #
+    #     self.assertTrue(result)
+
+    def testFindByProductNumber(self):
+        repository = ProductRepositoryImpl.getInstance()
+
+        retrievedProduct = repository.findByProductNumber("2")
+
+        data = ProductServiceImpl.getInstance()
+        productData = data.readProductDataByProductNumber(retrievedProduct)
+        self.assertIsNotNone(retrievedProduct)
     #
     # def testUpdateAccount(self):
     #     repository = AccountRepositoryImpl.getInstance()
