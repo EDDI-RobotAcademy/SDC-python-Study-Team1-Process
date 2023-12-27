@@ -21,7 +21,7 @@ class TestAccountRepository(unittest.TestCase):
         initCustomProtocol()
         testInstance = CustomProtocolRepositoryImpl.getInstance()
         accountData = {
-            "accountId": "test_user444",
+            "accountId": "test_user111",
             "password": "test_password"
         }
 
@@ -29,7 +29,8 @@ class TestAccountRepository(unittest.TestCase):
 
         result = testInstance.execute(2, **accountData)
 
-        self.assertIsNone(result)
+        print(result)
+        self.assertIsNotNone(result)
 
 if __name__ == '__main__':
     unittest.main()

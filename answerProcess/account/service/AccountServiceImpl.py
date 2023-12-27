@@ -26,29 +26,29 @@ class AccountServiceImpl(AccountService):
         return cls.__instance
 
     def registerAccount(self, *args, **kwargs):
+        print("registerAccount()")
+        print(f"args: {args}")
         cleanedElements = args[0]
+        print(f"cleanedElements: {cleanedElements}")
 
-        # for i, element in enumerate(cleanedElements):
-        #     print(f"각각의 요소 {i + 1}: {element}")
-
-        accountRegisterRequest = AccountRegisterRequest(cleanedElements[0], cleanedElements[1])
+        accountRegisterRequest = AccountRegisterRequest(*cleanedElements)
         storedAccount = self.__accountRepository.save(accountRegisterRequest.toAccount())
 
-        return AccountRegisterResponse(storedAccount.getId())
+        if storedAccount.getId() is not None:
+            return AccountRegisterResponse(True)
+        return AccountRegisterResponse(False)
 
     def loginAccount(self, *args, **kwargs):
-        cleanedElements = kwargs
-        accountLoginRequest = AccountLoginRequest(cleanedElements["accountId"], cleanedElements["password"])
+        cleanedElements = args[0]
 
-        storedAccount = accountLoginRequest.toAccount()
-
-        if self.__accountRepository.getBoolWithFindByAccountId(storedAccount.getAccountId()) is True:
+        if self.__accountRepository.getBoolWithFindByAccountId(cleanedElements[0]) is True:
             print("아이디 일치")
-            databaseAccount = self.__accountRepository.findByAccountId(storedAccount.getAccountId())
-            print(databaseAccount.getId())
-            if storedAccount.getPassword() == databaseAccount.getPassword() is True:
+            accountLoginRequest = AccountLoginRequest(cleanedElements[0], cleanedElements[1])
+            databaseAccount = self.__accountRepository.findByAccountId(cleanedElements[0])
+            if databaseAccount.checkPassword(accountLoginRequest.getPassword()) is True:
                 print("비밀번호 일치")
-                return AccountLoginResponse(databaseAccount.getId())
+
+                return AccountLoginResponse(databaseAccount.getId()).getId()
 
         return None
 
