@@ -7,3 +7,10 @@ class AccountRepository(abc.ABC):
     def save(self, account):
         pass
 
+    @abc.abstractmethod
+    def getBoolWithFindByAccountId(self, accountId):
+        pass
+
+    @abc.abstractmethod
+    def findByAccountId(self, accountId):
+        pass
