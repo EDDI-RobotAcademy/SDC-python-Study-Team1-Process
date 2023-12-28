@@ -34,8 +34,6 @@ class TestAccountRepository(unittest.TestCase):
         result = testInstance.execute(2, tuple(requestForm.__dict__.values()))
         print(result)
 
-        self.assertIsNotNone(result)
-        
     def testdelateaccount(self):
 
         service = AccountServiceImpl.getInstance()

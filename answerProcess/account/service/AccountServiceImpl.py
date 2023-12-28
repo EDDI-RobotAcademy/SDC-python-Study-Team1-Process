@@ -1,4 +1,6 @@
+from account.entity.Session import Session
 from account.repository.AccountRepositoryImpl import AccountRepositoryImpl
+from account.repository.SessionRepositoryImpl import SessionRepositoryImpl
 from account.service.AccountService import AccountService
 from account.service.request.AccountLoginRequest import AccountLoginRequest
 from account.service.request.AccountRegisterRequest import AccountRegisterRequest
@@ -20,6 +22,7 @@ class AccountServiceImpl(AccountService):
     def __init__(self, repository):
         print("AccountRepositoryImpl 생성자 호출")
         self.__accountRepository = AccountRepositoryImpl()
+        self.__sessionRepository = SessionRepositoryImpl()
 
     @classmethod
     def getInstance(cls, repository=None):
@@ -40,6 +43,25 @@ class AccountServiceImpl(AccountService):
             return AccountRegisterResponse(True)
         return AccountRegisterResponse(False)
 
+
+
+
+    def deleteAccount(self, *args, **kwargs):
+        print("AccountService - deleteAccount()")
+
+        cleanedElements = args[0]
+
+        accountLoginRequest = AccountDeleteRequest(*cleanedElements)
+        foundAccount = self.__accountRepository.findById(accountLoginRequest.getAccountSessionId())
+        print(f"foundAccount: {foundAccount}")
+        if foundAccount is None:
+            return AccountDeleteResponse(False)
+
+        self.__sessionRepository.deleteBySessionId(foundAccount.getId())
+        self.__accountRepository.deleteById(foundAccount.getId())
+
+        return AccountDeleteResponse(True)
+
     def loginAccount(self, *args, **kwargs):
         cleanedElements = args[0]
 
@@ -52,17 +74,10 @@ class AccountServiceImpl(AccountService):
             databaseAccount = self.__accountRepository.findByAccountId(cleanedElements[0])
             if databaseAccount.checkPassword(accountLoginRequest.getPassword()) is True:
                 print("비밀번호 일치")
-                return AccountLoginResponse(databaseAccount.getId()).getId()
+                accountsession = Session(databaseAccount.getId())
+                self.__sessionRepository.save(accountsession)
+                return AccountLoginResponse(databaseAccount.getId())
+        
         print("비밀번호 불일치")
         return None
-
-    def deleteAccount(self, *args, **kwargs):
-        cleanedElements = args[0]
-        #accountDeleteRequest = AccountDeleteRequest()
-
-        storedAccount = self.__accountRepository.deleteById(int(cleanedElements[0]))
-        print("삭제")
-        #return AccountDeleteResponse(storedAccount.getId())
-
-
 

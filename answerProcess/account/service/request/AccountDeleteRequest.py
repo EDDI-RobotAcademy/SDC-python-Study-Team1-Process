@@ -1,16 +1,25 @@
 from dataclasses import dataclass
 
-from account.entity.Account import Account
+from account.entity.Session import Session
 
 
 @dataclass
 class AccountDeleteRequest:
-    __id: int
+    __accountSessionId: int
 
+    def toSession(self):
+        return Session(self.__accountSessionId)
 
-    def __inint__(self, id: int):
-        self.__id = id
+    def __init__(self, accountSessionId=None, **kwargs):
+        if accountSessionId is not None:
+            self.__accountSessionId = accountSessionId
+        elif "__accountSessionId" in kwargs:
+            self.__accountSessionId = kwargs["__accountSessionId"]
 
-    def getAccountId(self):
-        return self.__id
+    @classmethod
+    def createFromTuple(cls, inputTuple):
+        return cls(*inputTuple)
+
+    def getAccountSessionId(self):
+        return self.__accountSessionId
 
