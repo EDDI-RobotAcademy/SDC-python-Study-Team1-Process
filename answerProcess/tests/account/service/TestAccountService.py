@@ -31,7 +31,21 @@ class TestAccountRepository(unittest.TestCase):
         result = testInstance.execute(1, sample)
 
         self.assertIsNone(result)
-        
+
+
+    def testLoginAccountSession(self):
+        service = AccountServiceImpl.getInstance()
+        # initCustomProtocol()
+        # testInstance = CustomProtocolRepositoryImpl.getInstance()
+        # accountData = {
+        #     "accountId": "test_user111",
+        #     "password": "test_password"
+        # }
+
+        accountUnuqe = ("testUser", "testPassword")
+        result = service.loginAccount(accountUnuqe)
+        self.assertIsNone(result)
+
     def testdelateaccount(self):
 
         service = AccountServiceImpl.getInstance()
