@@ -40,6 +40,21 @@ class AccountServiceImpl(AccountService):
             return AccountRegisterResponse(True)
         return AccountRegisterResponse(False)
 
+    def loginAccount(self, *args, **kwargs):
+        cleanedElements = args[0]
+
+        print(f"cleanedElements: {cleanedElements}")
+
+        accountLoginRequest = AccountLoginRequest(*cleanedElements)
+
+        if self.__accountRepository.getBoolWithFindByAccountId(accountLoginRequest.getAccountId()) is True:
+            print("아이디 일치")
+            databaseAccount = self.__accountRepository.findByAccountId(cleanedElements[0])
+            if databaseAccount.checkPassword(accountLoginRequest.getPassword()) is True:
+                print("비밀번호 일치")
+                return AccountLoginResponse(databaseAccount.getId()).getId()
+        print("비밀번호 불일치")
+        return None
 
     def deleteAccount(self, *args, **kwargs):
         cleanedElements = args[0]
@@ -49,18 +64,5 @@ class AccountServiceImpl(AccountService):
         print("삭제")
         #return AccountDeleteResponse(storedAccount.getId())
 
-    def loginAccount(self, *args, **kwargs):
-        cleanedElements = args[0]
-
-        if self.__accountRepository.getBoolWithFindByAccountId(cleanedElements[0]) is True:
-            print("아이디 일치")
-            accountLoginRequest = AccountLoginRequest(cleanedElements[0], cleanedElements[1])
-            databaseAccount = self.__accountRepository.findByAccountId(cleanedElements[0])
-            if databaseAccount.checkPassword(accountLoginRequest.getPassword()) is True:
-                print("비밀번호 일치")
-
-                return AccountLoginResponse(databaseAccount.getId()).getId()
-
-        return None
 
 
