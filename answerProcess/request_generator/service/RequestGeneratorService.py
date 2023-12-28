@@ -6,3 +6,7 @@ class RequestGeneratorService(abc.ABC):
     @abc.abstractmethod
     def generateAccountRegisterRequest(self, arguments):
         pass
+
+    @abc.abstractmethod
+    def generateAccountLoginRequest(self, arguments):
+        pass

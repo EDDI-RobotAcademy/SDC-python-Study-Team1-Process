@@ -6,6 +6,7 @@ from account.service.AccountServiceImpl import AccountServiceImpl
 from custom_protocol.repository.CustomProtocolRepositoryImpl import CustomProtocolRepositoryImpl
 from main import initCustomProtocol
 from mysql.MySQLDatabase import MySQLDatabase
+from request_generator.service.RequestGeneratorServiceImpl import RequestGeneratorServiceImpl
 
 
 class TestAccountRepository(unittest.TestCase):
@@ -21,16 +22,19 @@ class TestAccountRepository(unittest.TestCase):
     def testLoginAccount(self):
         initCustomProtocol()
         testInstance = CustomProtocolRepositoryImpl.getInstance()
-        accountData = {
-            "accountId": "test_user111",
-            "password": "test_password"
-        }
+        requestGeneratorService = RequestGeneratorServiceImpl.getInstance()
+        accountData = {'__accountId': 'id', '__password': 'pw'}
+        protocolNumber = 2
+
+        requestGenerator = requestGeneratorService.findRequestGenerator(protocolNumber)
+        requestForm = requestGenerator(accountData)
 
         sample = ("testUser", "testPassword")
 
-        result = testInstance.execute(1, sample)
+        result = testInstance.execute(2, tuple(requestForm.__dict__.values()))
+        print(result)
 
-        self.assertIsNone(result)
+        self.assertIsNotNone(result)
         
     def testdelateaccount(self):
 

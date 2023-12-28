@@ -1,3 +1,4 @@
+import json
 import multiprocessing
 import socket
 from datetime import datetime
@@ -28,12 +29,15 @@ class TransmitterRepositoryImpl(TransmitterRepository):
         while True:
             try:
                 print("transmitter: 응답 준비")
-                response = self.__transmitQueue.get()
+                combinedResponseData = self.__transmitQueue.get()
 
-                if response is not None:
-                    responseStr = str(response)
-                    print(f"응답할 내용: {response}")
-                    clientSocket.sendall(responseStr.encode())
+                if combinedResponseData is not None:
+                    combinedResponseDataStarting = json.dumps(combinedResponseData)
+
+                    print(f"transmitter: will be send - {combinedResponseDataStarting}")
+
+                    clientSocket.sendall(combinedResponseDataStarting.encode())
+
 
             except (socket.error, BrokenPipeError) as exception:
                 print(f"사용자 연결 종료")
