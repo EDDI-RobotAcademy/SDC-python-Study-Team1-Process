@@ -44,13 +44,7 @@ class AccountServiceImpl(AccountService):
         return AccountRegisterResponse(False)
 
 
-    # def deleteAccount(self, *args, **kwargs):
-    #     cleanedElements = args[0]
-    #     #accountDeleteRequest = AccountDeleteRequest()
-    #
-    #     storedAccount = self.__accountRepository.deleteById(int(cleanedElements[0]))
-    #     print("삭제")
-    #     #return AccountDeleteResponse(storedAccount.getId())
+
 
     def deleteAccount(self, *args, **kwargs):
         print("AccountService - deleteAccount()")
@@ -68,20 +62,22 @@ class AccountServiceImpl(AccountService):
 
         return AccountDeleteResponse(True)
 
-
     def loginAccount(self, *args, **kwargs):
         cleanedElements = args[0]
 
-        if self.__accountRepository.getBoolWithFindByAccountId(cleanedElements[0]) is True:
+        print(f"cleanedElements: {cleanedElements}")
+
+        accountLoginRequest = AccountLoginRequest(*cleanedElements)
+
+        if self.__accountRepository.getBoolWithFindByAccountId(accountLoginRequest.getAccountId()) is True:
             print("아이디 일치")
-            accountLoginRequest = AccountLoginRequest(cleanedElements[0], cleanedElements[1])
             databaseAccount = self.__accountRepository.findByAccountId(cleanedElements[0])
             if databaseAccount.checkPassword(accountLoginRequest.getPassword()) is True:
                 print("비밀번호 일치")
                 accountsession = Session(databaseAccount.getId())
                 self.__sessionRepository.save(accountsession)
                 return AccountLoginResponse(databaseAccount.getId())
-
+        
+        print("비밀번호 불일치")
         return None
-
 
