@@ -1,4 +1,4 @@
-from session.entity.Session import Session
+from session.entity.AccountSession import AccountSession
 from account.repository.AccountRepositoryImpl import AccountRepositoryImpl
 from session.repository.SessionRepositoryImpl import SessionRepositoryImpl
 from account.service.AccountService import AccountService
@@ -74,7 +74,7 @@ class AccountServiceImpl(AccountService):
             databaseAccount = self.__accountRepository.findByAccountId(cleanedElements[0])
             if databaseAccount.checkPassword(accountLoginRequest.getPassword()) is True:
                 print("비밀번호 일치")
-                accountsession = Session(databaseAccount.getId())
+                accountsession = AccountSession(databaseAccount.getId())
                 self.__sessionRepository.save(accountsession)
                 return AccountLoginResponse(databaseAccount.getId())
         

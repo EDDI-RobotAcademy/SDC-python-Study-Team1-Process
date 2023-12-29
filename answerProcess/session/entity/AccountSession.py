@@ -6,7 +6,7 @@ from passlib.hash import pbkdf2_sha256
 Base = declarative_base()
 
 @dataclass
-class Session(Base):
+class AccountSession(Base):
     __tablename__: str = "session"
 
     __id: int = Column(Integer, primary_key=True, autoincrement=True, name="id")
