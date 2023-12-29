@@ -3,6 +3,7 @@ from product.ProductService import ProductService
 from product.entity.Product import Product
 from product.repository.ProductRepositoryImpl import ProductRepositoryImpl
 from product.service.request.ProductDeleteRequest import ProductDeleteRequest
+from product.service.request.ProductUpdateRequest import ProductUpdateRequest
 # from product.service.request.ProductEditRequest import ProductEditRequest
 from product.service.request.ProductReadRequest import ProductReadRequest
 from product.service.request.ProductRegisterRequest import ProductRegisterRequest
@@ -73,3 +74,9 @@ class ProductServiceImpl(ProductService):
 
         self.__productRepository.deleteByProductNumber(foundProduct.getProductNumber())
         return ProductDeleteResponse(True)
+
+    def productUpdate(self, *args, **kwargs):
+        data = args[0]
+        request = ProductUpdateRequest(*data)
+        response = self.repository(request)
+        return response

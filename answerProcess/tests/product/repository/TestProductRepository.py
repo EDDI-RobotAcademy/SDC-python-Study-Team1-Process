@@ -79,6 +79,18 @@ class TestProductRepository(unittest.TestCase):
         updatedProduct = Product(**updatedProductData)
         repository.updateProductInfo(updatedProduct, "3")
 
+    def testServiceUpdateProduct(self):
+        service = ProductServiceImpl.getInstance()
+        updatedProductData = {
+            "productName": "newName1",
+            "description": "newdes1",
+            "seller":"new",
+            "price": "newPrice1"
+        }
+        print(f"updatedProductData: {updatedProductData}")
+        updatedProduct = Product(**updatedProductData)
+        service.productUpdate(updatedProduct, "3")
+
     #
     # def testFindById(self):
     #     repository = AccountRepositoryImpl.getInstance()
