@@ -26,11 +26,10 @@ class Product(Base):
     __seller: str = Column(String, name="seller")
     __price: float = Column(String, name="price")
 
-    def __init__(self, productNumber: int, productName: str, description: str, seller: str, price: float):
-        self.__productNumber = productNumber
+    def __init__(self, productName: str, description: str, seller: str, price: float):
+
         self.__productName = productName
         self.__description = description
-        self.__seller = seller
         self.__price = price
 
     def getProductNumber(self):
@@ -47,16 +46,11 @@ class Product(Base):
     def getPrice(self):
         return self.__price
 
-    def setProductName(self, productNumber):
-        self.__productNumber = productNumber
     def setProductName(self, productName):
         self.__productName = productName
 
     def setDescription(self, description):
         self.__description = description
-
-    def setSeller(self, seller):
-        self.__seller = seller
 
     def setPrice(self, price):
         self.__price = price

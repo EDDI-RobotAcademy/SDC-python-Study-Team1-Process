@@ -31,7 +31,7 @@ class ProductRepositoryImpl(ProductRepository):
     def save(self, product):
         dbSession = sessionmaker(bind=self.__instance.engine)
         session = dbSession()
-        if self.getBoolWithFindByProductName(product.getProductName()):
+        if session is not None:
             try:
                 session.add(product)
                 session.commit()
@@ -46,28 +46,12 @@ class ProductRepositoryImpl(ProductRepository):
         else:
             print("중복")
 
-    # def update(self, account):
-    #     dbSession = sessionmaker(bind=self.__instance.engine)
-    #     session = dbSession()
-    #
-    #     # protected 키워드는 이런데서 사용합니다.
-    #     existingAccount = session.query(Account).filter_by(_Account__accountId=account.getAccountId()).first()
-    #     if existingAccount:
-    #         existingAccount.setPassword(account.getPassword())
-    #         session.commit()
-    #
-    # def findById(self, id):
-    #     dbSession = sessionmaker(bind=self.__instance.engine)
-    #     session = dbSession()
-    #
-    #     return session.query(Account).filter_by(_Account__id=id).first()
-    #
     def findByProductNumber(self, productNumber):
 
         dbSession = sessionmaker(bind=self.__instance.engine)
         session = dbSession()
         print(dir(productNumber))
-
+        print(f"productNumber: {productNumber}")
         return session.query(Product).filter_by(_Product__productNumber=productNumber).first()
 
     def findAllProducts(self):
@@ -78,13 +62,6 @@ class ProductRepositoryImpl(ProductRepository):
             response = ProductListResponse(product.getProductNumber(), product.getProductName(),
                                            product.getDescription(), product.getSeller(), product.getPrice())
             list.append(response)
-
-            # print(f"1. 상품 번호: {product.getProductNumber()}")
-            # print(f"2. 상품 이름: {product.getProductName()}")
-            # print(f"3. 상품 설명: {product.getDescription()}")
-            # print(f"4. 판매자: {product.getSeller()}")
-            # print(f"5. 상품 가격: {product.getPrice()}\n")
-
         return list
 
     def deleteByProductNumber(self, productNumber):
@@ -96,8 +73,20 @@ class ProductRepositoryImpl(ProductRepository):
             session.delete(product)
             session.commit()
 
-    def getBoolWithFindByProductName(self, productName):
-        if self.findByProductName(productName) is not None:
+
+    def updateProductInfo(self, product, productNumber):
+        dbSession = sessionmaker(bind=self.__instance.engine)
+        session = dbSession()
+
+        existingProduct = session.query(Product).filter_by(_Product__productNumber=productNumber).first()
+        if existingProduct:
+            existingProduct.setProductName(product.getProductName())
+            existingProduct.setDescription(product.getDescription())
+            existingProduct.setPrice(product.getPrice())
+            session.commit()
+
+    def getBoolWithFindByProductNumber(self, productNumber):
+        if self.findByProductNumber(productNumber) is not None:
             return False
         else:
             return True

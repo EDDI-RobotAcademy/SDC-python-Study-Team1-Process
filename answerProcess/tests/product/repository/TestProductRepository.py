@@ -17,33 +17,33 @@ class TestProductRepository(unittest.TestCase):
         # Clean up any resources after each test
         pass
 
-    # def testSaveProduct(self):
-    #     repository = ProductRepositoryImpl.getInstance()
-    #     product_data = {
-    #         "productName": "test_product_12343",
-    #         "description": "cabbages",
-    #         "seller": "junghwan",
-    #         "price": "0"
-    #     }
-    #     product = Product(**product_data)
-    #
-    #     result = repository.save(product)
-    #
-    #     self.assertTrue(result)
+    def testSaveProduct(self):
+        repository = ProductRepositoryImpl.getInstance()
+        product_data = {
+            "productName": "test_product_12343",
+            "description": "cabbages",
+            "seller": "junghwan",
+            "price": "0"
+        }
+        product = Product(**product_data)
 
-    # def testServiceSaveProduct(self):
-    #     service = ProductServiceImpl.getInstance()
-    #     product_data = {
-    #         "productName": "test_product_567890",
-    #         "description": "cabbages",
-    #         "seller": "junghwan",
-    #         "price": "0"
-    #     }
-    #     product = Product(**product_data)
-    #
-    #     result = service.registerProduct(product)
-    #
-    #     self.assertTrue(result)
+        result = repository.save(product)
+
+        self.assertTrue(result)
+
+    def testServiceSaveProduct(self):
+        service = ProductServiceImpl.getInstance()
+        product_data = {
+            "productName": "test_product_567890",
+            "description": "cabbages",
+            "seller": "junghwan",
+            "price": "0"
+        }
+        product = Product(**product_data)
+
+        result = service.registerProduct(product)
+
+        self.assertTrue(result)
 
     def testFindByProductNumber(self):
         repository = ProductRepositoryImpl.getInstance()
@@ -63,26 +63,22 @@ class TestProductRepository(unittest.TestCase):
 
     def testDeleteProductByNumber(self):
         repository = ProductRepositoryImpl.getInstance()
-        repository.deleteByProductNumber("1")
+        repository.deleteByProductNumber("2")
 
-        deletedProduct = repository.findByProductNumber("1")
+        deletedProduct = repository.findByProductNumber("2")
         self.assertIsNone(deletedProduct)
 
-    #
-    # def testUpdateAccount(self):
-    #     repository = AccountRepositoryImpl.getInstance()
-    #     updatedAccountData = {
-    #         "accountId": "test_user",
-    #         "password": "newPassword"
-    #     }
-    #     updatedAccount = Account(**updatedAccountData)
-    #     repository.update(updatedAccount)
-    #
-    #     retrievedAccount = repository.findByAccountId("test_user")
-    #     self.assertIsNotNone(retrievedAccount)
-    #     self.assertTrue(retrievedAccount.checkPassword(updatedAccountData["password"]))
-    #     self.assertFalse(retrievedAccount.checkPassword("incorrect_password"))
-    #
+    def testUpdateProduct(self):
+        repository = ProductRepositoryImpl.getInstance()
+        updatedProductData = {
+            "productName": "newName",
+            "description": "newdes",
+            "price": "newPrice"
+        }
+        print(f"updatedProductData: {updatedProductData}")
+        updatedProduct = Product(**updatedProductData)
+        repository.updateProductInfo(updatedProduct, "3")
+
     #
     # def testFindById(self):
     #     repository = AccountRepositoryImpl.getInstance()
