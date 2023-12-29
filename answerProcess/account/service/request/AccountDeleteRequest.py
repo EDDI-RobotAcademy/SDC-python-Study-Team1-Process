@@ -10,7 +10,7 @@ class AccountDeleteRequest:
     def toSession(self):
         return AccountSession(self.__accountSessionId)
 
-    def __init__(self, accountSessionId:int, **kwargs):
+    def __init__(self, accountSessionId:None, **kwargs):
         if accountSessionId is not None:
             self.__accountSessionId = accountSessionId
         elif "__accountSessionId" in kwargs:

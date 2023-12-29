@@ -29,7 +29,7 @@ class TestAccountRepository(unittest.TestCase):
         requestGenerator = requestGeneratorService.findRequestGenerator(protocolNumber)
         requestForm = requestGenerator(accountData)
 
-        result = testInstance.execute(2, tuple(requestForm.__dict__.values()))
+        result = testInstance.execute(protocolNumber, tuple(requestForm.__dict__.values()))
         # result = testInstance.execute(2, tuple(requestForm.__dict__.values()))
         print(result)
 
@@ -38,14 +38,14 @@ class TestAccountRepository(unittest.TestCase):
         testInstance = CustomProtocolRepositoryImpl.getInstance()
         requestGeneratorService = RequestGeneratorServiceImpl.getInstance()
 
-        accountData = 3
+        accountData = {'__accountSessionId': 3}
         protocolNumber = 3
 
         requestGenerator = requestGeneratorService.findRequestGenerator(protocolNumber)
         requestForm = requestGenerator(accountData)
 
 
-        result = testInstance.execute(2, requestForm)
+        result = testInstance.execute(protocolNumber, tuple(requestForm.__dict__.values()))
         self.assertIsNone(result)
 
 

@@ -47,9 +47,10 @@ class AccountServiceImpl(AccountService):
         print("AccountService - deleteAccount()")
 
         cleanedElements = args[0]
+        print(cleanedElements)
 
-        accountLoginRequest = AccountDeleteRequest(*cleanedElements)
-        foundAccount = self.__accountRepository.findById(accountLoginRequest.getAccountSessionId())
+        accountDeleteRequest = AccountDeleteRequest(*cleanedElements)
+        foundAccount = self.__accountRepository.findById(accountDeleteRequest.getAccountSessionId())
         print(f"foundAccount: {foundAccount}")
         if foundAccount is None:
             return AccountDeleteResponse(False)
