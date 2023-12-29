@@ -64,6 +64,10 @@ def initCustomProtocol():
         CustomProtocol.ACCOUNT_LOGIN.value,
         accountService.loginAccount
     )
+    customProtocolService.registerCustomProtocol(
+        CustomProtocol.ACCOUNT_DELETE.value,
+        accountService.deleteAccount
+    )
 
 
 def initEachDomain():

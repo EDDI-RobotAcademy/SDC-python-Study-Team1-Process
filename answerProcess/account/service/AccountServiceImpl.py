@@ -43,9 +43,6 @@ class AccountServiceImpl(AccountService):
             return AccountRegisterResponse(True)
         return AccountRegisterResponse(False)
 
-
-
-
     def deleteAccount(self, *args, **kwargs):
         print("AccountService - deleteAccount()")
 
