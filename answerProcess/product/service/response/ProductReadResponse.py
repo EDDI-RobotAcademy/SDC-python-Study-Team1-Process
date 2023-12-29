@@ -6,4 +6,4 @@ class ProductReadResponse:
     __productName: str
     __description: str
     __seller: str
-    __price: str
+    __price: float

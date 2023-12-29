@@ -24,9 +24,9 @@ class Product(Base):
     __productName: str = Column(String, name="product_name")
     __description: str = Column(String, name="description")
     __seller: str = Column(String, name="seller")
-    __price: str = Column(String, name="price")
+    __price: float = Column(String, name="price")
 
-    def __init__(self, productNumber: int, productName: str, description: str, seller: str, price: str):
+    def __init__(self, productNumber: int, productName: str, description: str, seller: str, price: float):
         self.__productNumber = productNumber
         self.__productName = productName
         self.__description = description

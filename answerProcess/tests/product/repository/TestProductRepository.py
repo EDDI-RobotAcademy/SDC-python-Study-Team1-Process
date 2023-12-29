@@ -53,6 +53,21 @@ class TestProductRepository(unittest.TestCase):
         data = ProductServiceImpl.getInstance()
         productData = data.readProductDataByProductNumber(retrievedProduct)
         self.assertIsNotNone(retrievedProduct)
+
+    def testFindAllProducts(self):
+        repository = ProductRepositoryImpl.getInstance()
+        findProducts = repository.findAllProducts()
+
+        service = ProductServiceImpl.getInstance()
+        products = service.getAllProducts()
+
+    def testDeleteProductByNumber(self):
+        repository = ProductRepositoryImpl.getInstance()
+        repository.deleteByProductNumber("1")
+
+        deletedProduct = repository.findByProductNumber("1")
+        self.assertIsNone(deletedProduct)
+
     #
     # def testUpdateAccount(self):
     #     repository = AccountRepositoryImpl.getInstance()
@@ -68,19 +83,6 @@ class TestProductRepository(unittest.TestCase):
     #     self.assertTrue(retrievedAccount.checkPassword(updatedAccountData["password"]))
     #     self.assertFalse(retrievedAccount.checkPassword("incorrect_password"))
     #
-    # def testDeleteAccountById(self):
-    #     repository = AccountRepositoryImpl.getInstance()
-    #     account_data = {
-    #         "accountId": "delete_user",
-    #         "password": "test_password"
-    #     }
-    #     account = Account(**account_data)
-    #     repository.save(account)
-    #
-    #     repository.deleteByAccountId("delete_user")
-    #
-    #     deletedAccount = repository.findByAccountId("delete_user")
-    #     self.assertIsNone(deletedAccount)
     #
     # def testFindById(self):
     #     repository = AccountRepositoryImpl.getInstance()
