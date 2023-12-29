@@ -18,6 +18,8 @@ class RequestGeneratorServiceImpl(RequestGeneratorService):
                 CustomProtocol.ACCOUNT_REGISTER.value] = cls.__instance.generateAccountRegisterRequest
             cls.__requestFormGenerationTable[
                 CustomProtocol.ACCOUNT_LOGIN.value] = cls.__instance.generateAccountLoginRequest
+            cls.__requestFormGenerationTable[
+                CustomProtocol.ACCOUNT_DELETE.value] = cls.__instance.generateAccountDeleteRequest
 
         return cls.__instance
 
@@ -50,4 +52,10 @@ class RequestGeneratorServiceImpl(RequestGeneratorService):
         return AccountLoginRequest(
             __accountId=arguments["__accountId"],
             __password=arguments["__password"]
+        )
+
+    def generateAccountDeleteRequest(self, arguments):
+        print("AccountDeleteRequest 생성")
+        return AccountLoginRequest(
+            __id=arguments["__id"]
         )
