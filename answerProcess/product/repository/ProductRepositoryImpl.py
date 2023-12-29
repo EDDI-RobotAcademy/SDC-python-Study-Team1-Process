@@ -1,11 +1,11 @@
 from sqlalchemy.orm import sessionmaker
 
-from account.repository.AccountRepositoryImpl import AccountRepositoryImpl
 from mysql.MySQLDatabase import MySQLDatabase
 from sqlalchemy.exc import SQLAlchemyError
 
 from product.entity.Product import Product
 from product.repository.ProductRepository import ProductRepository
+from product.service.response.ProductListResponse import ProductListResponse
 
 
 class ProductRepositoryImpl(ProductRepository):
@@ -46,7 +46,6 @@ class ProductRepositoryImpl(ProductRepository):
         else:
             print("중복")
 
-
     # def update(self, account):
     #     dbSession = sessionmaker(bind=self.__instance.engine)
     #     session = dbSession()
@@ -70,15 +69,32 @@ class ProductRepositoryImpl(ProductRepository):
         print(dir(productNumber))
 
         return session.query(Product).filter_by(_Product__productNumber=productNumber).first()
-    #
-    # def deleteByAccountId(self, accountId):
-    #     dbSession = sessionmaker(bind=self.__instance.engine)
-    #     session = dbSession()
-    #
-    #     account = session.query(Account).filter_by(_Account__accountId=accountId).first()
-    #     if account:
-    #         session.delete(account)
-    #         session.commit()
+
+    def findAllProducts(self):
+        dbSession = sessionmaker(bind=self.__instance.engine)
+        session = dbSession()
+        list = []
+        for product in session.query(Product).all():
+            response = ProductListResponse(product.getProductNumber(), product.getProductName(),
+                                           product.getDescription(), product.getSeller(), product.getPrice())
+            list.append(response)
+
+            # print(f"1. 상품 번호: {product.getProductNumber()}")
+            # print(f"2. 상품 이름: {product.getProductName()}")
+            # print(f"3. 상품 설명: {product.getDescription()}")
+            # print(f"4. 판매자: {product.getSeller()}")
+            # print(f"5. 상품 가격: {product.getPrice()}\n")
+
+        return list
+
+    def deleteByProductNumber(self, productNumber):
+        dbSession = sessionmaker(bind=self.__instance.engine)
+        session = dbSession()
+
+        product = session.query(Product).filter_by(_Product__productNumber=productNumber).first()
+        if product:
+            session.delete(product)
+            session.commit()
 
     def getBoolWithFindByProductName(self, productName):
         if self.findByProductName(productName) is not None:
