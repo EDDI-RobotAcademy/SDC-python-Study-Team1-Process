@@ -31,7 +31,8 @@ class TestAccountRepository(unittest.TestCase):
 
         sample = ("testUser", "testPassword")
 
-        result = testInstance.execute(2, tuple(requestForm.__dict__.values()))
+        result = testInstance.execute(2, sample)
+        # result = testInstance.execute(2, tuple(requestForm.__dict__.values()))
         print(result)
 
     def testdelateaccount(self):
@@ -42,7 +43,7 @@ class TestAccountRepository(unittest.TestCase):
         #     "accountId": "test_user",
         # }
         # account = Account(**account_data)
-        accountUnuqe = ('9')
+        accountUnuqe = ("10")
         result = service.deleteAccount(accountUnuqe)
         self.assertIsNone(result)
 
