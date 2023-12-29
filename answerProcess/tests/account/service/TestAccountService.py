@@ -29,22 +29,23 @@ class TestAccountRepository(unittest.TestCase):
         requestGenerator = requestGeneratorService.findRequestGenerator(protocolNumber)
         requestForm = requestGenerator(accountData)
 
-        sample = ("testUser", "testPassword")
-
-        result = testInstance.execute(2, sample)
+        result = testInstance.execute(2, tuple(requestForm.__dict__.values()))
         # result = testInstance.execute(2, tuple(requestForm.__dict__.values()))
         print(result)
 
     def testdelateaccount(self):
+        initCustomProtocol()
+        testInstance = CustomProtocolRepositoryImpl.getInstance()
+        requestGeneratorService = RequestGeneratorServiceImpl.getInstance()
 
-        service = AccountServiceImpl.getInstance()
+        accountData = 3
+        protocolNumber = 3
 
-        # account_data = {
-        #     "accountId": "test_user",
-        # }
-        # account = Account(**account_data)
-        accountUnuqe = ("10")
-        result = service.deleteAccount(accountUnuqe)
+        requestGenerator = requestGeneratorService.findRequestGenerator(protocolNumber)
+        requestForm = requestGenerator(accountData)
+
+
+        result = testInstance.execute(2, requestForm)
         self.assertIsNone(result)
 
 
