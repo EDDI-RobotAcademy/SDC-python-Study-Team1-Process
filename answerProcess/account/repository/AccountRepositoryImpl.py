@@ -52,6 +52,7 @@ class AccountRepositoryImpl(AccountRepository):
 
         # protected 키워드는 이런데서 사용합니다.
         existingAccount = session.query(Account).filter_by(_Account__accountId=account.getAccountId()).first()
+        print(f"existingAccount: {existingAccount}")
         if existingAccount:
             existingAccount.setPassword(account.getPassword())
             session.commit()
