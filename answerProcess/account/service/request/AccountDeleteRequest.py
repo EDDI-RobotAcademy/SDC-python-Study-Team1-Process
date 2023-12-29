@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from account.entity.Session import Session
+from session.entity.Session import Session
 
 
 @dataclass
