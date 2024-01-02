@@ -6,7 +6,7 @@ from mysql.MySQLDatabase import MySQLDatabase
 from sqlalchemy.exc import SQLAlchemyError
 
 
-class OrderRepositoryImpl(ProductOrderRepository):
+class ProductOrderRepositoryImpl(ProductOrderRepository):
     __instance = None
 
     def __new__(cls):
