@@ -30,7 +30,9 @@ class Product(Base):
 
         self.__productName = productName
         self.__description = description
+        self.__seller = seller
         self.__price = price
+
 
     def getProductNumber(self):
         return self.__productNumber

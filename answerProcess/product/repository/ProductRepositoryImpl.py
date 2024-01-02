@@ -31,6 +31,7 @@ class ProductRepositoryImpl(ProductRepository):
     def save(self, product):
         dbSession = sessionmaker(bind=self.__instance.engine)
         session = dbSession()
+
         if session is not None:
             try:
                 session.add(product)
