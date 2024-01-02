@@ -10,6 +10,6 @@ class RequestGeneratorService(abc.ABC):
     @abc.abstractmethod
     def generateAccountLoginRequest(self, arguments):
         pass
-
+    @abc.abstractmethod
     def generateAccountDeleteRequest(self, arguments):
         pass

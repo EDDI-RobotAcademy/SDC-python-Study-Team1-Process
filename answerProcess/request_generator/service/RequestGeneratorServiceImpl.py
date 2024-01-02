@@ -1,5 +1,6 @@
 import ast
 
+from account.service.request.AccountDeleteRequest import AccountDeleteRequest
 from account.service.request.AccountLoginRequest import AccountLoginRequest
 from account.service.request.AccountRegisterRequest import AccountRegisterRequest
 from custom_protocol.entity.CustomProtocol import CustomProtocol
@@ -56,6 +57,6 @@ class RequestGeneratorServiceImpl(RequestGeneratorService):
 
     def generateAccountDeleteRequest(self, arguments):
         print("AccountDeleteRequest 생성")
-        return AccountLoginRequest(
-            __id=arguments["__id"]
+        return AccountDeleteRequest(
+            __accountSessionId=arguments["__accountSessionId"]
         )
