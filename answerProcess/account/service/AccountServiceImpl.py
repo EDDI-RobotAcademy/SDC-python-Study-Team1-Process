@@ -64,6 +64,7 @@ class AccountServiceImpl(AccountService):
 
     def loginAccount(self, *args, **kwargs):
         print("AccountService - loginAccount()")
+        self.__sessionRepository.resetSession()
         cleanedElements = args[0]
 
         print(f"cleanedElements: {cleanedElements}")
