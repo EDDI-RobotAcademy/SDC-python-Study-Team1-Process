@@ -6,6 +6,7 @@ from mysql.MySQLDatabase import MySQLDatabase
 from product.ProductServiceImpl import ProductServiceImpl
 from product.entity.Product import Product
 from product.repository.ProductRepositoryImpl import ProductRepositoryImpl
+from product.service.request.ProductUpdateRequest import ProductUpdateRequest
 
 
 class TestProductRepository(unittest.TestCase):
@@ -68,28 +69,69 @@ class TestProductRepository(unittest.TestCase):
         deletedProduct = repository.findByProductNumber("2")
         self.assertIsNone(deletedProduct)
 
-    def testUpdateProduct(self):
-        repository = ProductRepositoryImpl.getInstance()
-        updatedProductData = {
-            "productName": "newName",
-            "description": "newdes",
-            "price": "newPrice"
-        }
-        print(f"updatedProductData: {updatedProductData}")
-        updatedProduct = Product(**updatedProductData)
-        repository.updateProductInfo(updatedProduct, "3")
-
-    def testServiceUpdateProduct(self):
+    def testUpdate(self):
         service = ProductServiceImpl.getInstance()
-        updatedProductData = {
-            "productName": "newName1",
-            "description": "newdes1",
-            "seller":"new",
-            "price": "newPrice1"
-        }
-        print(f"updatedProductData: {updatedProductData}")
-        updatedProduct = Product(**updatedProductData)
-        service.productUpdate(updatedProduct, "3")
+        repository = ProductRepositoryImpl.getInstance()
+        foundProduct = repository.findByProductNumber("3")
+        print(f"foundProduct: {foundProduct}")
+
+        if foundProduct is not None:
+            productUpdateRequest ={"__productNumber": foundProduct.getProductNumber(),
+                                   "__productName": "test_update",
+                                   "__description": "test",
+                                   "__seller": "test_seller",
+                                   "__price": 100.0
+                                   }
+
+            print(f"type{productUpdateRequest}")
+            result = service.updateProduct(productUpdateRequest)
+
+            self.assertTrue(result)
+
+    # def testUpdate(self):
+    #     service = ProductServiceImpl.getInstance()
+    #     repository = ProductRepositoryImpl.getInstance()
+    #     foundProduct = repository.findByProductNumber("3")
+    #     print(f"foundProduct: {foundProduct}")
+    #
+    #     if foundProduct is not None:
+    #         productUpdateData = {
+    #             foundProduct.getProductNumber(),
+    #             foundProduct.getProductName("test_update"),
+    #             foundProduct.getDescription("test"),
+    #             foundProduct.getSeller("test_seller"),
+    #             foundProduct.getPrice("100.0")
+    #         }
+    #         productUpdateRequest = ProductUpdateRequest(**productUpdateData)
+    #
+    #         result = service.updateProduct(productUpdateRequest)
+    #
+    #         self.assertTrue(result)
+
+
+# def testUpdateProduct(self):
+    #     repository = ProductRepositoryImpl.getInstance()
+    #     updatedProductData = {
+    #         "productName": "newName",
+    #         "description": "newdes",
+    #         "price": "newPrice"
+    #     }
+    #     print(f"updatedProductData: {updatedProductData}")
+    #     updatedProduct = Product(**updatedProductData)
+    #     repository.updateProductInfo(updatedProduct, "3")
+
+    # def testServiceUpdateProduct(self):
+    #     service = ProductServiceImpl.getInstance()
+    #     repository = ProductRepositoryImpl.getInstance()
+    #     updatedProductData = {
+    #         "productNumber": repository.findByProductNumber('3'),
+    #         "productName": "newName1",
+    #         "description": "newdes1",
+    #         "price": "newPrice1"
+    #     }
+    #     print(f"updatedProductData: {updatedProductData}")
+    #     updatedProduct = Product(**updatedProductData)
+    #     service.productUpdate(updatedProduct)
 
     #
     # def testFindById(self):

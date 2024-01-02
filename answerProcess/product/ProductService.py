@@ -9,3 +9,7 @@ class ProductService(abc.ABC):
     @abc.abstractmethod
     def readProductDataByProductNumber(self, *args, **kwargs):
         pass
+
+    @abc.abstractmethod
+    def updateProduct(self, *args, **kwargs):
+        pass

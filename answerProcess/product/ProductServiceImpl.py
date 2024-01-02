@@ -12,6 +12,7 @@ from product.service.response.ProductDeleteResponse import ProductDeleteResponse
 # from product.service.response.ProductEditResponse import ProductEditResponse
 from product.service.response.ProductReadResponse import ProductReadResponse
 from product.service.response.ProductRegisterResponse import ProductRegisterResponse
+from product.service.response.ProductUpdateResponse import ProductUpdateResponse
 
 
 class ProductServiceImpl(ProductService):
@@ -36,7 +37,8 @@ class ProductServiceImpl(ProductService):
     def registerProduct(self, *args, **kwargs):
         cleanedElements = args[0]
 
-        productRegisterRequest = ProductRegisterRequest(cleanedElements.getProductName(), cleanedElements.getDescription(),
+        productRegisterRequest = ProductRegisterRequest(cleanedElements.getProductName(),
+                                                        cleanedElements.getDescription(),
                                                         cleanedElements.getSeller(), cleanedElements.getPrice())
         data = self.__productRepository.save(productRegisterRequest.toProduct())
 
@@ -60,8 +62,8 @@ class ProductServiceImpl(ProductService):
             return None
 
     def getAllProducts(self, *args, **kwargs):
-         product_list = self.__productRepository.findAllProducts()
-         return product_list
+        product_list = self.__productRepository.findAllProducts()
+        return product_list
 
     def deleteProduct(self, *args, **kwargs):
         cleanedElements = args[0]
@@ -75,8 +77,52 @@ class ProductServiceImpl(ProductService):
         self.__productRepository.deleteByProductNumber(foundProduct.getProductNumber())
         return ProductDeleteResponse(True)
 
-    def productUpdate(self, *args, **kwargs):
-        data = args[0]
-        request = ProductUpdateRequest(*data)
-        response = self.repository(request)
-        return response
+    def updateProduct(self, *args, **kwargs):
+        cleanedElements = args[0]
+        print(f"cleanedElements: {cleanedElements}")
+
+        productUpdateRequest = ProductUpdateRequest(cleanedElements.getProductName(), cleanedElements.getDescription(),
+                                                    cleanedElements.getSeller(), cleanedElements.getPrice())
+        print(productUpdateRequest)
+
+        # data = self.__productRepository.save(productUpdateRequest.toProduct())
+        foundProduct = self.__productRepository.findByProductNumber(productUpdateRequest.getProductNumber())
+        print(type[foundProduct])
+
+        if foundProduct is not None:
+            foundProduct.setProductName(productUpdateRequest.getProductName())
+            foundProduct.setDescription(productUpdateRequest.getDescription())
+            foundProduct.setSeller(productUpdateRequest.getSeller())
+            foundProduct.setPrice(productUpdateRequest.getPrice())
+
+            savedProduct = self.__productRepository.save(foundProduct)
+            print(f"foundProduct: {foundProduct}")
+            print(f"savedProduct: {savedProduct}")
+
+            return ProductUpdateResponse(
+                savedProduct.getProductNumber(),
+                savedProduct.getProductName(),
+                savedProduct.getDescription(),
+                savedProduct.getSeller(),
+                savedProduct.getPrice(),
+            )
+
+        return None
+
+    # def productUpdate(self, *args, **kwargs):
+    #     cleanedElements = args[0]
+    #     productUpdateRequest = ProductUpdateRequest(*cleanedElements)
+    #     response = self.repository(productUpdateRequest)
+    #     return response
+    #
+    # def updateProduct(self, *args, **kwargs):
+    #     cleaned_elements = args[0]
+    #     product_update_request = ProductUpdateRequest(*cleaned_elements)
+    #
+    #     saved_product = self.repository.updateProductInfo(product_update_request.toProduct())
+    #     return ProductUpdateResponse(
+    #             saved_product.getProductNumber(),
+    #             saved_product.getProductName(),
+    #             saved_product.getDescription(),
+    #             saved_product.getPrice(),
+    #         )

@@ -30,6 +30,7 @@ class Product(Base):
 
         self.__productName = productName
         self.__description = description
+        self.__seller = seller
         self.__price = price
 
     def getProductNumber(self):
@@ -51,6 +52,9 @@ class Product(Base):
 
     def setDescription(self, description):
         self.__description = description
+
+    def setSeller(self, seller):
+        self.__seller = seller
 
     def setPrice(self, price):
         self.__price = price

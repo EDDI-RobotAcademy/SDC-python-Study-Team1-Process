@@ -5,7 +5,7 @@ from sqlalchemy.exc import SQLAlchemyError
 
 from product.entity.Product import Product
 from product.repository.ProductRepository import ProductRepository
-from product.service.response.ProductListResponse import ProductListResponse
+# from product.service.response.ProductListResponse import ProductListResponse
 
 
 class ProductRepositoryImpl(ProductRepository):
@@ -31,20 +31,18 @@ class ProductRepositoryImpl(ProductRepository):
     def save(self, product):
         dbSession = sessionmaker(bind=self.__instance.engine)
         session = dbSession()
-        if session is not None:
-            try:
-                session.add(product)
-                session.commit()
 
-                print(f"상품 이름: {product.getProductName()}")
-                return product
+        try:
+            session.add(product)
+            session.commit()
 
-            except SQLAlchemyError as exception:
-                session.rollback()
-                print(f"DB 저장 중 에러 발생: {exception}")
-                return None
-        else:
-            print("중복")
+            print(f"상품 이름: {product.getProductName()}")
+            return product
+
+        except SQLAlchemyError as exception:
+            session.rollback()
+            print(f"DB 저장 중 에러 발생: {exception}")
+            return None
 
     def findByProductNumber(self, productNumber):
 
@@ -54,15 +52,15 @@ class ProductRepositoryImpl(ProductRepository):
         print(f"productNumber: {productNumber}")
         return session.query(Product).filter_by(_Product__productNumber=productNumber).first()
 
-    def findAllProducts(self):
-        dbSession = sessionmaker(bind=self.__instance.engine)
-        session = dbSession()
-        list = []
-        for product in session.query(Product).all():
-            response = ProductListResponse(product.getProductNumber(), product.getProductName(),
-                                           product.getDescription(), product.getSeller(), product.getPrice())
-            list.append(response)
-        return list
+    # def findAllProducts(self):
+    #     dbSession = sessionmaker(bind=self.__instance.engine)
+    #     session = dbSession()
+    #     list = []
+    #     for product in session.query(Product).all():
+    #         response = ProductListResponse(product.getProductNumber(), product.getProductName(),
+    #                                        product.getDescription(), product.getSeller(), product.getPrice())
+    #         list.append(response)
+    #     return list
 
     def deleteByProductNumber(self, productNumber):
         dbSession = sessionmaker(bind=self.__instance.engine)
@@ -73,17 +71,23 @@ class ProductRepositoryImpl(ProductRepository):
             session.delete(product)
             session.commit()
 
+    # def updateProductInfo(self, product):
+    #     dbSession = sessionmaker(bind=self.__instance.engine)
+    #     session = dbSession()
+    #
+    #     existingProduct = session.query(Product).filter_by(_Product__productNumber=product.getProductNumber()).first()
+    #     if existingProduct:
+    #         existingProduct.getProductNumber(product.getProductNumber())
+    #         existingProduct.setProductName(product.getProductName())
+    #         existingProduct.setDescription(product.getDescription())
+    #         existingProduct.setPrice(product.getPrice())
+    #         session.commit()
 
-    def updateProductInfo(self, product, productNumber):
+    def findByUserInputKeyword(self, keyword):
         dbSession = sessionmaker(bind=self.__instance.engine)
         session = dbSession()
 
-        existingProduct = session.query(Product).filter_by(_Product__productNumber=productNumber).first()
-        if existingProduct:
-            existingProduct.setProductName(product.getProductName())
-            existingProduct.setDescription(product.getDescription())
-            existingProduct.setPrice(product.getPrice())
-            session.commit()
+        return session.query(Product).filter(Product._Product__productName.ilike(f"%{keyword}%")).all()
 
     def getBoolWithFindByProductNumber(self, productNumber):
         if self.findByProductNumber(productNumber) is not None:
