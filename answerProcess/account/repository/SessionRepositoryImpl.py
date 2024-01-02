@@ -1,6 +1,6 @@
 from sqlalchemy.orm import sessionmaker
-from session.entity.AccountSession import AccountSession
-from session.repository.SessionRepository import SessionRepository
+from account.entity.AccountSession import AccountSession
+from account.repository.SessionRepository import SessionRepository
 from mysql.MySQLDatabase import MySQLDatabase
 from sqlalchemy.exc import SQLAlchemyError
 
@@ -47,7 +47,7 @@ class SessionRepositoryImpl(SessionRepository):
         dbSession = sessionmaker(bind=self.__instance.engine)
         session = dbSession()
 
-        return session.query(AccountSession).filter_by(_Session__Id=id).first()
+        return session.query(AccountSession).filter_by(_AccountSession__Id=id).first()
 
     def findBySessionId(self, sessionId):
         dbSession = sessionmaker(bind=self.__instance.engine)
@@ -55,14 +55,14 @@ class SessionRepositoryImpl(SessionRepository):
 
         print(dir(AccountSession))
 
-        return session.query(AccountSession).filter_by(_Session__sessionId=sessionId).first()
+        return session.query(AccountSession).filter_by(_AccountSession__sessionId=sessionId).first()
 
     def deleteBySessionId(self, sessionId):
         dbSession = sessionmaker(bind=self.__instance.engine)
         session = dbSession()
         print("세션")
 
-        acountSession = session.query(AccountSession).filter_by(_Session__sessionId=sessionId).first()
+        acountSession = session.query(AccountSession).filter_by(_AccountSession__sessionId=sessionId).first()
         print("해당 아이디정보 찾는")
         if acountSession:
             session.delete(acountSession)

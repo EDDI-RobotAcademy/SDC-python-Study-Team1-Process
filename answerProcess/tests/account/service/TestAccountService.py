@@ -19,11 +19,27 @@ class TestAccountRepository(unittest.TestCase):
         # Clean up any resources after each test
         pass
 
+    def testregisterAccount(self):
+        initCustomProtocol()
+        testInstance = CustomProtocolRepositoryImpl.getInstance()
+        requestGeneratorService = RequestGeneratorServiceImpl.getInstance()
+        accountData = {'__accountId': 'Id111', '__password': 'pw111'}
+        protocolNumber = 1
+
+        requestGenerator = requestGeneratorService.findRequestGenerator(protocolNumber)
+        requestForm = requestGenerator(accountData)
+
+        result = testInstance.execute(protocolNumber, tuple(requestForm.__dict__.values()))
+        print(result)
+
+
+
+
     def testLoginAccount(self):
         initCustomProtocol()
         testInstance = CustomProtocolRepositoryImpl.getInstance()
         requestGeneratorService = RequestGeneratorServiceImpl.getInstance()
-        accountData = {'__accountId': 'id', '__password': 'pw'}
+        accountData = {'__accountId': 'Id', '__password': 'pw'}
         protocolNumber = 2
 
         requestGenerator = requestGeneratorService.findRequestGenerator(protocolNumber)
@@ -33,12 +49,27 @@ class TestAccountRepository(unittest.TestCase):
         # result = testInstance.execute(2, tuple(requestForm.__dict__.values()))
         print(result)
 
+    def testLogoutAccount(self):
+        initCustomProtocol()
+        testInstance = CustomProtocolRepositoryImpl.getInstance()
+        requestGeneratorService = RequestGeneratorServiceImpl.getInstance()
+        accountData = {'__accountSessionId': 4}
+        protocolNumber = 4
+
+        requestGenerator = requestGeneratorService.findRequestGenerator(protocolNumber)
+        requestForm = requestGenerator(accountData)
+
+        result = testInstance.execute(protocolNumber, tuple(requestForm.__dict__.values()))
+        # result = testInstance.execute(2, tuple(requestForm.__dict__.values()))
+        print(result)
+
+
     def testdelateaccount(self):
         initCustomProtocol()
         testInstance = CustomProtocolRepositoryImpl.getInstance()
         requestGeneratorService = RequestGeneratorServiceImpl.getInstance()
 
-        accountData = {'__accountSessionId': 3}
+        accountData = {'__accountSessionId': 1}
         protocolNumber = 3
 
         requestGenerator = requestGeneratorService.findRequestGenerator(protocolNumber)
