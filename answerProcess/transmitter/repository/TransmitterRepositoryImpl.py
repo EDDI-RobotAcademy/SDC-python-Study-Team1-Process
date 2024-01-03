@@ -32,7 +32,7 @@ class TransmitterRepositoryImpl(TransmitterRepository):
                 combinedResponseData = self.__transmitQueue.get()
 
                 if combinedResponseData is not None:
-                    combinedResponseDataStarting = json.dumps(combinedResponseData)
+                    combinedResponseDataStarting = str(combinedResponseData)
 
                     print(f"transmitter: will be send - {combinedResponseDataStarting}")
 

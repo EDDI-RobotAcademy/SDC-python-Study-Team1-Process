@@ -98,10 +98,3 @@ class AccountRepositoryImpl(AccountRepository):
             return True
         else:
             return False
-
-    def saveSessionId(self):
-        dbSession = sessionmaker(bind=self.__instance.engine)
-        session = dbSession()
-
-        sessionId = session.q
-
