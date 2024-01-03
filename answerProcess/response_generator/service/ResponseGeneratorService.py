@@ -12,6 +12,14 @@ class ResponseGeneratorService(abc.ABC):
         pass
 
     @abc.abstractmethod
+    def generateAccountDeleteResponse(self, arguments):
+        pass
+
+    @abc.abstractmethod
+    def generateAccountLogoutResponse(self, arguments):
+        pass
+
+    @abc.abstractmethod
     def generateProductRegisterResponse(self, arguments):
         pass
 

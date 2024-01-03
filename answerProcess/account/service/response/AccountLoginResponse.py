@@ -3,7 +3,11 @@ from dataclasses import dataclass
 
 @dataclass
 class AccountLoginResponse:
-    __id: int
+    __isSuccess: bool
 
-    def getId(self):
-        return self.__id
+
+    def __init__(self, __isSuccess):
+        self.__isSuccess = __isSuccess
+
+    def getIsSuccess(self):
+        return self.__isSuccess

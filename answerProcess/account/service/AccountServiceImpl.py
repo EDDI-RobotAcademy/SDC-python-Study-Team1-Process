@@ -78,10 +78,10 @@ class AccountServiceImpl(AccountService):
                 print("비밀번호 일치")
                 accountsession = AccountSession(databaseAccount.getId())
                 self.__sessionRepository.save(accountsession)
-                return AccountLoginResponse(databaseAccount.getId()).getId()
+                return AccountLoginResponse(True)
         
         print("비밀번호 불일치")
-        return None
+        return AccountLoginResponse(False)
 
     def logoutAccount(self, *args, **kwargs):
         print("AccountService - logoutAccount()")
