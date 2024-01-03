@@ -33,6 +33,13 @@ class TestAccountRepository(unittest.TestCase):
         self.assertIsNotNone(retrievedAccount)
         self.assertEqual(retrievedAccount.getAccountId(), "test_user")
 
+    def testGetIdBySessionId(self):
+        repository = SessionRepositoryImpl.getInstance()
+        retrievedAccount = repository.getIdBySessionId()
+        print(retrievedAccount)
+
+
+
     def testUpdateAccount(self):
         repository = AccountRepositoryImpl.getInstance()
         updatedAccountData = {

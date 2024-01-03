@@ -43,19 +43,14 @@ class SessionRepositoryImpl(SessionRepository):
             return None
 
 
-    def findById(self, id):
+    def getIdBySessionId(self):
         dbSession = sessionmaker(bind=self.__instance.engine)
         session = dbSession()
 
-        return session.query(AccountSession).filter_by(_AccountSession__Id=id).first()
-
-    def findBySessionId(self, sessionId):
-        dbSession = sessionmaker(bind=self.__instance.engine)
-        session = dbSession()
-
-        print(dir(AccountSession))
-
-        return session.query(AccountSession).filter_by(_AccountSession__sessionId=sessionId).first()
+        sessionlist = session.query(AccountSession).all()
+        targetsessionId = sessionlist[0]
+        sessionId = targetsessionId.getSessionId()
+        return sessionId
 
     def deleteBySessionId(self, sessionId):
         dbSession = sessionmaker(bind=self.__instance.engine)
@@ -67,3 +62,16 @@ class SessionRepositoryImpl(SessionRepository):
         if acountSession:
             session.delete(acountSession)
             session.commit()
+
+
+    def resetSession(self):
+        dbSession = sessionmaker(bind=self.__instance.engine)
+        session = dbSession()
+        print("세션")
+
+        acountSession = session.query(AccountSession).all()
+        for session_obj in acountSession:
+            session.delete(session_obj)
+        session.commit()
+        print("AccountSession객체 초기화")
+

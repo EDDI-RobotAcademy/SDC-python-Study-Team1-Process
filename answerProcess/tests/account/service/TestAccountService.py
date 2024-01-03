@@ -23,7 +23,7 @@ class TestAccountRepository(unittest.TestCase):
         initCustomProtocol()
         testInstance = CustomProtocolRepositoryImpl.getInstance()
         requestGeneratorService = RequestGeneratorServiceImpl.getInstance()
-        accountData = {'__accountId': 'Id111', '__password': 'pw111'}
+        accountData = {'__accountId': 'Id', '__password': 'pw'}
         protocolNumber = 1
 
         requestGenerator = requestGeneratorService.findRequestGenerator(protocolNumber)
@@ -53,7 +53,7 @@ class TestAccountRepository(unittest.TestCase):
         initCustomProtocol()
         testInstance = CustomProtocolRepositoryImpl.getInstance()
         requestGeneratorService = RequestGeneratorServiceImpl.getInstance()
-        accountData = {'__accountSessionId': 4}
+        accountData = {'__accountSessionId': 1}
         protocolNumber = 4
 
         requestGenerator = requestGeneratorService.findRequestGenerator(protocolNumber)
@@ -69,7 +69,7 @@ class TestAccountRepository(unittest.TestCase):
         testInstance = CustomProtocolRepositoryImpl.getInstance()
         requestGeneratorService = RequestGeneratorServiceImpl.getInstance()
 
-        accountData = {'__accountSessionId': 1}
+        accountData = {'__accountSessionId': 2}
         protocolNumber = 3
 
         requestGenerator = requestGeneratorService.findRequestGenerator(protocolNumber)
