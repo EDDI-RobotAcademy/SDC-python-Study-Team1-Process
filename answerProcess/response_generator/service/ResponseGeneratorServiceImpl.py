@@ -1,8 +1,9 @@
 import ast
 
-from account.service.request.AccountLoginRequest import AccountLoginRequest
-from account.service.request.AccountRegisterRequest import AccountRegisterRequest
+from account.service.response.AccountRegisterResponse import AccountRegisterResponse
 from account.service.response.AccountLoginResponse import AccountLoginResponse
+from account.service.response.AccountDeleteResponse import AccountDeleteResponse
+from account.service.response.AccountLogoutResponse import AccountLogoutResponse
 from custom_protocol.entity.CustomProtocol import CustomProtocol
 from request_generator.service.RequestGeneratorService import RequestGeneratorService
 from response_generator.service.ResponseGeneratorService import ResponseGeneratorService
@@ -20,6 +21,10 @@ class ResponseGeneratorServiceImpl(ResponseGeneratorService):
                 CustomProtocol.ACCOUNT_REGISTER.value] = cls.__instance.generateAccountRegisterResponse
             cls.__responseFormGenerationTable[
                 CustomProtocol.ACCOUNT_LOGIN.value] = cls.__instance.generateAccountLoginResponse
+            cls.__responseFormGenerationTable[
+                CustomProtocol.ACCOUNT_REMOVE.value] = cls.__instance.generateAccountDeleteResponse
+            cls.__responseFormGenerationTable[
+                CustomProtocol.ACCOUNT_LOGOUT.value] = cls.__instance.generateAccountLogoutResponse
             cls.__responseFormGenerationTable[
                 CustomProtocol.PRODUCT_REGISTER.value] = cls.__instance.generateProductRegisterResponse
             cls.__responseFormGenerationTable[
@@ -47,18 +52,32 @@ class ResponseGeneratorServiceImpl(ResponseGeneratorService):
 
     def generateAccountRegisterResponse(self, arguments):
         print("AccountRegisterResponse 생성")
-        if arguments is True:
+        if arguments.getIsSuccess() is True:
             return False
         else:
             return True
 
     def generateAccountLoginResponse(self, arguments):
-        print(f"ResponseGeneratorService: login sessionId: {arguments}")
+        print("AccountLoginResponse 생성")
+        print(f"arguments: {arguments}")
+        if arguments.getIsSuccess() is True:
+            return True
+        else:
+            return False
 
-        accountResponseData = {
-            '__accountSessionId': arguments,
-        }
-        return accountResponseData
+    def generateAccountDeleteResponse(self, arguments):
+        print("AccountDeleteResponse 생성")
+        if arguments.getIsSuccess() is True:
+            return True
+        else:
+            return False
+
+    def generateAccountLogoutResponse(self, arguments):
+        print("AccountLogoutResponse 생성")
+        if arguments.getIsSuccess() is True:
+            return True
+        else:
+            return False
 
     def generateProductRegisterResponse(self, arguments):
         print("ProductRegisterResponse")
