@@ -10,3 +10,11 @@ class ResponseGeneratorService(abc.ABC):
     @abc.abstractmethod
     def generateAccountLoginResponse(self, arguments):
         pass
+
+    @abc.abstractmethod
+    def generateProductRegisterResponse(self, arguments):
+        pass
+
+    @abc.abstractmethod
+    def generateProductReadResponse(self, arguments):
+        pass

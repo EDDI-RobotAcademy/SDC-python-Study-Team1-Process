@@ -78,6 +78,10 @@ def initCustomProtocol():
         CustomProtocol.PRODUCT_REGISTER.value,
         productService.registerProduct
     )
+    customProtocolService.registerCustomProtocol(
+        CustomProtocol.PRODUCT_READ.value,
+        productService.readProduct
+    )
 
 
 def initEachDomain():

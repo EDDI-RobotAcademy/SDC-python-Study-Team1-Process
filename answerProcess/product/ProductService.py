@@ -7,5 +7,5 @@ class ProductService(abc.ABC):
         pass
 
     @abc.abstractmethod
-    def readProductDataByProductNumber(self, *args, **kwargs):
+    def readProduct(self, *args, **kwargs):
         pass
