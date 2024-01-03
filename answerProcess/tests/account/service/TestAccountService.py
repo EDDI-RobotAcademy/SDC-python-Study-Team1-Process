@@ -69,7 +69,7 @@ class TestAccountRepository(unittest.TestCase):
         testInstance = CustomProtocolRepositoryImpl.getInstance()
         requestGeneratorService = RequestGeneratorServiceImpl.getInstance()
 
-        accountData = {'__accountSessionId': 1}
+        accountData = {'__accountSessionId': 2}
         protocolNumber = 3
 
         requestGenerator = requestGeneratorService.findRequestGenerator(protocolNumber)

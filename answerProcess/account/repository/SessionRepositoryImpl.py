@@ -67,3 +67,16 @@ class SessionRepositoryImpl(SessionRepository):
         if acountSession:
             session.delete(acountSession)
             session.commit()
+
+
+    def resetSession(self):
+        dbSession = sessionmaker(bind=self.__instance.engine)
+        session = dbSession()
+        print("세션")
+
+        acountSession = session.query(AccountSession).all()
+        for session_obj in acountSession:
+            session.delete(session_obj)
+        session.commit()
+        print("AccountSession객체 초기화")
+
