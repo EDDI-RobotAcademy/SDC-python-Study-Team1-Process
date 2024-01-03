@@ -5,6 +5,8 @@ from account.service.request.AccountLoginRequest import AccountLoginRequest
 from account.service.request.AccountRegisterRequest import AccountRegisterRequest
 from account.service.request.AccountLogoutRequest import AccountLogoutRequest
 from custom_protocol.entity.CustomProtocol import CustomProtocol
+from product.service.request.ProductListRequest import ProductListRequest
+from product.service.request.ProductRegisterRequest import ProductRegisterRequest
 from request_generator.service.RequestGeneratorService import RequestGeneratorService
 
 
@@ -21,9 +23,21 @@ class RequestGeneratorServiceImpl(RequestGeneratorService):
             cls.__requestFormGenerationTable[
                 CustomProtocol.ACCOUNT_LOGIN.value] = cls.__instance.generateAccountLoginRequest
             cls.__requestFormGenerationTable[
-                CustomProtocol.ACCOUNT_DELETE.value] = cls.__instance.generateAccountDeleteRequest
+                CustomProtocol.ACCOUNT_REMOVE.value] = cls.__instance.generateAccountDeleteRequest
             cls.__requestFormGenerationTable[
                 CustomProtocol.ACCOUNT_LOGOUT.value] = cls.__instance.generateAccountLogoutRequest
+            cls.__requestFormGenerationTable[
+                CustomProtocol.PRODUCT_LIST.value] = cls.__instance.generteProductListRequest
+            cls.__requestFormGenerationTable[
+                CustomProtocol.PRODUCT_REGISTER.value] = cls.__instance.generteProductRegisterRequest
+            cls.__requestFormGenerationTable[
+                CustomProtocol.PRODUCT_READ.value] = cls.__instance.generteProductReadRequest
+            cls.__requestFormGenerationTable[
+                CustomProtocol.PRODUCT_MODIFY.value] = cls.__instance.generteProductModifyRequest
+            cls.__requestFormGenerationTable[
+                CustomProtocol.PRODUCT_PURCHASE.value] = cls.__instance.generteProductPurchaseRequest
+            cls.__requestFormGenerationTable[
+                CustomProtocol.PRODUCT_REMOVE.value] = cls.__instance.generteProductRemoveRequest
 
         return cls.__instance
 
@@ -69,3 +83,27 @@ class RequestGeneratorServiceImpl(RequestGeneratorService):
         return AccountLogoutRequest(
             __accountSessionId=arguments["__accountSessionId"]
         )
+
+    def generteProductListRequest(self, arguments):
+        print("ProductListRequest 생성")
+        return None
+
+    def generteProductRegisterRequest(self, arguments):
+        print("ProductRegisterRequest 생성")
+        return ProductRegisterRequest(
+            __productName=arguments["__productTitle"],
+            __description=arguments["__productContent"],
+            __price=arguments["__productPrice"]
+        )
+
+    def generteProductReadRequest(self, arguments):
+        print("ProductReadRequest 생성")
+
+    def generteProductModifyRequest(self, arguments):
+        print("ProductModifyRequest 생성")
+
+    def generteProductPurchaseRequest(self, arguments):
+        print("ProductPurchaseRequest 생성")
+
+    def generteProductRemoveRequest(self, arguments):
+        print("ProductRemoveRequest")

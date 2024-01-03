@@ -7,7 +7,7 @@ Base = declarative_base()
 
 @dataclass
 class AccountSession(Base):
-    __tablename__: str = "session"
+    __tablename__: str = 'session'
 
     __id: int = Column(Integer, primary_key=True, autoincrement=True, name="id")
     __sessionId: int = Column(Integer, name="session_id")
