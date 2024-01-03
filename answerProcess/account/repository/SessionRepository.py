@@ -5,5 +5,5 @@ class SessionRepository(abc.ABC):
     pass
 
     @abc.abstractmethod
-    def getAccountBySessionId(self):
+    def getIdBySessionId(self):
         pass
