@@ -1,5 +1,6 @@
 from sqlalchemy.orm import sessionmaker
 from account.entity.AccountSession import AccountSession
+from account.entity.Account import Account
 from account.repository.SessionRepository import SessionRepository
 from mysql.MySQLDatabase import MySQLDatabase
 from sqlalchemy.exc import SQLAlchemyError
@@ -43,19 +44,17 @@ class SessionRepositoryImpl(SessionRepository):
             return None
 
 
-    def findById(self, id):
+    def getAccountBySessionId(self):
         dbSession = sessionmaker(bind=self.__instance.engine)
         session = dbSession()
 
-        return session.query(AccountSession).filter_by(_AccountSession__Id=id).first()
-
-    def findBySessionId(self, sessionId):
-        dbSession = sessionmaker(bind=self.__instance.engine)
-        session = dbSession()
-
-        print(dir(AccountSession))
-
-        return session.query(AccountSession).filter_by(_AccountSession__sessionId=sessionId).first()
+        sessionlist = session.query(AccountSession).all()
+        print(sessionlist)
+        targetsessionId = sessionlist[0]
+        sessionId = targetsessionId.getSessionId()
+        print(sessionId)
+        account = session.query(Account).filter_by(_Account__id=sessionId).first()
+        return account
 
     def deleteBySessionId(self, sessionId):
         dbSession = sessionmaker(bind=self.__instance.engine)
