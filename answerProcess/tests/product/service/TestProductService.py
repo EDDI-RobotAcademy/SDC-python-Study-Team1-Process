@@ -5,6 +5,7 @@ from main import initCustomProtocol
 from mysql.MySQLDatabase import MySQLDatabase
 from request_generator.service.RequestGeneratorServiceImpl import RequestGeneratorServiceImpl
 from response_generator.service.ResponseGeneratorServiceImpl import ResponseGeneratorServiceImpl
+from product.service.response.ProductReadResponse import ProductReadResponse
 
 
 class TestProductService(unittest.TestCase):
@@ -46,13 +47,11 @@ class TestProductService(unittest.TestCase):
         requestForm = requestGenerator(productdata)
 
         result = testInstance.execute(protocolNumber, tuple(requestForm.__dict__.values()))
-        print(f"{type(result)}")
-        # evalData = eval(result)
-        # responseGeneratorService = ResponseGeneratorServiceImpl.getInstance()
-        #
-        # responseGenerator = responseGeneratorService.findResponseGenerator(protocolNumber)
-        # responseForm = responseGenerator(evalData)
-        # print(responseForm)
+        responseGeneratorService = ResponseGeneratorServiceImpl.getInstance()
+
+        responseGenerator = responseGeneratorService.findResponseGenerator(protocolNumber)
+        responseForm = responseGenerator(result)
+        print(responseForm)
 
 
 
