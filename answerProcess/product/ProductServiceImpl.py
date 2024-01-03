@@ -50,15 +50,18 @@ class ProductServiceImpl(ProductService):
         cleanedElements = args[0]
 
         productReadRequest = ProductReadRequest(*cleanedElements)
-        data = self.__productRepository.findByProductNumber(productReadRequest.getProductNumber())
+        print(f"productReadRequest: {productReadRequest}")
 
-        if data:
+        foundProduct = self.__productRepository.findByProductNumber(productReadRequest.getProductNumber())
+        print(f"foundProduct: {foundProduct}")
+
+        if foundProduct:
             productReadResponse = ProductReadResponse(
                 productReadRequest.getProductNumber(),
-                data.getProductName(),
-                data.getPrice(),
-                data.getDescription(),
-                data.getSeller()
+                foundProduct.getProductName(),
+                foundProduct.getPrice(),
+                foundProduct.getDescription(),
+                foundProduct.getSeller()
             )
             return productReadResponse
         else:

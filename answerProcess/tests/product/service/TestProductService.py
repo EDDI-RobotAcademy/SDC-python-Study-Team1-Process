@@ -47,11 +47,14 @@ class TestProductService(unittest.TestCase):
         requestForm = requestGenerator(productdata)
 
         result = testInstance.execute(protocolNumber, tuple(requestForm.__dict__.values()))
+        print(result)
+        print(f"type(result): {type(result)}")
         responseGeneratorService = ResponseGeneratorServiceImpl.getInstance()
 
         responseGenerator = responseGeneratorService.findResponseGenerator(protocolNumber)
+        print(result)
         responseForm = responseGenerator(result)
-        print(responseForm)
+        print(f"responseForm: {responseForm}")
 
 
 

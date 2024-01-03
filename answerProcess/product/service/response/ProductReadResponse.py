@@ -15,3 +15,25 @@ class ProductReadResponse:
         self.__productDetails = productDetails
         self.__seller = seller
         self.__productPrice = productPrice
+
+    def getProductId(self):
+        return self.__productId
+
+    def getProductName(self):
+        return self.__productName
+
+    def getProductPrice(self):
+        return self.__productPrice
+
+    def getProductDetails(self):
+        return self.__productDetails
+
+    def getSeller(self):
+        return self.__seller
+
+    def __iter__(self):
+        yield "__productId", self.__productId
+        yield "__productName", self.__productName
+        yield "__productPrice", self.__productPrice
+        yield "__productDetails", self.__productDetails
+        yield "__seller", self.__seller
