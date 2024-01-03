@@ -73,6 +73,7 @@ class TestProductRepository(unittest.TestCase):
         updatedProductData = {
             "productName": "newName",
             "description": "newdes",
+            "seller": "newseller",
             "price": "newPrice"
         }
         print(f"updatedProductData: {updatedProductData}")
