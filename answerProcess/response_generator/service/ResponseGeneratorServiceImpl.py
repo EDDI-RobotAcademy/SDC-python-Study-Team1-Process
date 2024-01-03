@@ -5,6 +5,7 @@ from account.service.response.AccountLoginResponse import AccountLoginResponse
 from account.service.response.AccountDeleteResponse import AccountDeleteResponse
 from account.service.response.AccountLogoutResponse import AccountLogoutResponse
 from custom_protocol.entity.CustomProtocol import CustomProtocol
+from product.service.response.ProductReadResponse import ProductReadResponse
 from request_generator.service.RequestGeneratorService import RequestGeneratorService
 from response_generator.service.ResponseGeneratorService import ResponseGeneratorService
 
@@ -58,12 +59,13 @@ class ResponseGeneratorServiceImpl(ResponseGeneratorService):
             return True
 
     def generateAccountLoginResponse(self, arguments):
-        print("AccountLoginResponse 생성")
-        print(f"arguments: {arguments}")
-        if arguments.getIsSuccess() is True:
-            return True
-        else:
-            return False
+        print(f"ResponseGeneratorService: login sessionId: {arguments}")
+
+        accountResponseData = {
+            '__accountSessionId': arguments,
+        }
+
+        return accountResponseData
 
     def generateAccountDeleteResponse(self, arguments):
         print("AccountDeleteResponse 생성")
@@ -88,14 +90,19 @@ class ResponseGeneratorServiceImpl(ResponseGeneratorService):
 
     def generateProductReadResponse(self, arguments):
         print("ProductReadResponse")
+        print(f"arguments: {arguments}")
+        resutl = dict(arguments)
+
+        print(f"arguments['__productId']")
 
         productResponseData = {
-            '__productId': arguments['__productId'],
-            '__productName': arguments['__productName'],
-            '__productPrice': arguments['__productPrice'],
-            '__productDetails': arguments['_productDetails'],
-            '__seller': arguments['__seller']
+            '__productId': resutl['__productId'],
+            '__productName': resutl['__productName'],
+            '__productPrice': resutl['__productPrice'],
+            '__productDetails': resutl['__productDetails'],
+            '__seller': resutl['__seller']
         }
 
         return productResponseData
+
 
