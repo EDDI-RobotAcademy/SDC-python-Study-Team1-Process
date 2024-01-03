@@ -78,7 +78,7 @@ class AccountServiceImpl(AccountService):
                 print("비밀번호 일치")
                 accountsession = AccountSession(databaseAccount.getId())
                 self.__sessionRepository.save(accountsession)
-                return AccountLoginResponse(databaseAccount.getId())
+                return AccountLoginResponse(databaseAccount.getId()).getId()
         
         print("비밀번호 불일치")
         return None
