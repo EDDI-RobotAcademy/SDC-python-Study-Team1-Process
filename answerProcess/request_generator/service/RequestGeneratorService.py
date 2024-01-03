@@ -13,3 +13,15 @@ class RequestGeneratorService(abc.ABC):
     @abc.abstractmethod
     def generateAccountDeleteRequest(self, arguments):
         pass
+
+    @abc.abstractmethod
+    def generateAccountLogoutRequest(self, arguments):
+        pass
+
+    @abc.abstractmethod
+    def generteProductListRequest(self, arguments):
+        pass
+
+    @abc.abstractmethod
+    def generteProductRegisterRequest(self, arguments):
+        pass

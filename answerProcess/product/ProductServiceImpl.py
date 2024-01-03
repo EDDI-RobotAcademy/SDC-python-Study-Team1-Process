@@ -1,4 +1,6 @@
 from account.entity.Account import Account
+from account.repository.AccountRepositoryImpl import AccountRepositoryImpl
+from account.repository.SessionRepositoryImpl import SessionRepositoryImpl
 from product.ProductService import ProductService
 from product.entity.Product import Product
 from product.repository.ProductRepositoryImpl import ProductRepositoryImpl
@@ -23,8 +25,10 @@ class ProductServiceImpl(ProductService):
         return cls.__instance
 
     def __init__(self, repository):
-        print("TaskManageServiceImpl 생성자 호출")
+        print("ProductServiceImpl 생성자 호출")
         self.__productRepository = ProductRepositoryImpl()
+        self.__accountRepository = AccountRepositoryImpl()
+        self.__sessionRepository = SessionRepositoryImpl()
 
     @classmethod
     def getInstance(cls, repository=None):
@@ -35,8 +39,9 @@ class ProductServiceImpl(ProductService):
     def registerProduct(self, *args, **kwargs):
         cleanedElements = args[0]
 
-        productRegisterRequest = ProductRegisterRequest(cleanedElements.getProductName(), cleanedElements.getDescription(),
-                                                        cleanedElements.getSeller(), cleanedElements.getPrice())
+        seller = self.__accountRepository.findById(self.__sessionRepository.getIdBySessionId()).getAccountId()
+        productRegisterRequest = ProductRegisterRequest(*cleanedElements)
+        productRegisterRequest.setSeller(seller)
         data = self.__productRepository.save(productRegisterRequest.toProduct())
 
         return ProductRegisterResponse(data.getProductName(), data.getDescription(), data.getSeller(), data.getPrice())
