@@ -4,6 +4,7 @@ from custom_protocol.repository.CustomProtocolRepositoryImpl import CustomProtoc
 from main import initCustomProtocol
 from mysql.MySQLDatabase import MySQLDatabase
 from request_generator.service.RequestGeneratorServiceImpl import RequestGeneratorServiceImpl
+from response_generator.service.ResponseGeneratorServiceImpl import ResponseGeneratorServiceImpl
 
 
 class TestProductService(unittest.TestCase):
@@ -15,7 +16,7 @@ class TestProductService(unittest.TestCase):
         # Clean up any resources after each test
         pass
 
-    def testregisterProduct(self):
+    def testRegisterProduct(self):
         initCustomProtocol()
         testInstance = CustomProtocolRepositoryImpl.getInstance()
         requestGeneratorService = RequestGeneratorServiceImpl.getInstance()
@@ -30,6 +31,29 @@ class TestProductService(unittest.TestCase):
 
         result = testInstance.execute(protocolNumber, tuple(requestForm.__dict__.values()))
         print(result)
+
+
+    def testReadProduct(self):
+        initCustomProtocol()
+        testInstance = CustomProtocolRepositoryImpl.getInstance()
+        requestGeneratorService = RequestGeneratorServiceImpl.getInstance()
+        productdata = {
+            '__productNumber': 4
+        }
+        protocolNumber = 7
+
+        requestGenerator = requestGeneratorService.findRequestGenerator(protocolNumber)
+        requestForm = requestGenerator(productdata)
+
+        result = testInstance.execute(protocolNumber, tuple(requestForm.__dict__.values()))
+        print(f"{type(result)}")
+        # evalData = eval(result)
+        # responseGeneratorService = ResponseGeneratorServiceImpl.getInstance()
+        #
+        # responseGenerator = responseGeneratorService.findResponseGenerator(protocolNumber)
+        # responseForm = responseGenerator(evalData)
+        # print(responseForm)
+
 
 
 

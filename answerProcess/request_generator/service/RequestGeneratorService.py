@@ -19,9 +19,13 @@ class RequestGeneratorService(abc.ABC):
         pass
 
     @abc.abstractmethod
-    def generteProductListRequest(self, arguments):
+    def generateProductListRequest(self, arguments):
         pass
 
     @abc.abstractmethod
-    def generteProductRegisterRequest(self, arguments):
+    def generateProductRegisterRequest(self, arguments):
+        pass
+
+    @abc.abstractmethod
+    def generateProductReadRequest(self, arguments):
         pass

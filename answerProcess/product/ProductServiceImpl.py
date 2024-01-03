@@ -46,18 +46,20 @@ class ProductServiceImpl(ProductService):
 
         return ProductRegisterResponse(data.getProductName(), data.getDescription(), data.getSeller(), data.getPrice())
 
-    def readProductDataByProductNumber(self, *args, **kwargs):
+    def readProduct(self, *args, **kwargs):
         cleanedElements = args[0]
 
-        productReadRequest = ProductReadRequest(cleanedElements.getProductNumber())
+        productReadRequest = ProductReadRequest(*cleanedElements)
         data = self.__productRepository.findByProductNumber(productReadRequest.getProductNumber())
 
         if data:
             productReadResponse = ProductReadResponse(
+                productReadRequest.getProductNumber(),
                 data.getProductName(),
+                data.getPrice(),
                 data.getDescription(),
-                data.getSeller(),
-                data.getPrice())
+                data.getSeller()
+            )
             return productReadResponse
         else:
             print("상품을 찾을 수 없습니다.")

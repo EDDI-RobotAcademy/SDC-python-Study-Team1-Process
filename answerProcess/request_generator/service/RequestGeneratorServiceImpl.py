@@ -6,6 +6,7 @@ from account.service.request.AccountRegisterRequest import AccountRegisterReques
 from account.service.request.AccountLogoutRequest import AccountLogoutRequest
 from custom_protocol.entity.CustomProtocol import CustomProtocol
 from product.service.request.ProductListRequest import ProductListRequest
+from product.service.request.ProductReadRequest import ProductReadRequest
 from product.service.request.ProductRegisterRequest import ProductRegisterRequest
 from request_generator.service.RequestGeneratorService import RequestGeneratorService
 
@@ -27,17 +28,17 @@ class RequestGeneratorServiceImpl(RequestGeneratorService):
             cls.__requestFormGenerationTable[
                 CustomProtocol.ACCOUNT_LOGOUT.value] = cls.__instance.generateAccountLogoutRequest
             cls.__requestFormGenerationTable[
-                CustomProtocol.PRODUCT_LIST.value] = cls.__instance.generteProductListRequest
+                CustomProtocol.PRODUCT_LIST.value] = cls.__instance.generateProductListRequest
             cls.__requestFormGenerationTable[
-                CustomProtocol.PRODUCT_REGISTER.value] = cls.__instance.generteProductRegisterRequest
+                CustomProtocol.PRODUCT_REGISTER.value] = cls.__instance.generateProductRegisterRequest
             cls.__requestFormGenerationTable[
-                CustomProtocol.PRODUCT_READ.value] = cls.__instance.generteProductReadRequest
+                CustomProtocol.PRODUCT_READ.value] = cls.__instance.generateProductReadRequest
             cls.__requestFormGenerationTable[
-                CustomProtocol.PRODUCT_MODIFY.value] = cls.__instance.generteProductModifyRequest
+                CustomProtocol.PRODUCT_MODIFY.value] = cls.__instance.generateProductModifyRequest
             cls.__requestFormGenerationTable[
-                CustomProtocol.PRODUCT_PURCHASE.value] = cls.__instance.generteProductPurchaseRequest
+                CustomProtocol.PRODUCT_PURCHASE.value] = cls.__instance.generateProductPurchaseRequest
             cls.__requestFormGenerationTable[
-                CustomProtocol.PRODUCT_REMOVE.value] = cls.__instance.generteProductRemoveRequest
+                CustomProtocol.PRODUCT_REMOVE.value] = cls.__instance.generateProductRemoveRequest
 
         return cls.__instance
 
@@ -84,11 +85,11 @@ class RequestGeneratorServiceImpl(RequestGeneratorService):
             __accountSessionId=arguments["__accountSessionId"]
         )
 
-    def generteProductListRequest(self, arguments):
+    def generateProductListRequest(self, arguments):
         print("ProductListRequest 생성")
         return None
 
-    def generteProductRegisterRequest(self, arguments):
+    def generateProductRegisterRequest(self, arguments):
         print("ProductRegisterRequest 생성")
         return ProductRegisterRequest(
             __productName=arguments["__productTitle"],
@@ -96,14 +97,17 @@ class RequestGeneratorServiceImpl(RequestGeneratorService):
             __price=arguments["__productPrice"]
         )
 
-    def generteProductReadRequest(self, arguments):
+    def generateProductReadRequest(self, arguments):
         print("ProductReadRequest 생성")
+        return ProductReadRequest(
+            __productNumber=arguments["__productNumber"]
+        )
 
-    def generteProductModifyRequest(self, arguments):
+    def generateProductModifyRequest(self, arguments):
         print("ProductModifyRequest 생성")
 
-    def generteProductPurchaseRequest(self, arguments):
+    def generateProductPurchaseRequest(self, arguments):
         print("ProductPurchaseRequest 생성")
 
-    def generteProductRemoveRequest(self, arguments):
+    def generateProductRemoveRequest(self, arguments):
         print("ProductRemoveRequest")

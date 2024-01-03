@@ -20,6 +20,11 @@ class ResponseGeneratorServiceImpl(ResponseGeneratorService):
                 CustomProtocol.ACCOUNT_REGISTER.value] = cls.__instance.generateAccountRegisterResponse
             cls.__responseFormGenerationTable[
                 CustomProtocol.ACCOUNT_LOGIN.value] = cls.__instance.generateAccountLoginResponse
+            cls.__responseFormGenerationTable[
+                CustomProtocol.PRODUCT_REGISTER.value] = cls.__instance.generateProductRegisterResponse
+            cls.__responseFormGenerationTable[
+                CustomProtocol.PRODUCT_READ.value] = cls.__instance.generateProductReadResponse
+
 
         return cls.__instance
 
@@ -53,5 +58,25 @@ class ResponseGeneratorServiceImpl(ResponseGeneratorService):
         accountResponseData = {
             '__accountSessionId': arguments,
         }
-
         return accountResponseData
+
+    def generateProductRegisterResponse(self, arguments):
+        print("ProductRegisterResponse")
+        if arguments is True:
+            return True
+        else:
+            return False
+
+    def generateProductReadResponse(self, arguments):
+        print("ProductReadResponse")
+
+        productResponseData = {
+            '__productId': arguments['__productId'],
+            '__productName': arguments['__productName'],
+            '__productPrice': arguments['__productPrice'],
+            '__productDetails': arguments['_productDetails'],
+            '__seller': arguments['__seller']
+        }
+
+        return productResponseData
+
