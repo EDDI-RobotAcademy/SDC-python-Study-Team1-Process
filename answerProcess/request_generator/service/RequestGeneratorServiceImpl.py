@@ -28,8 +28,6 @@ class RequestGeneratorServiceImpl(RequestGeneratorService):
             cls.__requestFormGenerationTable[
                 CustomProtocol.ACCOUNT_LOGOUT.value] = cls.__instance.generateAccountLogoutRequest
             cls.__requestFormGenerationTable[
-                CustomProtocol.PRODUCT_LIST.value] = cls.__instance.generateProductListRequest
-            cls.__requestFormGenerationTable[
                 CustomProtocol.PRODUCT_REGISTER.value] = cls.__instance.generateProductRegisterRequest
             cls.__requestFormGenerationTable[
                 CustomProtocol.PRODUCT_READ.value] = cls.__instance.generateProductReadRequest
@@ -84,10 +82,6 @@ class RequestGeneratorServiceImpl(RequestGeneratorService):
         return AccountLogoutRequest(
             __accountSessionId=arguments["__accountSessionId"]
         )
-
-    def generateProductListRequest(self, arguments):
-        print("ProductListRequest 생성")
-        return None
 
     def generateProductRegisterRequest(self, arguments):
         print("ProductRegisterRequest 생성")

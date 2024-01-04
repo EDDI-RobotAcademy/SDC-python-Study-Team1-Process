@@ -60,8 +60,11 @@ class ProductRepositoryImpl(ProductRepository):
         session = dbSession()
         list = []
         for product in session.query(Product).all():
-            response = ProductListResponse(product.getProductNumber(), product.getProductName(),
-                                           product.getDescription(), product.getSeller(), product.getPrice())
+            response = ProductListResponse(
+                product.getProductNumber(),
+                product.getProductTitle(),
+                product.getProductPrice()
+            )
             list.append(response)
         return list
 

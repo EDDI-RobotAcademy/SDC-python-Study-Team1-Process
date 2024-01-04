@@ -17,6 +17,15 @@ class TestProductService(unittest.TestCase):
         # Clean up any resources after each test
         pass
 
+    def testListProduct(self):
+        initCustomProtocol()
+        testInstance = CustomProtocolRepositoryImpl.getInstance()
+
+        protocolNumber = 5
+
+        result = testInstance.execute(protocolNumber)
+        print(result)
+
     def testRegisterProduct(self):
         initCustomProtocol()
         testInstance = CustomProtocolRepositoryImpl.getInstance()
@@ -55,6 +64,8 @@ class TestProductService(unittest.TestCase):
         print(result)
         responseForm = responseGenerator(result)
         print(f"responseForm: {responseForm}")
+
+
 
 
 
