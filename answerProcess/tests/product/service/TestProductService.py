@@ -4,6 +4,9 @@ from custom_protocol.repository.CustomProtocolRepositoryImpl import CustomProtoc
 from main import initCustomProtocol
 from mysql.MySQLDatabase import MySQLDatabase
 from product.ProductServiceImpl import ProductServiceImpl
+from product.entity.Product import Product
+from product.repository.ProductRepositoryImpl import ProductRepositoryImpl
+from product.service.request.ProductDeleteRequest import ProductDeleteRequest
 from product.service.request.ProductUpdateRequest import ProductUpdateRequest
 from request_generator.service.RequestGeneratorServiceImpl import RequestGeneratorServiceImpl
 from response_generator.service.ResponseGeneratorServiceImpl import ResponseGeneratorServiceImpl
@@ -67,9 +70,29 @@ class TestProductService(unittest.TestCase):
         responseForm = responseGenerator(result)
         print(f"responseForm: {responseForm}")
 
+    def testServiceSaveProduct(self):
+        service = ProductServiceImpl.getInstance()
+        product_data = {
+            "productName": "test_product_567890",
+            "description": "cabbages",
+            "seller": "junghwan",
+            "price": "0"
+        }
+        product = Product(**product_data)
+
+        result = service.registerProduct(product)
+
+        self.assertTrue(result)
+    def testDelete(self):
+        repository = ProductRepositoryImpl.getInstance()
+        service = ProductServiceImpl.getInstance()
+        product = repository.findProductByProductNumber(9)
+        print(f"product: {product}")
+        deleteProduct = service.productDelete(product)
+
     def testUpdate(self):
         updateData = {
-            "productNumber": 7,
+            "productNumber": 10,
             "productTitle": "222",
             "productDetails": "222",
             "productPrice": 222

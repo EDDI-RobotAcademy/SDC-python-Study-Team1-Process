@@ -55,10 +55,8 @@ class ProductServiceImpl(ProductService):
         cleanedElements = args[0]
 
         productReadRequest = ProductReadRequest(*cleanedElements)
-        print(f"productReadRequest: {productReadRequest}")
 
         foundProduct = self.__productRepository.findProductByProductNumber(productReadRequest.getProductNumber())
-        print(f"foundProduct: {foundProduct}")
 
         if foundProduct:
             productReadResponse = ProductReadResponse(
@@ -79,36 +77,21 @@ class ProductServiceImpl(ProductService):
 
     def productDelete(self, *args, **kwargs):
         cleanedElements = args[0]
-
         productDeleteRequest = ProductDeleteRequest(cleanedElements.getProductNumber())
-        foundProduct = self.__productRepository.findProductByProductNumber(productDeleteRequest.getProductNumber())
-
-        if foundProduct is None:
-            return ProductDeleteResponse(False)
-
-        self.__productRepository.deleteProductByProductNumber(foundProduct.getProductNumber())
-        return ProductDeleteResponse(True)
+        repository = ProductRepositoryImpl.getInstance()
+        result = repository.deleteProductByProductNumber(productDeleteRequest)
+        return result
 
     def productUpdate(self, *args, **kwargs):
-        print(f"args: {args}")
         cleanedElements = args[0]
-        print(f"cleanedElements: {cleanedElements}")
-
         productUpdateRequest = ProductUpdateRequest(cleanedElements.getProductNumber(),
                                                     cleanedElements.getProductTitle(),
                                                     cleanedElements.getProductDetails(),
                                                     cleanedElements.getProductPrice())
-        print(productUpdateRequest)
+        result = self.__productRepository.updateProductInfo(productUpdateRequest)
+        if result == True:
+            return self.__productRepository.findProductByProductNumber(cleanedElements.getProductNumber())
 
-        savedProduct = self.__productRepository.updateProductInfo(productUpdateRequest)
-        print(f"savedProduct: {savedProduct}")
-
-        return ProductUpdateResponse(
-            savedProduct.getProductNumber(),
-            savedProduct.getProductTitle(),
-            savedProduct.getProductDetails(),
-            savedProduct.getProductPrice(),
-            )
 
     # def productUpdate(self, *args, **kwargs):
     #     cleanedElements = args[0]
