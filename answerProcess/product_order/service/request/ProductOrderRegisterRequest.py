@@ -3,24 +3,24 @@ from dataclasses import dataclass
 
 @dataclass
 class ProductOrderRegisterRequest:
-    __productId: int
-    __sessionId: int
+    __productNumber: int
+    __accountSessionId: int
 
-    def __init__(self, productId=-1, sessionId=-1, **kwargs):
-        if "__productId" in kwargs and "__sessionId" in kwargs:
-            self.__productId = kwargs["__productId"]
-            self.__sessionId = kwargs["__sessionId"]
+    def __init__(self, productNumber=-1, accountSessionId=-1, **kwargs):
+        if "__productNumber" in kwargs and "__accountSessionId" in kwargs:
+            self.__accountSessionId = kwargs["__productNumber"]
+            self.__accountSessionId = kwargs["__accountSessionId"]
         else:
-            self.__productId = productId
-            self.__sessionId = sessionId
+            self.__productNumber = productNumber
+            self.__accountSessionId = accountSessionId
 
     @classmethod
     def createFromTuple(cls, inputTuple):
         return cls(*inputTuple)
 
-    def getSessionId(self):
-        return self.__sessionId
+    def getAccountId(self):
+        return self.__accountSessionId
 
-    def getProductId(self):
-        return self.__productId
+    def getProductNumber(self):
+        return self.__productNumber
 

@@ -22,9 +22,6 @@ class AccountServiceImpl(AccountService):
             cls.__instance.__sessionRepository = sessionRepository
         return cls.__instance
 
-    def __init__(self, accountRepository, sessionRepository):
-        print("AccountServiceImpl 생성자 호출")
-
     @classmethod
     def getInstance(cls, accountRepository=None, sessionRepository=None):
         if cls.__instance is None:
