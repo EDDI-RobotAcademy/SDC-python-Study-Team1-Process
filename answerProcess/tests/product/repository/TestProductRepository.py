@@ -1,12 +1,9 @@
 import unittest
 
-from account.entity.Account import Account
-from account.repository.AccountRepositoryImpl import AccountRepositoryImpl
 from mysql.MySQLDatabase import MySQLDatabase
-from product.ProductServiceImpl import ProductServiceImpl
+from product.service.ProductServiceImpl import ProductServiceImpl
 from product.entity.Product import Product
 from product.repository.ProductRepositoryImpl import ProductRepositoryImpl
-from product.service.request.ProductUpdateRequest import ProductUpdateRequest
 
 
 class TestProductRepository(unittest.TestCase):
@@ -44,10 +41,10 @@ class TestProductRepository(unittest.TestCase):
 
     def testFindAllProducts(self):
         repository = ProductRepositoryImpl.getInstance()
-        findProducts = repository.findProductByProductNumber()
+        findProducts = repository.findAllProducts()
 
-        service = ProductServiceImpl.getInstance()
-        products = service.productList()
+        print(findProducts)
+
 
     def testDeleteProductByNumber(self):
         repository = ProductRepositoryImpl.getInstance()

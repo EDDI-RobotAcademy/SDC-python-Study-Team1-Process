@@ -21,9 +21,8 @@ class ProductRepositoryImpl(ProductRepository):
         return cls.__instance
 
     def __init__(self):
-        print("TaskManageRepository 생성자 호출")
-        self.__receiverTask = None
-        self.__transmitterTask = None
+        print("ProductRepositoryImpl 생성자 호출")
+
 
     @classmethod
     def getInstance(cls):
@@ -61,16 +60,8 @@ class ProductRepositoryImpl(ProductRepository):
     def findAllProducts(self):
         dbSession = sessionmaker(bind=self.__instance.engine)
         session = dbSession()
-        list = []
-        for product in session.query(Product).all():
-            response = ProductListResponse(
-                product.getProductNumber(),
-                product.getProductTitle(),
-                product.getProductPrice()
-            )
 
-            list.append(response)
-        return list
+        return session.query(Product).all()
 
     def deleteProductByProductNumber(self, request:ProductDeleteRequest):
         dbSession = sessionmaker(bind=self.__instance.engine)

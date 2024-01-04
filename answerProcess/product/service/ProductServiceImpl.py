@@ -1,16 +1,14 @@
-from account.entity.Account import Account
 from account.repository.AccountRepositoryImpl import AccountRepositoryImpl
 from account.repository.SessionRepositoryImpl import SessionRepositoryImpl
-from product.ProductService import ProductService
-from product.entity.Product import Product
+from product.service.ProductService import ProductService
 from product.repository.ProductRepositoryImpl import ProductRepositoryImpl
 from product.service.request.ProductDeleteRequest import ProductDeleteRequest
 from product.service.request.ProductUpdateRequest import ProductUpdateRequest
 # from product.service.request.ProductEditRequest import ProductEditRequest
 from product.service.request.ProductReadRequest import ProductReadRequest
 from product.service.request.ProductRegisterRequest import ProductRegisterRequest
-from product.service.response import ProductListResponse
 from product.service.response.ProductDeleteResponse import ProductDeleteResponse
+from product.service.response.ProductListResponse import ProductListResponse
 # from product.service.response.ProductEditResponse import ProductEditResponse
 from product.service.response.ProductReadResponse import ProductReadResponse
 from product.service.response.ProductRegisterResponse import ProductRegisterResponse
@@ -20,22 +18,19 @@ from product.service.response.ProductUpdateResponse import ProductUpdateResponse
 class ProductServiceImpl(ProductService):
     __instance = None
 
-    def __new__(cls, repository):
+    def __new__(cls, productRepository, accountRepository, sessionRepository):
         if cls.__instance is None:
             cls.__instance = super().__new__(cls)
-            cls.__instance.repository = repository
+            cls.__instance.__productRepository = productRepository
+            cls.__instance.__accountRepository = accountRepository
+            cls.__instance.__sessionRepository = sessionRepository
         return cls.__instance
 
-    def __init__(self, repository):
-        print("ProductServiceImpl 생성자 호출")
-        self.__productRepository = ProductRepositoryImpl()
-        self.__accountRepository = AccountRepositoryImpl()
-        self.__sessionRepository = SessionRepositoryImpl()
 
     @classmethod
-    def getInstance(cls, repository=None):
+    def getInstance(cls, productRepository=None, accountRepository=None, sessionRepository=None):
         if cls.__instance is None:
-            cls.__instance = cls(repository)
+            cls.__instance = cls(productRepository, accountRepository, sessionRepository)
         return cls.__instance
 
     def productRegister(self, *args, **kwargs):
@@ -64,7 +59,7 @@ class ProductServiceImpl(ProductService):
                 foundProduct.getProductTitle(),
                 foundProduct.getProductPrice(),
                 foundProduct.getProductDetails(),
-                foundProduct.getSeller()
+                foundProduct.getSeller(),
             )
             return productReadResponse
         else:
@@ -73,7 +68,16 @@ class ProductServiceImpl(ProductService):
 
     def productList(self):
         productList = self.__productRepository.findAllProducts()
-        return productList
+        list = []
+        for Product in productList:
+            response = ProductListResponse(
+                Product.getProductNumber(),
+                Product.getProductTitle(),
+                Product.getProductPrice()
+            )
+            list.append(dict(response))
+        return list
+
 
     def productDelete(self, *args, **kwargs):
         cleanedElements = args[0]
@@ -81,6 +85,7 @@ class ProductServiceImpl(ProductService):
         repository = ProductRepositoryImpl.getInstance()
         result = repository.deleteProductByProductNumber(productDeleteRequest)
         return result
+
 
     def productUpdate(self, *args, **kwargs):
         cleanedElements = args[0]

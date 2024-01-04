@@ -26,3 +26,7 @@ class RequestGeneratorService(abc.ABC):
     @abc.abstractmethod
     def generateProductReadRequest(self, arguments):
         pass
+
+    @abc.abstractmethod
+    def generateProductOrderListRequest(self,arfuments):
+        pass

@@ -16,9 +16,7 @@ class ProductOrderRepositoryImpl(ProductOrderRepository):
         return cls.__instance
 
     def __init__(self):
-        print("TaskManageRepository 생성자 호출")
-        self.__receiverTask = None
-        self.__transmitterTask = None
+        print("ProductOrderRepository 생성자 호출")
 
     @classmethod
     def getInstance(cls):
@@ -42,12 +40,6 @@ class ProductOrderRepositoryImpl(ProductOrderRepository):
             print(f"DB 저장 중 에러 발생: {exception}")
             return None
 
-    def findAccountId(self, accountId):
-        dbSession = sessionmaker(bind=self.__instance.engine)
-        session = dbSession()
-
-        return session.query(ProductOrder).filter_by(_ProductOrder__accountId=accountId).first()
-
     def findAllProductIdByAccountId(self, accountId):
         dbSession = sessionmaker(bind=self.__instance.engine)
         session = dbSession()
@@ -55,6 +47,25 @@ class ProductOrderRepositoryImpl(ProductOrderRepository):
         accountIdList = session.query(ProductOrder).filter_by(_ProductOrder__accountId=accountId).all()
         productIdList = []
         for id in accountIdList:
-            productIdList.append(id.productNumber())
+            productIdList.append(id.getProductNumber())
 
         return productIdList
+
+    def removeProductsByAccountId(self, sessionId, productId):
+        dbSession = sessionmaker(bind=self.__instance.engine)
+        session = dbSession()
+
+        products = session.query(ProductOrder).filter_by(_ProductOrder__accountId=sessionId,
+                                                         _ProductOrder__productNumber=productId).all()
+
+        if products:
+            for product in products:
+                session.delete(product)
+                session.commit()
+            response = True
+            print("주문 취소 완료")
+        else:
+            response = False
+            print("주문을 취소할 수 없습니다.")
+
+        return response
