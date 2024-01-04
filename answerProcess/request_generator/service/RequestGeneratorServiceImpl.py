@@ -5,7 +5,6 @@ from account.service.request.AccountLoginRequest import AccountLoginRequest
 from account.service.request.AccountRegisterRequest import AccountRegisterRequest
 from account.service.request.AccountLogoutRequest import AccountLogoutRequest
 from custom_protocol.entity.CustomProtocol import CustomProtocol
-from product.service.request.ProductListRequest import ProductListRequest
 from product.service.request.ProductReadRequest import ProductReadRequest
 from product.service.request.ProductRegisterRequest import ProductRegisterRequest
 from request_generator.service.RequestGeneratorService import RequestGeneratorService
@@ -18,7 +17,6 @@ class RequestGeneratorServiceImpl(RequestGeneratorService):
     def __new__(cls):
         if cls.__instance is None:
             cls.__instance = super().__new__(cls)
-
             cls.__requestFormGenerationTable[
                 CustomProtocol.ACCOUNT_REGISTER.value] = cls.__instance.generateAccountRegisterRequest
             cls.__requestFormGenerationTable[

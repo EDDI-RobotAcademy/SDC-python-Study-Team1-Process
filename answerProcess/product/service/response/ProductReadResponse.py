@@ -5,11 +5,11 @@ from dataclasses import dataclass
 class ProductReadResponse:
     __productNumber: int
     __productTitle: str
-    __productPrice: float
+    __productPrice: int
     __productDetails: str
     __seller: str
 
-    def __init__(self,productNumber: int, productTitle: str, productDetails: str, seller: str, productPrice: float):
+    def __init__(self,productNumber: int, productTitle: str, productDetails: str, seller: str, productPrice: int):
         self.__productNumber = productNumber
         self.__productTitle = productTitle
         self.__productDetails = productDetails
