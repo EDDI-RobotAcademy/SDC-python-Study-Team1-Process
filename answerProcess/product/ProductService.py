@@ -3,9 +3,19 @@ import abc
 
 class ProductService(abc.ABC):
     @abc.abstractmethod
-    def registerProduct(self, *args, **kwargs):
+    def productRegister(self, *args, **kwargs):
         pass
 
     @abc.abstractmethod
-    def readProduct(self, *args, **kwargs):
+    def productRead(self, *args, **kwargs):
+        pass
+
+    @abc.abstractmethod
+    def productList(self, *args, **kwargs):
+        pass
+    @abc.abstractmethod
+    def productDelete(self, *args, **kwargs):
+        pass
+    @abc.abstractmethod
+    def productUpdate(self, *args, **kwargs):
         pass

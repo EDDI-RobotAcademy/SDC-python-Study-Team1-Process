@@ -6,6 +6,7 @@ from mysql.MySQLDatabase import MySQLDatabase
 from product.ProductServiceImpl import ProductServiceImpl
 from product.entity.Product import Product
 from product.repository.ProductRepositoryImpl import ProductRepositoryImpl
+from product.service.request.ProductUpdateRequest import ProductUpdateRequest
 
 
 class TestProductRepository(unittest.TestCase):
@@ -68,17 +69,9 @@ class TestProductRepository(unittest.TestCase):
         deletedProduct = repository.findByProductNumber("2")
         self.assertIsNone(deletedProduct)
 
-    def testUpdateProduct(self):
+    def testUpdate(self):
+        service = ProductServiceImpl.getInstance()
         repository = ProductRepositoryImpl.getInstance()
-        updatedProductData = {
-            "productName": "newName",
-            "description": "newdes",
-            "seller": "newseller",
-            "price": "newPrice"
-        }
-        print(f"updatedProductData: {updatedProductData}")
-        updatedProduct = Product(**updatedProductData)
-        repository.updateProductInfo(updatedProduct, "3")
 
     #
     # def testFindById(self):

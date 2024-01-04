@@ -5,6 +5,7 @@ from product.ProductService import ProductService
 from product.entity.Product import Product
 from product.repository.ProductRepositoryImpl import ProductRepositoryImpl
 from product.service.request.ProductDeleteRequest import ProductDeleteRequest
+from product.service.request.ProductUpdateRequest import ProductUpdateRequest
 # from product.service.request.ProductEditRequest import ProductEditRequest
 from product.service.request.ProductReadRequest import ProductReadRequest
 from product.service.request.ProductRegisterRequest import ProductRegisterRequest
@@ -13,6 +14,7 @@ from product.service.response.ProductDeleteResponse import ProductDeleteResponse
 # from product.service.response.ProductEditResponse import ProductEditResponse
 from product.service.response.ProductReadResponse import ProductReadResponse
 from product.service.response.ProductRegisterResponse import ProductRegisterResponse
+from product.service.response.ProductUpdateResponse import ProductUpdateResponse
 
 
 class ProductServiceImpl(ProductService):
@@ -36,31 +38,33 @@ class ProductServiceImpl(ProductService):
             cls.__instance = cls(repository)
         return cls.__instance
 
-    def registerProduct(self, *args, **kwargs):
+    def productRegister(self, *args, **kwargs):
         cleanedElements = args[0]
-
         seller = self.__accountRepository.findById(self.__sessionRepository.getIdBySessionId()).getAccountId()
         productRegisterRequest = ProductRegisterRequest(*cleanedElements)
         productRegisterRequest.setSeller(seller)
-        data = self.__productRepository.save(productRegisterRequest.toProduct())
+        registedProduct = self.__productRepository.save(productRegisterRequest.toProduct())
 
-        return ProductRegisterResponse(data.getProductName(), data.getDescription(), data.getSeller(), data.getPrice())
+        return ProductRegisterResponse(registedProduct.getProductName(),
+                                       registedProduct.getProductDetails(),
+                                       registedProduct.getSeller(),
+                                       registedProduct.getProductPrice())
 
-    def readProduct(self, *args, **kwargs):
+    def productRead(self, *args, **kwargs):
         cleanedElements = args[0]
 
         productReadRequest = ProductReadRequest(*cleanedElements)
         print(f"productReadRequest: {productReadRequest}")
 
-        foundProduct = self.__productRepository.findByProductNumber(productReadRequest.getProductNumber())
+        foundProduct = self.__productRepository.findProductByProductNumber(productReadRequest.getProductNumber())
         print(f"foundProduct: {foundProduct}")
 
         if foundProduct:
             productReadResponse = ProductReadResponse(
                 productReadRequest.getProductNumber(),
-                foundProduct.getProductName(),
-                foundProduct.getPrice(),
-                foundProduct.getDescription(),
+                foundProduct.getProductTitle(),
+                foundProduct.getProductPrice(),
+                foundProduct.getProductDetails(),
                 foundProduct.getSeller()
             )
             return productReadResponse
@@ -68,18 +72,68 @@ class ProductServiceImpl(ProductService):
             print("상품을 찾을 수 없습니다.")
             return None
 
-    def getAllProducts(self, *args, **kwargs):
-         product_list = self.__productRepository.findAllProducts()
-         return product_list
+    def productList(self, *args, **kwargs):
+        productList = self.__productRepository.findAllProducts()
+        return productList
 
-    def deleteProduct(self, *args, **kwargs):
+    def productDelete(self, *args, **kwargs):
         cleanedElements = args[0]
 
         productDeleteRequest = ProductDeleteRequest(cleanedElements.getProductNumber())
-        foundProduct = self.__productRepository.findByProductNumber(productDeleteRequest.getProductNumber())
+        foundProduct = self.__productRepository.findProductByProductNumber(productDeleteRequest.getProductNumber())
 
         if foundProduct is None:
             return ProductDeleteResponse(False)
 
-        self.__productRepository.deleteByProductNumber(foundProduct.getProductNumber())
+        self.__productRepository.deleteProductByProductNumber(foundProduct.getProductNumber())
         return ProductDeleteResponse(True)
+
+    def productUpdate(self, *args, **kwargs):
+        cleanedElements = args[0]
+        print(f"cleanedElements: {cleanedElements}")
+
+        productUpdateRequest = ProductUpdateRequest(cleanedElements.getProductTitle(), cleanedElements.getProductDetails(),
+                                                    cleanedElements.getSeller(), cleanedElements.getProductPrice())
+        print(productUpdateRequest)
+
+        # data = self.__productRepository.save(productUpdateRequest.toProduct())
+        foundProduct = self.__productRepository.findProductByProductNumber(productUpdateRequest.getProductNumber())
+        print(type[foundProduct])
+
+        if foundProduct is not None:
+            foundProduct.setProductName(productUpdateRequest.getProductTitle())
+            foundProduct.setDescription(productUpdateRequest.getProductDetails())
+            foundProduct.setSeller(productUpdateRequest.getSeller())
+            foundProduct.setPrice(productUpdateRequest.getProductPrice())
+
+            savedProduct = self.__productRepository.save(foundProduct)
+            print(f"foundProduct: {foundProduct}")
+            print(f"savedProduct: {savedProduct}")
+
+            return ProductUpdateResponse(
+                savedProduct.getProductNumber(),
+                savedProduct.getProductTitle(),
+                savedProduct.getProductDetails(),
+                savedProduct.getSeller(),
+                savedProduct.getProductPrice(),
+            )
+
+        return None
+
+    # def productUpdate(self, *args, **kwargs):
+    #     cleanedElements = args[0]
+    #     productUpdateRequest = ProductUpdateRequest(*cleanedElements)
+    #     response = self.repository(productUpdateRequest)
+    #     return response
+    #
+    # def updateProduct(self, *args, **kwargs):
+    #     cleaned_elements = args[0]
+    #     product_update_request = ProductUpdateRequest(*cleaned_elements)
+    #
+    #     saved_product = self.repository.updateProductInfo(product_update_request.toProduct())
+    #     return ProductUpdateResponse(
+    #             saved_product.getProductNumber(),
+    #             saved_product.getProductName(),
+    #             saved_product.getDescription(),
+    #             saved_product.getPrice(),
+    #         )

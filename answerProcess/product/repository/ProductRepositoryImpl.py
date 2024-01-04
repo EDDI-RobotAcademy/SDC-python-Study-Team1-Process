@@ -47,7 +47,7 @@ class ProductRepositoryImpl(ProductRepository):
         else:
             print("중복")
 
-    def findByProductNumber(self, productNumber):
+    def findProductByProductNumber(self, productNumber):
 
         dbSession = sessionmaker(bind=self.__instance.engine)
         session = dbSession()
@@ -65,7 +65,7 @@ class ProductRepositoryImpl(ProductRepository):
             list.append(response)
         return list
 
-    def deleteByProductNumber(self, productNumber):
+    def deleteProductByProductNumber(self, productNumber):
         dbSession = sessionmaker(bind=self.__instance.engine)
         session = dbSession()
 
@@ -74,20 +74,20 @@ class ProductRepositoryImpl(ProductRepository):
             session.delete(product)
             session.commit()
 
+    # def updateProductInfo(self, product):
+    #     dbSession = sessionmaker(bind=self.__ins`tance.engine)
+    #     session = dbSession()
+    #
+    #     existingProduct = session.query(Product).filter_by(_Product__productNumber=product.getProductNumber()).first()
+    #     if existingProduct:
+    #         existingProduct.getProductNumber(product.getProductNumber())
+    #         existingProduct.setProductName(product.getProductName())
+    #         existingProduct.setDescription(product.getDescription())
+    #         existingProduct.setPrice(product.getPrice())
+    #         session.commit()
 
-    def updateProductInfo(self, product, productNumber):
+    def findByUserInputKeyword(self, keyword):
         dbSession = sessionmaker(bind=self.__instance.engine)
         session = dbSession()
 
-        existingProduct = session.query(Product).filter_by(_Product__productNumber=productNumber).first()
-        if existingProduct:
-            existingProduct.setProductName(product.getProductName())
-            existingProduct.setDescription(product.getDescription())
-            existingProduct.setPrice(product.getPrice())
-            session.commit()
-
-    def getBoolWithFindByProductNumber(self, productNumber):
-        if self.findByProductNumber(productNumber) is not None:
-            return False
-        else:
-            return True
+        return session.query(Product).filter(Product._Product__productName.ilike(f"%{keyword}%")).all()

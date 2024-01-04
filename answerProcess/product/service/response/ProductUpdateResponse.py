@@ -1,13 +1,10 @@
 from dataclasses import dataclass
 
-from product.entity.Product import Product
-
 
 @dataclass
-class ProductListResponse:
+class ProductUpdateResponse:
     __productNumber: int
     __productTitle: str
     __productDetails: str
     __seller: str
-    __productPrice: int
-
+    __productPrice: float

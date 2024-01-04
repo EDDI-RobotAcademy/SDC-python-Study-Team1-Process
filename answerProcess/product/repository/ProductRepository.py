@@ -7,14 +7,14 @@ class ProductRepository(abc.ABC):
     def save(self, product):
         pass
 
-    def findByProductNumber(self, productNumber):
+    def findProductByProductNumber(self, productNumber):
         pass
 
     def findAllProducts(self):
         pass
 
-    def deleteByProductNumber(self, productNumber):
+    def deleteProductByProductNumber(self, productNumber):
         pass
 
-    def updateProductInfo(self, product, productNumber):
+    def findByUserInputKeyword(self, keyword):
         pass
