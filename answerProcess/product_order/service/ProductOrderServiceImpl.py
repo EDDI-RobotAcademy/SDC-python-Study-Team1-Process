@@ -40,45 +40,40 @@ class ProductOrderServiceImpl(ProductOrderService):
         orderList = []
 
         for order in orderByAccountList:
-            productId = order.getProductId()
-            foundProduct = self.__productRepository.findById(productId)
+            productId = order.getProductNumber()
+            foundProduct = self.__productRepository.findProductByProductNumber(productId)
 
-            orderList.append({
-                'productName': foundProduct.getName(),
-                'price': foundProduct.getPrice(),
-            })
+            response = ProductOrderListResponse(
+                foundProduct.getProductNumber(),
+                foundProduct.getProductTitle(),
+                foundProduct.getProductPrice()
+            )
+            orderList.append(response)
 
         print(f"orderList: {orderList}")
-
-        orderListResponse = ProductOrderListResponse(orderList)
-        print(f"orderListResponse: {orderListResponse}")
-
-        return ProductOrderListResponse.toDict()
+        return orderList
 
     def orderRegister(self, *args, **kwargs):
-        print("registerOrder()")
+        print("registerOrder 실행")
 
         cleanedElements = args[0]
         print(f"cleanedElements: {cleanedElements}")
 
-        if cleanedElements.getSessionId() == -1:
-            response = ProductOrderRegisterResponse(False)
-            return response
 
+        productOrderRegisterRequest = ProductOrderRegisterRequest(*cleanedElements)
+        print(f"type(productOrderRegisterRequest): {type(productOrderRegisterRequest)}")
+
+        accountSessionId = productOrderRegisterRequest.getAccountId()
+        productNumber = productOrderRegisterRequest.getProductNumber()
+        order = ProductOrder(accountSessionId, productNumber)
+        print(f"type(order): {type(order)}")
+
+        self.__productOrderRepository.saveProductOrderInfo(order)
+
+        if order:
+            return ProductOrderRegisterResponse(True)
         else:
-            productorderRegisterRequest = ProductOrderRegisterRequest(*cleanedElements)
-
-            sessionId = productorderRegisterRequest.getAccountId()
-            productId = productorderRegisterRequest.getProductNumber()
-            order = ProductOrder(sessionId, productId)
-
-            self.__productOrderRepository.saveProductOrderInfo(order)
-
-            if order:
-                response = ProductOrderRegisterResponse(True)
-            else:
-                response = ProductOrderRegisterResponse(False)
-            return response
+            return ProductOrderRegisterResponse(False)
 
 
 

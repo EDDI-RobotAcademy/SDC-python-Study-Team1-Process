@@ -26,3 +26,11 @@ class ResponseGeneratorService(abc.ABC):
     @abc.abstractmethod
     def generateProductReadResponse(self, arguments):
         pass
+
+    @abc.abstractmethod
+    def generateProductOrderRegisterResponse(self, arguments):
+        pass
+
+    @abc.abstractmethod
+    def generateProductOrderListResponse(self, arguments):
+        pass

@@ -32,6 +32,10 @@ class ResponseGeneratorServiceImpl(ResponseGeneratorService):
                 CustomProtocol.PRODUCT_REGISTER.value] = cls.__instance.generateProductRegisterResponse
             cls.__responseFormGenerationTable[
                 CustomProtocol.PRODUCT_READ.value] = cls.__instance.generateProductReadResponse
+            cls.__responseFormGenerationTable[
+                CustomProtocol.PRODUCT_PURCHASE.value] = cls.__instance.generateProductOrderRegisterResponse
+            cls.__responseFormGenerationTable[
+                CustomProtocol.ORDER_LIST.value] = cls.__instance.generateProductOrderListResponse
 
 
         return cls.__instance
@@ -107,7 +111,18 @@ class ResponseGeneratorServiceImpl(ResponseGeneratorService):
             '__productDetails': resutl['__productDetails'],
             '__seller': resutl['__seller']
         }
-
         return productResponseData
+
+    def generateProductOrderRegisterResponse(self, arguments):
+        print("ProductOrderRegisterResponse 생성")
+        if arguments.getIsSuccess() is True:
+            return True
+        else:
+            return False
+
+    def generateProductOrderListResponse(self, arguments):
+        print("ProductOrderListResponse 생성")
+        return arguments
+
 
 

@@ -24,16 +24,16 @@ class ProductOrderRepositoryImpl(ProductOrderRepository):
             cls.__instance = cls()
         return cls.__instance
 
-    def saveProductOrderInfo(self, orderInfo):
+    def saveProductOrderInfo(self, order):
         dbSession = sessionmaker(bind=self.__instance.engine)
         session = dbSession()
 
         try:
-            session.add(orderInfo)
+            session.add(order)
             session.commit()
 
-            print(f"order - id: {orderInfo.getId()}")
-            return orderInfo
+            print(f"order - id: {order.getId()}")
+            return order
 
         except SQLAlchemyError as exception:
             session.rollback()
