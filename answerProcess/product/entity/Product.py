@@ -21,41 +21,41 @@ class Product(Base):
     # __는 private = 변경하지 못 하도록
     # __로 사용하려면 name 까지만 쓰면 됨
     __productNumber: int = Column(Integer, primary_key=True, autoincrement=True, name="product_number")
-    __productName: str = Column(String, name="product_name")
-    __description: str = Column(String, name="description")
+    __productTitle: str = Column(String, name="product_name")
+    __productDetails: str = Column(String, name="description")
     __seller: str = Column(String, name="seller")
-    __price: float = Column(String, name="price")
+    __productPrice: int = Column(String, name="price")
 
-    def __init__(self, productName: str, description: str, seller: str, price: float):
+    def __init__(self, productTitle: str, productDetails: str, seller: str, productPrice: int):
 
-        self.__productName = productName
-        self.__description = description
+        self.__productTitle = productTitle
+        self.__productDetails = productDetails
         self.__seller = seller
-        self.__price = price
+        self.__productPrice = productPrice
 
 
     def getProductNumber(self):
         return self.__productNumber
-    def getProductName(self):
-        return self.__productName
+    def getProductTitle(self):
+        return self.__productTitle
 
-    def getDescription(self):
-        return self.__description
+    def getProductDetails(self):
+        return self.__productDetails
 
     def getSeller(self):
         return self.__seller
 
-    def getPrice(self):
-        return self.__price
+    def getProductPrice(self):
+        return self.__productPrice
 
     def setProductName(self, productName):
         self.__productName = productName
 
-    def setDescription(self, description):
-        self.__description = description
+    def setProductDetails(self, productDetails):
+        self.__productDetails = productDetails
 
     def setSeller(self, seller):
         self.__seller = seller
 
-    def setPrice(self, price):
-        self.__price = price
+    def setProductPrice(self, productPrice):
+        self.__productPrice = productPrice

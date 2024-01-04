@@ -4,7 +4,7 @@ from dataclasses import dataclass
 @dataclass
 class ProductUpdateResponse:
     __productNumber: int
-    __productName: str
-    __description: str
+    __productTitle: str
+    __productDetails: str
     __seller: str
-    __price: float
+    __productPrice: float

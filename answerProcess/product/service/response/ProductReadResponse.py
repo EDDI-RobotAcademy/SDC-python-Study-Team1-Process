@@ -3,24 +3,24 @@ from dataclasses import dataclass
 
 @dataclass
 class ProductReadResponse:
-    __productId: int
-    __productName: str
+    __productNumber: int
+    __productTitle: str
     __productPrice: float
     __productDetails: str
     __seller: str
 
-    def __init__(self,productId: int, productName: str, productDetails: str, seller: str, productPrice: float):
-        self.__productId = productId
-        self.__productName = productName
+    def __init__(self,productNumber: int, productTitle: str, productDetails: str, seller: str, productPrice: float):
+        self.__productNumber = productNumber
+        self.__productTitle = productTitle
         self.__productDetails = productDetails
         self.__seller = seller
         self.__productPrice = productPrice
 
-    def getProductId(self):
-        return self.__productId
+    def getProductNumber(self):
+        return self.__productNumber
 
-    def getProductName(self):
-        return self.__productName
+    def getProductTitle(self):
+        return self.__productTitle
 
     def getProductPrice(self):
         return self.__productPrice
@@ -32,8 +32,8 @@ class ProductReadResponse:
         return self.__seller
 
     def __iter__(self):
-        yield "__productId", self.__productId
-        yield "__productName", self.__productName
+        yield "__productNumber", self.__productNumber
+        yield "__productTitle", self.__productTitle
         yield "__productPrice", self.__productPrice
         yield "__productDetails", self.__productDetails
         yield "__seller", self.__seller

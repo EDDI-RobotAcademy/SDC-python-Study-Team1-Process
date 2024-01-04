@@ -6,17 +6,17 @@ from product.entity.Product import Product
 @dataclass
 class ProductUpdateRequest:
     __productNumber: int
-    __productName: str
-    __description: str
+    __productTitle: str
+    __productDetails: str
     __seller: str
-    __price: float
+    __productPrice: int
 
 
-    def __init__(self, productName: str, description: str, seller: str, price: int):
-        self.__productName = productName
-        self.__description = description
+    def __init__(self, productTitle: str, productDetails: str, seller: str, productPrice: int):
+        self.__productTitle = productTitle
+        self.__productDetails = productDetails
         self.__seller = seller
-        self.__price = price
+        self.__productPrice = productPrice
 
     # def __init__(self, productNumber=-1, productName=None, description=None, seller=None, price=0, **kwargs):
     #     if productName is not None and description is not None:
@@ -33,7 +33,7 @@ class ProductUpdateRequest:
     #         self.__price = kwargs["__price"]
 
     def toProduct(self):
-        return Product(self.__productName, self.__description, self.__seller, self.__price)
+        return Product(self.__productTitle, self.__productDetails, self.__seller, self.__productPrice)
 
     @classmethod
     def createFromTuple(cls, inputTuple):
@@ -42,14 +42,14 @@ class ProductUpdateRequest:
     def getProductNumber(self):
         return self.__productNumber
 
-    def getProductName(self):
-        return self.__productName
+    def getProductTitle(self):
+        return self.__productTitle
 
     def getSeller(self):
         return self.__seller
 
-    def getDescription(self):
-        return self.__description
+    def getProductDetails(self):
+        return self.__productDetails
 
-    def getPrice(self):
-        return self.__price
+    def getProductPrice(self):
+        return self.__productPrice
