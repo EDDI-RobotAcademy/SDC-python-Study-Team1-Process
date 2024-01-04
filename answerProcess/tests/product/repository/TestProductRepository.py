@@ -70,8 +70,10 @@ class TestProductRepository(unittest.TestCase):
         self.assertIsNone(deletedProduct)
 
     def testUpdate(self):
-        service = ProductServiceImpl.getInstance()
         repository = ProductRepositoryImpl.getInstance()
+        request = ProductUpdateRequest(5, "111", "111", 111)
+        result = repository.updateProductInfo(request)
+        # self.assertTrue(result)
 
     #
     # def testFindById(self):

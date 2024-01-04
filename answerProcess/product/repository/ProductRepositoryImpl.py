@@ -78,17 +78,20 @@ class ProductRepositoryImpl(ProductRepository):
             session.delete(product)
             session.commit()
 
-    # def updateProductInfo(self, product):
-    #     dbSession = sessionmaker(bind=self.__ins`tance.engine)
-    #     session = dbSession()
-    #
-    #     existingProduct = session.query(Product).filter_by(_Product__productNumber=product.getProductNumber()).first()
-    #     if existingProduct:
-    #         existingProduct.getProductNumber(product.getProductNumber())
-    #         existingProduct.setProductName(product.getProductName())
-    #         existingProduct.setDescription(product.getDescription())
-    #         existingProduct.setPrice(product.getPrice())
-    #         session.commit()
+    def updateProductInfo(self, product):
+        dbSession = sessionmaker(bind=self.__instance.engine)
+        session = dbSession()
+        existingProduct = session.query(Product).filter_by(_Product__productNumber=product.getProductNumber()).first()
+        if existingProduct:
+            existingProduct.setProductNumber(product.getProductNumber())
+            existingProduct.setProductTitle(product.getProductTitle())
+            existingProduct.setProductDetails(product.getProductDetails())
+            existingProduct.setProductPrice(product.getProductPrice())
+            session.commit()
+            print(f"existingProduct: {existingProduct}")
+            return existingProduct
+
+
 
     def findByUserInputKeyword(self, keyword):
         dbSession = sessionmaker(bind=self.__instance.engine)

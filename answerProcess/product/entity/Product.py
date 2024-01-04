@@ -48,8 +48,10 @@ class Product(Base):
     def getProductPrice(self):
         return self.__productPrice
 
-    def setProductName(self, productName):
-        self.__productName = productName
+    def setProductNumber(self, productNumber):
+        self.__productNumber = productNumber
+    def setProductTitle(self, productTitle):
+        self.__productTitle = productTitle
 
     def setProductDetails(self, productDetails):
         self.__productDetails = productDetails
