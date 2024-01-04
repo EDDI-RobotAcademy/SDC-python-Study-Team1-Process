@@ -15,21 +15,20 @@ from account.service.response.AccountLogoutResponse import AccountLogoutResponse
 class AccountServiceImpl(AccountService):
     __instance = None
 
-    def __new__(cls, repository):
+    def __new__(cls, accountRepository, sessionRepository):
         if cls.__instance is None:
             cls.__instance = super().__new__(cls)
-            cls.__instance.repository = repository
+            cls.__instance.__accountRepository = accountRepository
+            cls.__instance.__sessionRepository = sessionRepository
         return cls.__instance
 
-    def __init__(self, repository):
+    def __init__(self, accountRepository, sessionRepository):
         print("AccountServiceImpl 생성자 호출")
-        self.__accountRepository = AccountRepositoryImpl()
-        self.__sessionRepository = SessionRepositoryImpl()
 
     @classmethod
-    def getInstance(cls, repository=None):
+    def getInstance(cls, accountRepository=None, sessionRepository=None):
         if cls.__instance is None:
-            cls.__instance = cls(repository)
+            cls.__instance = cls(accountRepository, sessionRepository)
         return cls.__instance
 
     def registerAccount(self, *args, **kwargs):

@@ -18,22 +18,21 @@ from product.service.response.ProductUpdateResponse import ProductUpdateResponse
 class ProductServiceImpl(ProductService):
     __instance = None
 
-    def __new__(cls, repository):
+    def __new__(cls, productRepository, accountRepository, sessionRepository):
         if cls.__instance is None:
             cls.__instance = super().__new__(cls)
-            cls.__instance.repository = repository
+            cls.__instance.__productRepository = productRepository
+            cls.__instance.__accountRepository = accountRepository
+            cls.__instance.__sessionRepository = sessionRepository
         return cls.__instance
 
-    def __init__(self, repository):
+    def __init__(self, productRepository, accountRepository, sessionRepository):
         print("ProductServiceImpl 생성자 호출")
-        self.__productRepository = ProductRepositoryImpl()
-        self.__accountRepository = AccountRepositoryImpl()
-        self.__sessionRepository = SessionRepositoryImpl()
 
     @classmethod
-    def getInstance(cls, repository=None):
+    def getInstance(cls, productRepository=None, accountRepository=None, sessionRepository=None):
         if cls.__instance is None:
-            cls.__instance = cls(repository)
+            cls.__instance = cls(productRepository, accountRepository, sessionRepository)
         return cls.__instance
 
     def productRegister(self, *args, **kwargs):
