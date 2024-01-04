@@ -2,11 +2,17 @@ import multiprocessing
 import socket
 from time import sleep
 
+from account.repository.AccountRepository import AccountRepository
+from account.repository.AccountRepositoryImpl import AccountRepositoryImpl
+from account.repository.SessionRepositoryImpl import SessionRepositoryImpl
 from account.service.AccountServiceImpl import AccountServiceImpl
 from custom_protocol.entity.CustomProtocol import CustomProtocol
 from custom_protocol.service.CustomProtocolServiceImpl import CustomProtocolServiceImpl
 from mysql.MySQLDatabase import MySQLDatabase
+from product.repository.ProductRepositoryImpl import ProductRepositoryImpl
 from product.service.ProductServiceImpl import ProductServiceImpl
+from product_order.repository.ProductOrderRepositoryImpl import ProductOrderRepositoryImpl
+from product_order.service.ProductOrderServiceImpl import ProductOrderServiceImpl
 from server_socket.repository.ServerSocketRepositoryImpl import ServerSocketRepositoryImpl
 from server_socket.service.ServerSocketServiceImpl import ServerSocketServiceImpl
 from task_manage.repository.TaskManageRepositoryImpl import TaskManageRepositoryImpl
@@ -84,9 +90,34 @@ def initCustomProtocol():
     )
 
 
+def initAccountDomain():
+    accountRepository = AccountRepositoryImpl()
+    sessionRepository = SessionRepositoryImpl()
+    AccountServiceImpl(accountRepository, sessionRepository)
+
+
+def initProductDomain():
+    accountRepository = AccountRepositoryImpl.getInstance()
+    sessionRepository = SessionRepositoryImpl.getInstance()
+    productRepository = ProductRepositoryImpl()
+    ProductServiceImpl(accountRepository, sessionRepository, productRepository)
+
+
+def initOrderDomain():
+    accountRepository = AccountRepositoryImpl.getInstance()
+    sessionRepository = SessionRepositoryImpl.getInstance()
+    productRepository = ProductRepositoryImpl.getInstance()
+    productOrderRepository = ProductOrderRepositoryImpl.getInstance()
+    ProductOrderServiceImpl(accountRepository, sessionRepository, productRepository, productOrderRepository)
+
+
 def initEachDomain():
     # initMysqlInstance()
     initMysqlInstanceAlternatives()
+
+    initAccountDomain()
+    initProductDomain()
+    initOrderDomain()
 
     initServerSocketDomain()
     initTaskManageDomain()

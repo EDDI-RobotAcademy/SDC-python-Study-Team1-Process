@@ -10,19 +10,20 @@ from product_order.service.response.ProductOrderRegisterResponse import ProductO
 class ProductOrderServiceImpl(ProductOrderService):
     __instance = None
 
-    def __new__(cls, accountRepository, sessionRepository, productRepository, productorderRepository):
+    def __new__(cls, accountRepository, sessionRepository, productRepository, productOrderRepository):
         if cls.__instance is None:
             cls.__instance = super().__new__(cls)
             cls.__instance.__accountRepository = accountRepository
             cls.__instance.__sessionRepository = sessionRepository
             cls.__instance.__productRepository = productRepository
-            cls.__instance.__productorderRepository = productorderRepository
+            cls.__instance.__productOrderRepository = productOrderRepository
         return cls.__instance
 
     @classmethod
-    def getInstance(cls, repository=None):
+    def getInstance(cls, accountRepository=None, sessionRepository=None,
+                    productRepository=None, productOrderRepository=None):
         if cls.__instance is None:
-            cls.__instance = cls()
+            cls.__instance = cls(accountRepository, sessionRepository, productRepository, productOrderRepository)
         return cls.__instance
 
     def orderList(self, *args, **kwargs):
@@ -34,7 +35,7 @@ class ProductOrderServiceImpl(ProductOrderService):
         productorderListRequest = ProductOrderListRequest(*cleanedElements)
 
         sessionId = productorderListRequest.getSessionId()
-        orderByAccountList = self.__productorderRepository.findAllProductIdByAccountId(sessionId)
+        orderByAccountList = self.__productOrderRepository.findAllProductIdByAccountId(sessionId)
 
         orderList = []
 
@@ -71,7 +72,7 @@ class ProductOrderServiceImpl(ProductOrderService):
             productId = productorderRegisterRequest.getProductId()
             order = ProductOrder(sessionId, productId)
 
-            self.__productorderRepository.saveProductOrderInfo(order)
+            self.__productOrderRepository.saveProductOrderInfo(order)
 
             if order:
                 response = ProductOrderRegisterResponse(True)
