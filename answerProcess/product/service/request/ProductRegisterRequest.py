@@ -8,7 +8,7 @@ class ProductRegisterRequest:
     __productTitle: str
     __productDetails: str
     __seller: str
-    __productPrice: float
+    __productPrice: int
 
     def __init__(self, productTitle=None, productDetails=None, seller=None, productPrice=None, **kwargs):
         if productTitle is not None and productPrice is not None:

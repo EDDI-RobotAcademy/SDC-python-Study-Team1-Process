@@ -49,7 +49,7 @@ class TestProductRepository(unittest.TestCase):
     def testFindByProductNumber(self):
         repository = ProductRepositoryImpl.getInstance()
 
-        retrievedProduct = repository.findByProductNumber("2")
+        retrievedProduct = repository.findProductByProductNumber("2")
 
         data = ProductServiceImpl.getInstance()
         productData = data.readProductDataByProductNumber(retrievedProduct)
@@ -57,16 +57,16 @@ class TestProductRepository(unittest.TestCase):
 
     def testFindAllProducts(self):
         repository = ProductRepositoryImpl.getInstance()
-        findProducts = repository.findAllProducts()
+        findProducts = repository.findProductByProductNumber()
 
         service = ProductServiceImpl.getInstance()
-        products = service.getAllProducts()
+        products = service.productList()
 
     def testDeleteProductByNumber(self):
         repository = ProductRepositoryImpl.getInstance()
-        repository.deleteByProductNumber("2")
+        repository.deleteProductByProductNumber("2")
 
-        deletedProduct = repository.findByProductNumber("2")
+        deletedProduct = repository.findProductByProductNumber("2")
         self.assertIsNone(deletedProduct)
 
     def testUpdate(self):

@@ -93,11 +93,11 @@ class ResponseGeneratorServiceImpl(ResponseGeneratorService):
         print(f"arguments: {arguments}")
         resutl = dict(arguments)
 
-        print(f"arguments['__productId']")
+        print(f"arguments['__productNumber']")
 
         productResponseData = {
-            '__productId': resutl['__productId'],
-            '__productName': resutl['__productName'],
+            '__productNumber': resutl['__productNumber'],
+            '__productTitle': resutl['__productTitle'],
             '__productPrice': resutl['__productPrice'],
             '__productDetails': resutl['__productDetails'],
             '__seller': resutl['__seller']

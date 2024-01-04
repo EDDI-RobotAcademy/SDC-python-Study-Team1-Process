@@ -21,14 +21,14 @@ class TestProductService(unittest.TestCase):
         initCustomProtocol()
         testInstance = CustomProtocolRepositoryImpl.getInstance()
         requestGeneratorService = RequestGeneratorServiceImpl.getInstance()
-        productdata = {
+        productData = {
             '__productTitle': 'test_product_title',
-            '__productContent': 'test_product_content',
+            '__productDetails': 'test_product_content',
             '__productPrice': 10000}
         protocolNumber = 6
 
         requestGenerator = requestGeneratorService.findRequestGenerator(protocolNumber)
-        requestForm = requestGenerator(productdata)
+        requestForm = requestGenerator(productData)
 
         result = testInstance.execute(protocolNumber, tuple(requestForm.__dict__.values()))
         print(result)

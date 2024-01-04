@@ -7,4 +7,4 @@ class ProductUpdateResponse:
     __productTitle: str
     __productDetails: str
     __seller: str
-    __productPrice: float
+    __productPrice: int

@@ -55,6 +55,6 @@ class ProductOrderRepositoryImpl(ProductOrderRepository):
         accountIdList = session.query(ProductOrder).filter_by(_ProductOrder__accountId=accountId).all()
         productIdList = []
         for id in accountIdList:
-            productIdList.append(id.getProductId())
+            productIdList.append(id.productNumber())
 
         return productIdList
