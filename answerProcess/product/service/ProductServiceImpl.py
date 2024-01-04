@@ -1,9 +1,6 @@
-import product
-from account.entity.Account import Account
 from account.repository.AccountRepositoryImpl import AccountRepositoryImpl
 from account.repository.SessionRepositoryImpl import SessionRepositoryImpl
-from product.ProductService import ProductService
-from product.entity.Product import Product
+from product.service.ProductService import ProductService
 from product.repository.ProductRepositoryImpl import ProductRepositoryImpl
 from product.service.request.ProductDeleteRequest import ProductDeleteRequest
 from product.service.request.ProductUpdateRequest import ProductUpdateRequest

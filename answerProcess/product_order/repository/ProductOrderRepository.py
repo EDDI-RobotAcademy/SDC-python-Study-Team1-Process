@@ -8,5 +8,5 @@ class ProductOrderRepository(abc.ABC):
         pass
 
     @abc.abstractmethod
-    def findAccountId(self, accountId):
+    def findAllProductIdByAccountId(self, accountId):
         pass

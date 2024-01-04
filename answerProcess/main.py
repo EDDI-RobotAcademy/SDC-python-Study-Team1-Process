@@ -1,15 +1,12 @@
-import atexit
 import multiprocessing
 import socket
 from time import sleep
-
-import sqlalchemy
 
 from account.service.AccountServiceImpl import AccountServiceImpl
 from custom_protocol.entity.CustomProtocol import CustomProtocol
 from custom_protocol.service.CustomProtocolServiceImpl import CustomProtocolServiceImpl
 from mysql.MySQLDatabase import MySQLDatabase
-from product.ProductServiceImpl import ProductServiceImpl
+from product.service.ProductServiceImpl import ProductServiceImpl
 from server_socket.repository.ServerSocketRepositoryImpl import ServerSocketRepositoryImpl
 from server_socket.service.ServerSocketServiceImpl import ServerSocketServiceImpl
 from task_manage.repository.TaskManageRepositoryImpl import TaskManageRepositoryImpl
@@ -18,7 +15,6 @@ from utility.IPAddressBindSupporter import IPAddressBindSupporter
 from mysql.MySQLProcess import DbProcess
 # pip3 install pymysql
 
-from sqlalchemy import create_engine
 # pip3 install sqlalchemy
 # pip3 install mysql-connector-python
 from decouple import config
