@@ -17,13 +17,26 @@ class TestProductOrderRepository(unittest.TestCase):
         repository = ProductOrderRepositoryImpl.getInstance()
         orderInfo = {
             "accountId": "1",
-            "productId": "1"
+            "productNumber": "3"
         }
         productOrder = ProductOrder(**orderInfo)
 
         result = repository.saveProductOrderInfo(productOrder)
 
         self.assertTrue(result)
+
+    def testFindAllProductIdByAccountId(self):
+        repository = ProductOrderRepositoryImpl.getInstance()
+        result = repository.findAllProductIdByAccountId(1)
+        print(f"result: {result}")
+
+    def testRemoveProductsByAccountId(self):
+        repository = ProductOrderRepositoryImpl.getInstance()
+        result = repository.removeProductsByAccountId(1, 3)
+        print(f"result: {result}")
+
+        self.assertTrue(result)
+
 
     if __name__ == '__main__':
         unittest.main()
