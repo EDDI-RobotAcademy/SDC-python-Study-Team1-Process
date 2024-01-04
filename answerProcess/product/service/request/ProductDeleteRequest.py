@@ -4,7 +4,7 @@ from dataclasses import dataclass
 @dataclass
 class ProductDeleteRequest:
     __productNumber: int
-    def __init__(self, productNumber:int, **kwargs):
+    def __init__(self, productNumber=None, **kwargs):
         if productNumber is not None:
             self.__productNumber = productNumber
         elif "__productNumber" in kwargs:

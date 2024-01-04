@@ -11,11 +11,17 @@ class ProductUpdateRequest:
     __productPrice: int
 
 
-    def __init__(self, productNumber: int, productTitle: str, productDetails: str, productPrice: int):
-        self.__productNumber = productNumber
-        self.__productTitle = productTitle
-        self.__productDetails = productDetails
-        self.__productPrice = productPrice
+    def __init__(self, productNumber=None, productTitle=None, productDetails=None, productPrice=None, **kwargs):
+        if productTitle is not None and productPrice is not None:
+            self.__productNumber = productNumber
+            self.__productTitle = productTitle
+            self.__productDetails = productDetails
+            self.__productPrice = productPrice
+        elif "__productTitle" in kwargs and "__productPrice" in kwargs:
+            self.__productNumber = kwargs["__productNumber"]
+            self.__productTitle = kwargs["__productTitle"]
+            self.__productDetails = kwargs["__productDetails"]
+            self.__productPrice = kwargs["__productPrice"]
 
     # def __init__(self, productNumber=-1, productName=None, description=None, seller=None, price=0, **kwargs):
     #     if productName is not None and description is not None:
