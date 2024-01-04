@@ -57,10 +57,10 @@ class TestProductRepository(unittest.TestCase):
 
     def testFindAllProducts(self):
         repository = ProductRepositoryImpl.getInstance()
-        findProducts = repository.findProductByProductNumber()
+        findProducts = repository.findAllProducts()
 
-        service = ProductServiceImpl.getInstance()
-        products = service.productList()
+        print(findProducts)
+
 
     def testDeleteProductByNumber(self):
         repository = ProductRepositoryImpl.getInstance()

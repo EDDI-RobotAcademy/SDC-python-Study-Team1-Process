@@ -9,12 +9,13 @@ class ProductReadResponse:
     __productDetails: str
     __seller: str
 
-    def __init__(self,productNumber: int, productTitle: str, productDetails: str, seller: str, productPrice: int):
+    def __init__(self, productNumber: int, productTitle: str, productPrice: int ,productDetails: str, seller: str):
         self.__productNumber = productNumber
         self.__productTitle = productTitle
+        self.__productPrice = productPrice
         self.__productDetails = productDetails
         self.__seller = seller
-        self.__productPrice = productPrice
+
 
     def getProductNumber(self):
         return self.__productNumber
