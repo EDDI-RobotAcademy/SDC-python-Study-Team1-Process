@@ -5,7 +5,6 @@ from account.service.request.AccountLoginRequest import AccountLoginRequest
 from account.service.request.AccountRegisterRequest import AccountRegisterRequest
 from account.service.request.AccountLogoutRequest import AccountLogoutRequest
 from custom_protocol.entity.CustomProtocol import CustomProtocol
-from product.service.request.ProductListRequest import ProductListRequest
 from product.service.request.ProductReadRequest import ProductReadRequest
 from product.service.request.ProductRegisterRequest import ProductRegisterRequest
 from request_generator.service.RequestGeneratorService import RequestGeneratorService
@@ -18,7 +17,6 @@ class RequestGeneratorServiceImpl(RequestGeneratorService):
     def __new__(cls):
         if cls.__instance is None:
             cls.__instance = super().__new__(cls)
-
             cls.__requestFormGenerationTable[
                 CustomProtocol.ACCOUNT_REGISTER.value] = cls.__instance.generateAccountRegisterRequest
             cls.__requestFormGenerationTable[
@@ -27,8 +25,6 @@ class RequestGeneratorServiceImpl(RequestGeneratorService):
                 CustomProtocol.ACCOUNT_REMOVE.value] = cls.__instance.generateAccountDeleteRequest
             cls.__requestFormGenerationTable[
                 CustomProtocol.ACCOUNT_LOGOUT.value] = cls.__instance.generateAccountLogoutRequest
-            cls.__requestFormGenerationTable[
-                CustomProtocol.PRODUCT_LIST.value] = cls.__instance.generateProductListRequest
             cls.__requestFormGenerationTable[
                 CustomProtocol.PRODUCT_REGISTER.value] = cls.__instance.generateProductRegisterRequest
             cls.__requestFormGenerationTable[
@@ -84,10 +80,6 @@ class RequestGeneratorServiceImpl(RequestGeneratorService):
         return AccountLogoutRequest(
             __accountSessionId=arguments["__accountSessionId"]
         )
-
-    def generateProductListRequest(self, arguments):
-        print("ProductListRequest 생성")
-        return None
 
     def generateProductRegisterRequest(self, arguments):
         print("ProductRegisterRequest 생성")

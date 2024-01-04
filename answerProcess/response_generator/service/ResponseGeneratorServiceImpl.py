@@ -27,6 +27,8 @@ class ResponseGeneratorServiceImpl(ResponseGeneratorService):
             cls.__responseFormGenerationTable[
                 CustomProtocol.ACCOUNT_LOGOUT.value] = cls.__instance.generateAccountLogoutResponse
             cls.__responseFormGenerationTable[
+                CustomProtocol.PRODUCT_LIST.value] = cls.__instance.generateProductListResponse
+            cls.__responseFormGenerationTable[
                 CustomProtocol.PRODUCT_REGISTER.value] = cls.__instance.generateProductRegisterResponse
             cls.__responseFormGenerationTable[
                 CustomProtocol.PRODUCT_READ.value] = cls.__instance.generateProductReadResponse
@@ -81,15 +83,17 @@ class ResponseGeneratorServiceImpl(ResponseGeneratorService):
         else:
             return False
 
+    def generateProductListResponse(self, arguments):
+        print("ProductListResponse 생성")
     def generateProductRegisterResponse(self, arguments):
-        print("ProductRegisterResponse")
+        print("ProductRegisterResponse 생성")
         if arguments is True:
             return True
         else:
             return False
 
     def generateProductReadResponse(self, arguments):
-        print("ProductReadResponse")
+        print("ProductReadResponse 생성")
         print(f"arguments: {arguments}")
         resutl = dict(arguments)
 

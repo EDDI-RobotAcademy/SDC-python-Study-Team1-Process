@@ -18,9 +18,6 @@ class RequestGeneratorService(abc.ABC):
     def generateAccountLogoutRequest(self, arguments):
         pass
 
-    @abc.abstractmethod
-    def generateProductListRequest(self, arguments):
-        pass
 
     @abc.abstractmethod
     def generateProductRegisterRequest(self, arguments):

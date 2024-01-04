@@ -75,12 +75,16 @@ def initCustomProtocol():
         accountService.logoutAccount
     )
     customProtocolService.registerCustomProtocol(
+        CustomProtocol.PRODUCT_LIST.value,
+        productService.productList
+    )
+    customProtocolService.registerCustomProtocol(
         CustomProtocol.PRODUCT_REGISTER.value,
-        productService.registerProduct
+        productService.productRegister
     )
     customProtocolService.registerCustomProtocol(
         CustomProtocol.PRODUCT_READ.value,
-        productService.readProduct
+        productService.productRead
     )
 
 

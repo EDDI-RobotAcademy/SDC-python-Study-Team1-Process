@@ -37,7 +37,7 @@ class ProductRepositoryImpl(ProductRepository):
                 session.add(product)
                 session.commit()
 
-                print(f"상품 이름: {product.getProductName()}")
+                print(f"상품 이름: {product.getProductTitle()}")
                 return product
 
             except SQLAlchemyError as exception:
@@ -45,7 +45,7 @@ class ProductRepositoryImpl(ProductRepository):
                 print(f"DB 저장 중 에러 발생: {exception}")
                 return None
         else:
-            print("중복")
+            return None
 
     def findProductByProductNumber(self, productNumber):
 
@@ -60,8 +60,12 @@ class ProductRepositoryImpl(ProductRepository):
         session = dbSession()
         list = []
         for product in session.query(Product).all():
-            response = ProductListResponse(product.getProductNumber(), product.getProductTitle(),
-                                           product.getProductDetails(), product.getSeller(), product.getProductPrice())
+            response = ProductListResponse(
+                product.getProductNumber(),
+                product.getProductTitle(),
+                product.getProductPrice()
+            )
+
             list.append(response)
         return list
 

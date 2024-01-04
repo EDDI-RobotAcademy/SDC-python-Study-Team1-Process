@@ -11,7 +11,7 @@ class ProductService(abc.ABC):
         pass
 
     @abc.abstractmethod
-    def productList(self, *args, **kwargs):
+    def productList(self):
         pass
     @abc.abstractmethod
     def productDelete(self, *args, **kwargs):

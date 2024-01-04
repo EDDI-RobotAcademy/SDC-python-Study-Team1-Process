@@ -43,12 +43,13 @@ class ProductServiceImpl(ProductService):
         seller = self.__accountRepository.findById(self.__sessionRepository.getIdBySessionId()).getAccountId()
         productRegisterRequest = ProductRegisterRequest(*cleanedElements)
         productRegisterRequest.setSeller(seller)
-        registedProduct = self.__productRepository.save(productRegisterRequest.toProduct())
 
-        return ProductRegisterResponse(registedProduct.getProductName(),
-                                       registedProduct.getProductDetails(),
-                                       registedProduct.getSeller(),
-                                       registedProduct.getProductPrice())
+        registedProduct = self.__productRepository.save(productRegisterRequest.toProduct())
+        if registedProduct is not None:
+            return ProductRegisterResponse(True)
+        else:
+            return ProductRegisterResponse(False)
+
 
     def productRead(self, *args, **kwargs):
         cleanedElements = args[0]
@@ -72,7 +73,7 @@ class ProductServiceImpl(ProductService):
             print("상품을 찾을 수 없습니다.")
             return None
 
-    def productList(self, *args, **kwargs):
+    def productList(self):
         productList = self.__productRepository.findAllProducts()
         return productList
 
