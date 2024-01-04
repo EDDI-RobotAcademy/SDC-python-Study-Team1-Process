@@ -13,4 +13,5 @@ class AccountService(abc.ABC):
     @abc.abstractmethod
     def loginAccount(self, *args, **kwargs):
         pass
-
+    def logoutAccount(self, *args, **kwargs):
+        pass

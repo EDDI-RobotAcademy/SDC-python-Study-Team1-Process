@@ -1,6 +1,6 @@
 from sqlalchemy.orm import sessionmaker
-from session.entity.AccountSession import AccountSession
-from session.repository.SessionRepository import SessionRepository
+from account.entity.AccountSession import AccountSession
+from account.repository.SessionRepository import SessionRepository
 from mysql.MySQLDatabase import MySQLDatabase
 from sqlalchemy.exc import SQLAlchemyError
 
@@ -43,27 +43,35 @@ class SessionRepositoryImpl(SessionRepository):
             return None
 
 
-    def findById(self, id):
+    def getIdBySessionId(self):
         dbSession = sessionmaker(bind=self.__instance.engine)
         session = dbSession()
 
-        return session.query(AccountSession).filter_by(_Session__Id=id).first()
-
-    def findBySessionId(self, sessionId):
-        dbSession = sessionmaker(bind=self.__instance.engine)
-        session = dbSession()
-
-        print(dir(AccountSession))
-
-        return session.query(AccountSession).filter_by(_Session__sessionId=sessionId).first()
+        sessionlist = session.query(AccountSession).all()
+        targetsessionId = sessionlist[0]
+        sessionId = targetsessionId.getSessionId()
+        return sessionId
 
     def deleteBySessionId(self, sessionId):
         dbSession = sessionmaker(bind=self.__instance.engine)
         session = dbSession()
         print("세션")
 
-        acountSession = session.query(AccountSession).filter_by(_Session__sessionId=sessionId).first()
+        acountSession = session.query(AccountSession).filter_by(_AccountSession__sessionId=sessionId).first()
         print("해당 아이디정보 찾는")
         if acountSession:
             session.delete(acountSession)
             session.commit()
+
+
+    def resetSession(self):
+        dbSession = sessionmaker(bind=self.__instance.engine)
+        session = dbSession()
+        print("세션")
+
+        acountSession = session.query(AccountSession).all()
+        for session_obj in acountSession:
+            session.delete(session_obj)
+        session.commit()
+        print("AccountSession객체 초기화")
+

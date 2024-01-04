@@ -4,7 +4,7 @@ from account.entity.AccountSession import AccountSession
 
 
 @dataclass
-class AccountDeleteRequest:
+class AccountLogoutRequest:
     __accountSessionId: int
 
     def toSession(self):
@@ -22,4 +22,3 @@ class AccountDeleteRequest:
 
     def getAccountSessionId(self):
         return self.__accountSessionId
-

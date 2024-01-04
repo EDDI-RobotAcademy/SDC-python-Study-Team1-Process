@@ -13,3 +13,4 @@ class ProductService(abc.ABC):
     @abc.abstractmethod
     def updateProduct(self, *args, **kwargs):
         pass
+

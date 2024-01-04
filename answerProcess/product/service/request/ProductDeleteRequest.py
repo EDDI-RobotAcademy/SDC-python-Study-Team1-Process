@@ -1,7 +1,5 @@
 from dataclasses import dataclass
 
-from session.entity.AccountSession import AccountSession
-
 
 @dataclass
 class ProductDeleteRequest:

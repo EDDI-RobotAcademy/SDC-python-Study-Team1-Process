@@ -3,7 +3,37 @@ from dataclasses import dataclass
 
 @dataclass
 class ProductReadResponse:
+    __productId: int
     __productName: str
-    __description: str
+    __productPrice: float
+    __productDetails: str
     __seller: str
-    __price: float
+
+    def __init__(self,productId: int, productName: str, productDetails: str, seller: str, productPrice: float):
+        self.__productId = productId
+        self.__productName = productName
+        self.__productDetails = productDetails
+        self.__seller = seller
+        self.__productPrice = productPrice
+
+    def getProductId(self):
+        return self.__productId
+
+    def getProductName(self):
+        return self.__productName
+
+    def getProductPrice(self):
+        return self.__productPrice
+
+    def getProductDetails(self):
+        return self.__productDetails
+
+    def getSeller(self):
+        return self.__seller
+
+    def __iter__(self):
+        yield "__productId", self.__productId
+        yield "__productName", self.__productName
+        yield "__productPrice", self.__productPrice
+        yield "__productDetails", self.__productDetails
+        yield "__seller", self.__seller

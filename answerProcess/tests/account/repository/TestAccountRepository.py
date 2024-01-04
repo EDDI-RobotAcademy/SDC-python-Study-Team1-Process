@@ -1,6 +1,7 @@
 import unittest
 from account.entity.Account import Account
 from account.repository.AccountRepositoryImpl import AccountRepositoryImpl
+from account.repository.SessionRepositoryImpl import SessionRepositoryImpl
 from mysql.MySQLDatabase import MySQLDatabase
 
 
@@ -32,6 +33,13 @@ class TestAccountRepository(unittest.TestCase):
         self.assertIsNotNone(retrievedAccount)
         self.assertEqual(retrievedAccount.getAccountId(), "test_user")
 
+    def testGetIdBySessionId(self):
+        repository = SessionRepositoryImpl.getInstance()
+        retrievedAccount = repository.getIdBySessionId()
+        print(retrievedAccount)
+
+
+
     def testUpdateAccount(self):
         repository = AccountRepositoryImpl.getInstance()
         updatedAccountData = {
@@ -58,6 +66,20 @@ class TestAccountRepository(unittest.TestCase):
         repository.deleteByAccountId("delete_user")
 
         deletedAccount = repository.findByAccountId("delete_user")
+        self.assertIsNone(deletedAccount)
+
+    def testDeleteSessionById(self):
+        repository = SessionRepositoryImpl.getInstance()
+        # account_data = {
+        #     "accountId": "delete_user",
+        #     "password": "test_password"
+        # }
+        # account = Account(**account_data)
+        # repository.save(account)
+
+        repository.deleteSessionIdById(1)
+
+        #deletedAccount = repository.findByAccountId("delete_user")
         self.assertIsNone(deletedAccount)
 
     def testDeleteById(self):

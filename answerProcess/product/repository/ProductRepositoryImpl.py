@@ -32,9 +32,10 @@ class ProductRepositoryImpl(ProductRepository):
         dbSession = sessionmaker(bind=self.__instance.engine)
         session = dbSession()
 
-        try:
-            session.add(product)
-            session.commit()
+        if session is not None:
+            try:
+                session.add(product)
+                session.commit()
 
             print(f"상품 이름: {product.getProductName()}")
             return product

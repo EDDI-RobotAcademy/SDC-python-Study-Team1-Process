@@ -7,6 +7,7 @@ from custom_protocol.repository.CustomProtocolRepositoryImpl import CustomProtoc
 from main import initCustomProtocol
 from mysql.MySQLDatabase import MySQLDatabase
 from request_generator.service.RequestGeneratorServiceImpl import RequestGeneratorServiceImpl
+from response_generator.service.ResponseGeneratorServiceImpl import ResponseGeneratorServiceImpl
 
 
 class TestAccountRepository(unittest.TestCase):
@@ -19,33 +20,71 @@ class TestAccountRepository(unittest.TestCase):
         # Clean up any resources after each test
         pass
 
+    def testregisterAccount(self):
+        initCustomProtocol()
+        testInstance = CustomProtocolRepositoryImpl.getInstance()
+        requestGeneratorService = RequestGeneratorServiceImpl.getInstance()
+        accountData = {'__accountId': 'Id', '__password': 'pw'}
+        protocolNumber = 1
+
+        requestGenerator = requestGeneratorService.findRequestGenerator(protocolNumber)
+        requestForm = requestGenerator(accountData)
+
+        result = testInstance.execute(protocolNumber, tuple(requestForm.__dict__.values()))
+        print(result)
+
+
+
+
     def testLoginAccount(self):
         initCustomProtocol()
         testInstance = CustomProtocolRepositoryImpl.getInstance()
         requestGeneratorService = RequestGeneratorServiceImpl.getInstance()
-        accountData = {'__accountId': 'id', '__password': 'pw'}
+        responseGeneratorService = ResponseGeneratorServiceImpl.getInstance()
+        accountData = {'__accountId': 'Id', '__password': 'pw'}
         protocolNumber = 2
 
         requestGenerator = requestGeneratorService.findRequestGenerator(protocolNumber)
         requestForm = requestGenerator(accountData)
 
-        result = testInstance.execute(2, tuple(requestForm.__dict__.values()))
+        result = testInstance.execute(protocolNumber, tuple(requestForm.__dict__.values()))
+
+        responseGenerator = responseGeneratorService.findResponseGenerator(protocolNumber)
+        responseForm = responseGenerator(result)
+        print(responseForm)
+
+    def testLogoutAccount(self):
+        initCustomProtocol()
+        testInstance = CustomProtocolRepositoryImpl.getInstance()
+        requestGeneratorService = RequestGeneratorServiceImpl.getInstance()
+        responseGeneratorService = ResponseGeneratorServiceImpl.getInstance()
+        accountData = {'__accountSessionId': 6}
+        protocolNumber = 3
+
+        requestGenerator = requestGeneratorService.findRequestGenerator(protocolNumber)
+        requestForm = requestGenerator(accountData)
+
+        result = testInstance.execute(protocolNumber, tuple(requestForm.__dict__.values()))
+
+        responseGenerator = responseGeneratorService.findResponseGenerator(protocolNumber)
+        responseForm = responseGenerator(result)
         # result = testInstance.execute(2, tuple(requestForm.__dict__.values()))
-        print(result)
+        print(responseForm)
+
 
     def testdelateaccount(self):
         initCustomProtocol()
         testInstance = CustomProtocolRepositoryImpl.getInstance()
         requestGeneratorService = RequestGeneratorServiceImpl.getInstance()
 
-        accountData = 3
-        protocolNumber = 3
+        accountData = {'__accountSessionId': 2}
+        protocolNumber = 4
 
         requestGenerator = requestGeneratorService.findRequestGenerator(protocolNumber)
         requestForm = requestGenerator(accountData)
 
 
-        result = testInstance.execute(2, requestForm)
+        result = testInstance.execute(protocolNumber, tuple(requestForm.__dict__.values()))
         self.assertIsNone(result)
 
 

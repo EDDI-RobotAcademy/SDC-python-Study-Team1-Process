@@ -33,6 +33,7 @@ class Product(Base):
         self.__seller = seller
         self.__price = price
 
+
     def getProductNumber(self):
         return self.__productNumber
     def getProductName(self):
