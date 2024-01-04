@@ -1,13 +1,15 @@
 import unittest
 
+from account.repository.AccountRepositoryImpl import AccountRepositoryImpl
 from custom_protocol.repository.CustomProtocolRepositoryImpl import CustomProtocolRepositoryImpl
-from main import initCustomProtocol
+from main import initCustomProtocol, initAccountDomain, initProductDomain, initOrderDomain
 from mysql.MySQLDatabase import MySQLDatabase
 from product.ProductServiceImpl import ProductServiceImpl
 from product.entity.Product import Product
 from product.repository.ProductRepositoryImpl import ProductRepositoryImpl
 from product.service.request.ProductDeleteRequest import ProductDeleteRequest
 from product.service.request.ProductUpdateRequest import ProductUpdateRequest
+from product.repository.ProductRepositoryImpl import ProductRepositoryImpl
 from request_generator.service.RequestGeneratorServiceImpl import RequestGeneratorServiceImpl
 from response_generator.service.ResponseGeneratorServiceImpl import ResponseGeneratorServiceImpl
 from product.service.response.ProductReadResponse import ProductReadResponse
@@ -23,7 +25,12 @@ class TestProductService(unittest.TestCase):
         pass
 
     def testListProduct(self):
+        initAccountDomain()
+        initProductDomain()
+        initOrderDomain()
+
         initCustomProtocol()
+
         testInstance = CustomProtocolRepositoryImpl.getInstance()
 
         protocolNumber = 5

@@ -1,15 +1,10 @@
-from account.repository.AccountRepositoryImpl import AccountRepositoryImpl
-from account.repository.SessionRepositoryImpl import SessionRepositoryImpl
 from product.service.ProductService import ProductService
-from product.repository.ProductRepositoryImpl import ProductRepositoryImpl
 from product.service.request.ProductDeleteRequest import ProductDeleteRequest
 from product.service.request.ProductUpdateRequest import ProductUpdateRequest
-# from product.service.request.ProductEditRequest import ProductEditRequest
 from product.service.request.ProductReadRequest import ProductReadRequest
 from product.service.request.ProductRegisterRequest import ProductRegisterRequest
 from product.service.response.ProductDeleteResponse import ProductDeleteResponse
 from product.service.response.ProductListResponse import ProductListResponse
-# from product.service.response.ProductEditResponse import ProductEditResponse
 from product.service.response.ProductReadResponse import ProductReadResponse
 from product.service.response.ProductRegisterResponse import ProductRegisterResponse
 from product.service.response.ProductUpdateResponse import ProductUpdateResponse
@@ -18,7 +13,7 @@ from product.service.response.ProductUpdateResponse import ProductUpdateResponse
 class ProductServiceImpl(ProductService):
     __instance = None
 
-    def __new__(cls, productRepository, accountRepository, sessionRepository):
+    def __new__(cls, accountRepository, sessionRepository, productRepository):
         if cls.__instance is None:
             cls.__instance = super().__new__(cls)
             cls.__instance.__productRepository = productRepository
@@ -26,11 +21,10 @@ class ProductServiceImpl(ProductService):
             cls.__instance.__sessionRepository = sessionRepository
         return cls.__instance
 
-
     @classmethod
-    def getInstance(cls, productRepository=None, accountRepository=None, sessionRepository=None):
+    def getInstance(cls, accountRepository=None, sessionRepository=None, productRepository=None):
         if cls.__instance is None:
-            cls.__instance = cls(productRepository, accountRepository, sessionRepository)
+            cls.__instance = cls(accountRepository,sessionRepository,productRepository)
         return cls.__instance
 
     def productRegister(self, *args, **kwargs):
@@ -67,6 +61,7 @@ class ProductServiceImpl(ProductService):
             return None
 
     def productList(self):
+        print("productList 실행")
         productList = self.__productRepository.findAllProducts()
         list = []
         for Product in productList:

@@ -1,6 +1,6 @@
 import errno
 import json
-from socket import socket
+import socket
 from time import sleep
 
 from custom_protocol.repository.CustomProtocolRepositoryImpl import CustomProtocolRepositoryImpl

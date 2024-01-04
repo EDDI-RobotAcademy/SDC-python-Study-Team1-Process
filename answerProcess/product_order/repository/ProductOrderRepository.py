@@ -4,7 +4,7 @@ import abc
 class ProductOrderRepository(abc.ABC):
 
     @abc.abstractmethod
-    def saveProductOrderInfo(self, orderInfo):
+    def saveProductOrderInfo(self, order):
         pass
 
     @abc.abstractmethod

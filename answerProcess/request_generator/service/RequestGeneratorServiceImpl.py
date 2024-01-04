@@ -7,6 +7,8 @@ from account.service.request.AccountLogoutRequest import AccountLogoutRequest
 from custom_protocol.entity.CustomProtocol import CustomProtocol
 from product.service.request.ProductReadRequest import ProductReadRequest
 from product.service.request.ProductRegisterRequest import ProductRegisterRequest
+from product_order.service.request.ProductOrderListRequest import ProductOrderListRequest
+from product_order.service.request.ProductOrderRegisterRequest import ProductOrderRegisterRequest
 from request_generator.service.RequestGeneratorService import RequestGeneratorService
 
 
@@ -102,9 +104,17 @@ class RequestGeneratorServiceImpl(RequestGeneratorService):
 
     def generateProductPurchaseRequest(self, arguments):
         print("ProductPurchaseRequest 생성")
+        return ProductOrderRegisterRequest(
+            __productNumber=arguments["__productNumber"],
+            __accountSessionId=arguments["__accountSessionId"]
+        )
 
     def generateProductRemoveRequest(self, arguments):
         print("ProductRemoveRequest")
 
-    def generateProductOrderListRequest(self,arfuments):
+
+    def generateProductOrderListRequest(self, arguments):
         print("ProductOrderListRequest 생성")
+        return ProductOrderListRequest(
+            __accountSessionId=arguments["__accountSessionId"]
+        )

@@ -1,15 +1,15 @@
 class ProductOrderListRequest:
-    __sessionId: int
+    __accountSessionId: int
 
-    def __init__(self, sessionId=-1, **kwargs):
-        if "__sessionId" in kwargs:
-            self.__sessionId = kwargs["__sessionId"]
+    def __init__(self, accountSessionId=-1, **kwargs):
+        if "__accountSessionId" in kwargs:
+            self.__accountSessionId = kwargs["__accountSessionId"]
         else:
-            self.__sessionId = sessionId
+            self.__accountSessionId = accountSessionId
 
     @classmethod
     def createFromTuple(cls, inputTuple):
         return cls(*inputTuple)
 
     def getSessionId(self):
-        return self.__sessionId
+        return self.__accountSessionId

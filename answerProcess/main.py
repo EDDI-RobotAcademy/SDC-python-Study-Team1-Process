@@ -12,6 +12,7 @@ from mysql.MySQLDatabase import MySQLDatabase
 from product.repository.ProductRepositoryImpl import ProductRepositoryImpl
 from product.service.ProductServiceImpl import ProductServiceImpl
 from product_order.repository.ProductOrderRepositoryImpl import ProductOrderRepositoryImpl
+from product_order.service.ProductOrderService import ProductOrderService
 from product_order.service.ProductOrderServiceImpl import ProductOrderServiceImpl
 from server_socket.repository.ServerSocketRepositoryImpl import ServerSocketRepositoryImpl
 from server_socket.service.ServerSocketServiceImpl import ServerSocketServiceImpl
@@ -58,6 +59,7 @@ def initCustomProtocol():
     customProtocolService = CustomProtocolServiceImpl.getInstance()
     accountService = AccountServiceImpl.getInstance()
     productService = ProductServiceImpl.getInstance()
+    productOrderService = ProductOrderServiceImpl.getInstance()
 
     print(f"enum value test: {CustomProtocol.ACCOUNT_REGISTER.value}")
     customProtocolService.registerCustomProtocol(
@@ -87,6 +89,14 @@ def initCustomProtocol():
     customProtocolService.registerCustomProtocol(
         CustomProtocol.PRODUCT_READ.value,
         productService.productRead
+    )
+    customProtocolService.registerCustomProtocol(
+        CustomProtocol.PRODUCT_PURCHASE.value,
+        productOrderService.orderRegister
+    )
+    customProtocolService.registerCustomProtocol(
+        CustomProtocol.ORDER_LIST.value,
+        productOrderService.orderList
     )
 
 
