@@ -26,8 +26,6 @@ class ProductServiceImpl(ProductService):
             cls.__instance.__sessionRepository = sessionRepository
         return cls.__instance
 
-    def __init__(self, productRepository, accountRepository, sessionRepository):
-        print("ProductServiceImpl 생성자 호출")
 
     @classmethod
     def getInstance(cls, productRepository=None, accountRepository=None, sessionRepository=None):
@@ -86,7 +84,7 @@ class ProductServiceImpl(ProductService):
     def productDelete(self, *args, **kwargs):
         cleanedElements = args[0]
 
-        productDeleteRequest = ProductDeleteRequest(cleanedElements.getProductNumber())
+        productDeleteRequest = ProductDeleteRequest(*cleanedElements)
         foundProduct = self.__productRepository.findProductByProductNumber(productDeleteRequest.getProductNumber())
 
         if foundProduct is None:

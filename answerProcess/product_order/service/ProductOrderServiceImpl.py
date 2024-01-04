@@ -68,8 +68,8 @@ class ProductOrderServiceImpl(ProductOrderService):
         else:
             productorderRegisterRequest = ProductOrderRegisterRequest(*cleanedElements)
 
-            sessionId = productorderRegisterRequest.getSessionId()
-            productId = productorderRegisterRequest.getProductId()
+            sessionId = productorderRegisterRequest.getAccountId()
+            productId = productorderRegisterRequest.getProductNumber()
             order = ProductOrder(sessionId, productId)
 
             self.__productOrderRepository.saveProductOrderInfo(order)
