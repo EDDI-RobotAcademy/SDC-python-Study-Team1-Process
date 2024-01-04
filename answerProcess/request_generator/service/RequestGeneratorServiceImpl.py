@@ -86,9 +86,9 @@ class RequestGeneratorServiceImpl(RequestGeneratorService):
     def generateProductRegisterRequest(self, arguments):
         print("ProductRegisterRequest 생성")
         return ProductRegisterRequest(
-            __productName=arguments["__productTitle"],
-            __description=arguments["__productContent"],
-            __price=arguments["__productPrice"]
+            __productTitle=arguments["__productTitle"],
+            __productDetails=arguments["__productDetails"],
+            __productPrice=arguments["__productPrice"]
         )
 
     def generateProductReadRequest(self, arguments):

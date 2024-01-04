@@ -65,6 +65,7 @@ class ProductRepositoryImpl(ProductRepository):
                 product.getProductTitle(),
                 product.getProductPrice()
             )
+
             list.append(response)
         return list
 
@@ -93,4 +94,4 @@ class ProductRepositoryImpl(ProductRepository):
         dbSession = sessionmaker(bind=self.__instance.engine)
         session = dbSession()
 
-        return session.query(Product).filter(Product._Product__productName.ilike(f"%{keyword}%")).all()
+        return session.query(Product).filter(Product._Product__productTitle.ilike(f"%{keyword}%")).all()

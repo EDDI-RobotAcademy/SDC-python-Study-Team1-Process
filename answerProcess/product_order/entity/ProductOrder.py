@@ -12,11 +12,11 @@ class ProductOrder(Base):
 
     __id: int = Column(Integer, primary_key=True, autoincrement=True, name="id")
     __accountId: int = Column(Integer, name="account_id")
-    __productId: int = Column(Integer, name="product_id")
+    __productNumber: int = Column(Integer, name="product_id")
 
-    def __init__(self, accountId: int, productId: int):
+    def __init__(self, accountId: int, productNumber: int):
         self.__accountId = accountId
-        self.__productId = productId
+        self.__productNumber = productNumber
         
     def getId(self):
         return self.__id
@@ -24,7 +24,7 @@ class ProductOrder(Base):
     def getAccountId(self):
         return self.__accountId
 
-    def getProductId(self):
-        return self.__productId
+    def getProductNumber(self):
+        return self.__productNumber
 
 
