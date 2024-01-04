@@ -60,8 +60,8 @@ class ProductRepositoryImpl(ProductRepository):
         session = dbSession()
         list = []
         for product in session.query(Product).all():
-            response = ProductListResponse(product.getProductNumber(), product.getProductName(),
-                                           product.getDescription(), product.getSeller(), product.getPrice())
+            response = ProductListResponse(product.getProductNumber(), product.getProductTitle(),
+                                           product.getProductDetails(), product.getSeller(), product.getProductPrice())
             list.append(response)
         return list
 
@@ -90,4 +90,4 @@ class ProductRepositoryImpl(ProductRepository):
         dbSession = sessionmaker(bind=self.__instance.engine)
         session = dbSession()
 
-        return session.query(Product).filter(Product._Product__productName.ilike(f"%{keyword}%")).all()
+        return session.query(Product).filter(Product._Product__productTitle.ilike(f"%{keyword}%")).all()
