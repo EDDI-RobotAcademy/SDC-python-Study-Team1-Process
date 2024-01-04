@@ -8,7 +8,7 @@ class ProductOrderRegisterRequest:
 
     def __init__(self, productNumber=-1, accountSessionId=-1, **kwargs):
         if "__productNumber" in kwargs and "__accountSessionId" in kwargs:
-            self.__accountSessionId = kwargs["__productNumber"]
+            self.__productNumber = kwargs["__productNumber"]
             self.__accountSessionId = kwargs["__accountSessionId"]
         else:
             self.__productNumber = productNumber

@@ -71,12 +71,12 @@ def initCustomProtocol():
         accountService.loginAccount
     )
     customProtocolService.registerCustomProtocol(
-        CustomProtocol.ACCOUNT_REMOVE.value,
-        accountService.deleteAccount
-    )
-    customProtocolService.registerCustomProtocol(
         CustomProtocol.ACCOUNT_LOGOUT.value,
         accountService.logoutAccount
+    )
+    customProtocolService.registerCustomProtocol(
+        CustomProtocol.ACCOUNT_REMOVE.value,
+        accountService.deleteAccount
     )
     customProtocolService.registerCustomProtocol(
         CustomProtocol.PRODUCT_LIST.value,
@@ -91,8 +91,16 @@ def initCustomProtocol():
         productService.productRead
     )
     customProtocolService.registerCustomProtocol(
+        CustomProtocol.PRODUCT_MODIFY.value,
+        productService.productUpdate
+    )
+    customProtocolService.registerCustomProtocol(
         CustomProtocol.PRODUCT_PURCHASE.value,
         productOrderService.orderRegister
+    )
+    customProtocolService.registerCustomProtocol(
+        CustomProtocol.PRODUCT_REMOVE.value,
+        productService.productDelete
     )
     customProtocolService.registerCustomProtocol(
         CustomProtocol.ORDER_LIST.value,
