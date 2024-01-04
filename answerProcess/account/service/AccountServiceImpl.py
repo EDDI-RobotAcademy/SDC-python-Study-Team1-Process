@@ -22,7 +22,7 @@ class AccountServiceImpl(AccountService):
         return cls.__instance
 
     def __init__(self, repository):
-        print("AccountRepositoryImpl 생성자 호출")
+        print("AccountServiceImpl 생성자 호출")
         self.__accountRepository = AccountRepositoryImpl()
         self.__sessionRepository = SessionRepositoryImpl()
 
@@ -36,7 +36,6 @@ class AccountServiceImpl(AccountService):
         print("registerAccount()")
         print(f"args: {args}")
         cleanedElements = args[0]
-        print(f"cleanedElements: {cleanedElements}")
 
         accountRegisterRequest = AccountRegisterRequest(*cleanedElements)
         storedAccount = self.__accountRepository.save(accountRegisterRequest.toAccount())
@@ -88,7 +87,6 @@ class AccountServiceImpl(AccountService):
         print(f"args: {args}")
 
         cleanedElements = args[0]
-        print(f"cleanedElements: {cleanedElements}")
 
         accountLoginRequest = AccountLogoutRequest(*cleanedElements)
         foundAccount = self.__accountRepository.findById(accountLoginRequest.getAccountSessionId())
