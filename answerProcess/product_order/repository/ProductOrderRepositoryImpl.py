@@ -55,11 +55,11 @@ class ProductOrderRepositoryImpl(ProductOrderRepository):
         dbSession = sessionmaker(bind=self.__instance.engine)
         session = dbSession()
 
-        products = session.query(ProductOrder).filter_by(_ProductOrder__accountId=sessionId,
+        foundProductOrder = session.query(ProductOrder).filter_by(_ProductOrder__accountId=sessionId,
                                                          _ProductOrder__productNumber=productId).all()
 
-        if products:
-            for product in products:
+        if foundProductOrder:
+            for product in foundProductOrder:
                 session.delete(product)
                 session.commit()
             response = True

@@ -123,9 +123,9 @@ class RequestGeneratorServiceImpl(RequestGeneratorService):
             __productNumber=arguments["__productNumber"]
         )
 
-
     def generateProductOrderListRequest(self, arguments):
         print("ProductOrderListRequest 생성")
         return ProductOrderListRequest(
             __accountSessionId=arguments["__accountSessionId"]
         )
+
