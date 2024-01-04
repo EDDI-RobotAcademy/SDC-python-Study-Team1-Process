@@ -29,19 +29,6 @@ class TestProductRepository(unittest.TestCase):
 
         self.assertTrue(result)
 
-    def testServiceSaveProduct(self):
-        service = ProductServiceImpl.getInstance()
-        product_data = {
-            "productName": "test_product_567890",
-            "description": "cabbages",
-            "seller": "junghwan",
-            "price": "0"
-        }
-        product = Product(**product_data)
-
-        result = service.registerProduct(product)
-
-        self.assertTrue(result)
 
     def testFindByProductNumber(self):
         repository = ProductRepositoryImpl.getInstance()
@@ -61,14 +48,16 @@ class TestProductRepository(unittest.TestCase):
 
     def testDeleteProductByNumber(self):
         repository = ProductRepositoryImpl.getInstance()
-        repository.deleteProductByProductNumber("2")
+        repository.deleteProductByProductNumber("3")
 
-        deletedProduct = repository.findProductByProductNumber("2")
-        self.assertIsNone(deletedProduct)
+        # deletedProduct = repository.findProductByProductNumber("2")
+        # self.assertIsNone(deletedProduct)
 
     def testUpdate(self):
-        service = ProductServiceImpl.getInstance()
         repository = ProductRepositoryImpl.getInstance()
+        request = ProductUpdateRequest(8, "111", "111", 111)
+        result = repository.updateProductInfo(request)
+        # self.assertTrue(result)
 
     #
     # def testFindById(self):

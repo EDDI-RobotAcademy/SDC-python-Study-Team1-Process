@@ -10,7 +10,7 @@ class ProductDeleteRequest:
         elif "__productNumber" in kwargs:
             self.__productNumber = kwargs["__productNumber"]
 
-    @classmethod
+
     def getProductNumber(self):
         return self.__productNumber
 

@@ -5,7 +5,10 @@ from sqlalchemy.exc import SQLAlchemyError
 
 from product.entity.Product import Product
 from product.repository.ProductRepository import ProductRepository
+from product.service.request.ProductDeleteRequest import ProductDeleteRequest
+from product.service.response.ProductDeleteResponse import ProductDeleteResponse
 from product.service.response.ProductListResponse import ProductListResponse
+from product.service.response.ProductUpdateResponse import ProductUpdateResponse
 
 
 class ProductRepositoryImpl(ProductRepository):
@@ -60,26 +63,26 @@ class ProductRepositoryImpl(ProductRepository):
 
         return session.query(Product).all()
 
-    def deleteProductByProductNumber(self, productNumber):
+    def deleteProductByProductNumber(self, request:ProductDeleteRequest):
         dbSession = sessionmaker(bind=self.__instance.engine)
         session = dbSession()
 
-        product = session.query(Product).filter_by(_Product__productNumber=productNumber).first()
+        product = session.query(Product).filter_by(_Product__productNumber=request.getProductNumber()).first()
         if product:
             session.delete(product)
             session.commit()
+            return ProductDeleteResponse(True)
+        return ProductDeleteResponse(False)
 
-    # def updateProductInfo(self, product):
-    #     dbSession = sessionmaker(bind=self.__ins`tance.engine)
-    #     session = dbSession()
-    #
-    #     existingProduct = session.query(Product).filter_by(_Product__productNumber=product.getProductNumber()).first()
-    #     if existingProduct:
-    #         existingProduct.getProductNumber(product.getProductNumber())
-    #         existingProduct.setProductName(product.getProductName())
-    #         existingProduct.setDescription(product.getDescription())
-    #         existingProduct.setPrice(product.getPrice())
-    #         session.commit()
+    def updateProductInfo(self, product):
+        dbSession = sessionmaker(bind=self.__instance.engine)
+        session = dbSession()
+        existingProduct = session.query(Product).filter_by(_Product__productNumber=product.getProductNumber()).first()
+        if existingProduct:
+            existingProduct.editProduct(product.getProductTitle(),product.getProductPrice(), product.getProductDetails())
+            session.commit()
+            return True
+        return False
 
     def findByUserInputKeyword(self, keyword):
         dbSession = sessionmaker(bind=self.__instance.engine)

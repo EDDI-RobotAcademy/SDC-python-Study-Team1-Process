@@ -27,15 +27,14 @@ class Product(Base):
     __productPrice: int = Column(String, name="price")
 
     def __init__(self, productTitle: str, productDetails: str, seller: str, productPrice: int):
-
         self.__productTitle = productTitle
         self.__productDetails = productDetails
         self.__seller = seller
         self.__productPrice = productPrice
 
-
     def getProductNumber(self):
         return self.__productNumber
+
     def getProductTitle(self):
         return self.__productTitle
 
@@ -48,8 +47,11 @@ class Product(Base):
     def getProductPrice(self):
         return self.__productPrice
 
-    def setProductName(self, productName):
-        self.__productName = productName
+    def setProductNumber(self, productNumber):
+        self.__productNumber = productNumber
+
+    def setProductTitle(self, productTitle):
+        self.__productTitle = productTitle
 
     def setProductDetails(self, productDetails):
         self.__productDetails = productDetails
@@ -59,3 +61,8 @@ class Product(Base):
 
     def setProductPrice(self, productPrice):
         self.__productPrice = productPrice
+
+    def editProduct(self, _newProductTitle: str, _newProductPrice: int, _newProductDetails: str):
+        self.__productTitle = _newProductTitle
+        self.__productPrice = _newProductPrice
+        self.__productDetails = _newProductDetails
