@@ -1,3 +1,4 @@
+import product
 from account.entity.Account import Account
 from account.repository.AccountRepositoryImpl import AccountRepositoryImpl
 from account.repository.SessionRepositoryImpl import SessionRepositoryImpl
@@ -9,8 +10,8 @@ from product.service.request.ProductUpdateRequest import ProductUpdateRequest
 # from product.service.request.ProductEditRequest import ProductEditRequest
 from product.service.request.ProductReadRequest import ProductReadRequest
 from product.service.request.ProductRegisterRequest import ProductRegisterRequest
-from product.service.response import ProductListResponse
 from product.service.response.ProductDeleteResponse import ProductDeleteResponse
+from product.service.response.ProductListResponse import ProductListResponse
 # from product.service.response.ProductEditResponse import ProductEditResponse
 from product.service.response.ProductReadResponse import ProductReadResponse
 from product.service.response.ProductRegisterResponse import ProductRegisterResponse
@@ -66,7 +67,7 @@ class ProductServiceImpl(ProductService):
                 foundProduct.getProductTitle(),
                 foundProduct.getProductPrice(),
                 foundProduct.getProductDetails(),
-                foundProduct.getSeller()
+                foundProduct.getSeller(),
             )
             return productReadResponse
         else:
@@ -75,7 +76,16 @@ class ProductServiceImpl(ProductService):
 
     def productList(self):
         productList = self.__productRepository.findAllProducts()
-        return productList
+        list = []
+        for Product in productList:
+            response = ProductListResponse(
+                Product.getProductNumber(),
+                Product.getProductTitle(),
+                Product.getProductPrice()
+            )
+            list.append(dict(response))
+        return list
+
 
     def productDelete(self, *args, **kwargs):
         cleanedElements = args[0]

@@ -25,14 +25,21 @@ class TestProductService(unittest.TestCase):
 
         result = testInstance.execute(protocolNumber)
         print(result)
+        print(f"type(result): {type(result)}")
+        responseGeneratorService = ResponseGeneratorServiceImpl.getInstance()
+
+        responseGenerator = responseGeneratorService.findResponseGenerator(protocolNumber)
+        print(result)
+        responseForm = responseGenerator(result)
+        print(f"responseForm: {responseForm}")
 
     def testRegisterProduct(self):
         initCustomProtocol()
         testInstance = CustomProtocolRepositoryImpl.getInstance()
         requestGeneratorService = RequestGeneratorServiceImpl.getInstance()
         productData = {
-            '__productTitle': 'test_product_title',
-            '__productDetails': 'test_product_content',
+            '__productTitle': '아',
+            '__productDetails': 'ㅇㅇㄹ',
             '__productPrice': 10000}
         protocolNumber = 6
 
@@ -41,7 +48,13 @@ class TestProductService(unittest.TestCase):
 
         result = testInstance.execute(protocolNumber, tuple(requestForm.__dict__.values()))
         print(result)
+        print(f"type(result): {type(result)}")
+        responseGeneratorService = ResponseGeneratorServiceImpl.getInstance()
 
+        responseGenerator = responseGeneratorService.findResponseGenerator(protocolNumber)
+        print(result)
+        responseForm = responseGenerator(result)
+        print(f"responseForm: {responseForm}")
 
     def testReadProduct(self):
         initCustomProtocol()

@@ -56,9 +56,9 @@ class ResponseGeneratorServiceImpl(ResponseGeneratorService):
     def generateAccountRegisterResponse(self, arguments):
         print("AccountRegisterResponse 생성")
         if arguments.getIsSuccess() is True:
-            return False
-        else:
             return True
+        else:
+            return False
 
     def generateAccountLoginResponse(self, arguments):
         print(f"ResponseGeneratorService: login sessionId: {arguments}")
@@ -85,9 +85,10 @@ class ResponseGeneratorServiceImpl(ResponseGeneratorService):
 
     def generateProductListResponse(self, arguments):
         print("ProductListResponse 생성")
+        return arguments
     def generateProductRegisterResponse(self, arguments):
         print("ProductRegisterResponse 생성")
-        if arguments is True:
+        if arguments.getIsSuccess() is True:
             return True
         else:
             return False
