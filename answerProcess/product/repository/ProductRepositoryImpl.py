@@ -77,7 +77,9 @@ class ProductRepositoryImpl(ProductRepository):
     def updateProductInfo(self, product):
         dbSession = sessionmaker(bind=self.__instance.engine)
         session = dbSession()
+
         existingProduct = session.query(Product).filter_by(_Product__productNumber=product.getProductNumber()).first()
+
         if existingProduct:
             existingProduct.editProduct(product.getProductTitle(),product.getProductPrice(), product.getProductDetails())
             session.commit()

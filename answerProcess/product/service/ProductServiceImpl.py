@@ -76,18 +76,17 @@ class ProductServiceImpl(ProductService):
 
     def productDelete(self, *args, **kwargs):
         cleanedElements = args[0]
-        productDeleteRequest = ProductDeleteRequest(cleanedElements.getProductNumber())
-        repository = ProductRepositoryImpl.getInstance()
+        productDeleteRequest = ProductDeleteRequest(*cleanedElements)
+        repository = self.__productRepository
         result = repository.deleteProductByProductNumber(productDeleteRequest)
         return result
 
 
     def productUpdate(self, *args, **kwargs):
         cleanedElements = args[0]
-        productUpdateRequest = ProductUpdateRequest(cleanedElements.getProductNumber(),
-                                                    cleanedElements.getProductTitle(),
-                                                    cleanedElements.getProductDetails(),
-                                                    cleanedElements.getProductPrice())
+
+        productUpdateRequest = ProductUpdateRequest(*cleanedElements)
+
         result = self.__productRepository.updateProductInfo(productUpdateRequest)
         if result == True:
             return self.__productRepository.findProductByProductNumber(cleanedElements.getProductNumber())
