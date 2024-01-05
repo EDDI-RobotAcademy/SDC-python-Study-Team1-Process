@@ -83,7 +83,7 @@ class TestProductService(unittest.TestCase):
         testInstance = CustomProtocolRepositoryImpl.getInstance()
         requestGeneratorService = RequestGeneratorServiceImpl.getInstance()
         productdata = {
-            '__productNumber': 5
+            '__productNumber': 4
         }
         protocolNumber = 7
 
@@ -136,7 +136,7 @@ class TestProductService(unittest.TestCase):
         testInstance = CustomProtocolRepositoryImpl.getInstance()
         requestGeneratorService = RequestGeneratorServiceImpl.getInstance()
         updateData = {
-            "__productNumber": 10,
+            "__productNumber": 13,
             "__productTitle": "222",
             "__productDetails": "222",
             "__productPrice": 222
@@ -145,6 +145,7 @@ class TestProductService(unittest.TestCase):
 
         requestGenerator = requestGeneratorService.findRequestGenerator(protocolNumber)
         requestForm = requestGenerator(updateData)
+        print(f"requestForm: {requestForm}")
 
         result = testInstance.execute(protocolNumber, tuple(requestForm.__dict__.values()))
         print(result)

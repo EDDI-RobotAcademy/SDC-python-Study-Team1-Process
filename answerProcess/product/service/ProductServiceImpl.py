@@ -84,28 +84,8 @@ class ProductServiceImpl(ProductService):
 
     def productUpdate(self, *args, **kwargs):
         cleanedElements = args[0]
-
         productUpdateRequest = ProductUpdateRequest(*cleanedElements)
-
         result = self.__productRepository.updateProductInfo(productUpdateRequest)
+
         if result == True:
-            return self.__productRepository.findProductByProductNumber(cleanedElements.getProductNumber())
-
-
-    # def productUpdate(self, *args, **kwargs):
-    #     cleanedElements = args[0]
-    #     productUpdateRequest = ProductUpdateRequest(*cleanedElements)
-    #     response = self.repository(productUpdateRequest)
-    #     return response
-    #
-    # def updateProduct(self, *args, **kwargs):
-    #     cleaned_elements = args[0]
-    #     product_update_request = ProductUpdateRequest(*cleaned_elements)
-    #
-    #     saved_product = self.repository.updateProductInfo(product_update_request.toProduct())
-    #     return ProductUpdateResponse(
-    #             saved_product.getProductNumber(),
-    #             saved_product.getProductName(),
-    #             saved_product.getDescription(),
-    #             saved_product.getPrice(),
-    #         )
+            return self.__productRepository.findProductByProductNumber(productUpdateRequest.getProductNumber())
