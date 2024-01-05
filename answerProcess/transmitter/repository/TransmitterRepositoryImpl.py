@@ -32,6 +32,11 @@ class TransmitterRepositoryImpl(TransmitterRepository):
                 combinedResponseData = self.__transmitQueue.get()
 
                 if combinedResponseData is not None:
+                    if combinedResponseData == 0:
+                        print("transmitter: 종료~~~")
+
+                        clientSocket.close()
+                        break
                     combinedResponseDataStarting = str(combinedResponseData)
 
                     print(f"transmitter: will be send - {combinedResponseDataStarting}")
