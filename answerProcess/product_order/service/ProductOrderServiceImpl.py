@@ -107,9 +107,14 @@ class ProductOrderServiceImpl(ProductOrderService):
 
         productOrderReadRequest = ProductOrderReadRequest(*cleanedElements)
 
-        foundProduct = self.__productRepository.findProductByProductNumber(productOrderReadRequest.getProductNumber())
+        sessionId = productOrderReadRequest.getAccountSessionId()
+        productNumber = productOrderReadRequest.getProductNumber()
 
-        if foundProduct:
+        productList = self.__productOrderRepository.findAllProductIdByAccountId(sessionId)
+
+        if productNumber in productList:
+            foundProduct = self.__productRepository.findProductByProductNumber(productNumber)
+
             productReadResponse = ProductOrderReadResponse(
                 productOrderReadRequest.getProductNumber(),
                 foundProduct.getProductTitle(),
