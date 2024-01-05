@@ -18,5 +18,5 @@ class ProductRepository(abc.ABC):
     def deleteAllProductBySeller(self, seller):
         pass
     @abc.abstractmethod
-    def findByUserInputKeyword(self, keyword):
+    def updateProductInfo(self, product):
         pass
