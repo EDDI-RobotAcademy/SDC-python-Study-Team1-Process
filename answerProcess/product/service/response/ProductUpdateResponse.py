@@ -3,7 +3,7 @@ from dataclasses import dataclass
 
 @dataclass
 class ProductUpdateResponse:
-    __productNumber: int
-    __productTitle: str
-    __productDetails: str
-    __productPrice: int
+    __isSuccess: bool
+
+    def getIsSuccess(self):
+        return self.__isSuccess
