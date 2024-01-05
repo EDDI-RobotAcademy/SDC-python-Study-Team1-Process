@@ -4,7 +4,7 @@ from account.repository.AccountRepositoryImpl import AccountRepositoryImpl
 from custom_protocol.repository.CustomProtocolRepositoryImpl import CustomProtocolRepositoryImpl
 from main import initCustomProtocol, initAccountDomain, initProductDomain, initOrderDomain
 from mysql.MySQLDatabase import MySQLDatabase
-from product.ProductServiceImpl import ProductServiceImpl
+from product.service.ProductServiceImpl import ProductServiceImpl
 from product.entity.Product import Product
 from product.repository.ProductRepositoryImpl import ProductRepositoryImpl
 from product.service.request.ProductDeleteRequest import ProductDeleteRequest
@@ -46,7 +46,12 @@ class TestProductService(unittest.TestCase):
         print(f"responseForm: {responseForm}")
 
     def testRegisterProduct(self):
+        initAccountDomain()
+        initProductDomain()
+        initOrderDomain()
+
         initCustomProtocol()
+
         testInstance = CustomProtocolRepositoryImpl.getInstance()
         requestGeneratorService = RequestGeneratorServiceImpl.getInstance()
         productData = {
@@ -69,7 +74,12 @@ class TestProductService(unittest.TestCase):
         print(f"responseForm: {responseForm}")
 
     def testReadProduct(self):
+        initAccountDomain()
+        initProductDomain()
+        initOrderDomain()
+
         initCustomProtocol()
+
         testInstance = CustomProtocolRepositoryImpl.getInstance()
         requestGeneratorService = RequestGeneratorServiceImpl.getInstance()
         productdata = {
@@ -89,40 +99,57 @@ class TestProductService(unittest.TestCase):
         print(result)
         responseForm = responseGenerator(result)
         print(f"responseForm: {responseForm}")
+    def testDeleteProduct(self):
+        initAccountDomain()
+        initProductDomain()
+        initOrderDomain()
 
-    def testServiceSaveProduct(self):
-        service = ProductServiceImpl.getInstance()
-        product_data = {
-            "productName": "test_product_567890",
-            "description": "cabbages",
-            "seller": "junghwan",
-            "price": "0"
+        initCustomProtocol()
+
+        testInstance = CustomProtocolRepositoryImpl.getInstance()
+        requestGeneratorService = RequestGeneratorServiceImpl.getInstance()
+        productdata = {
+            '__productNumber': 4
         }
-        product = Product(**product_data)
+        protocolNumber = 10
 
-        result = service.registerProduct(product)
+        requestGenerator = requestGeneratorService.findRequestGenerator(protocolNumber)
+        requestForm = requestGenerator(productdata)
 
-        self.assertTrue(result)
-    def testDelete(self):
-        repository = ProductRepositoryImpl.getInstance()
-        service = ProductServiceImpl.getInstance()
-        product = repository.findProductByProductNumber(9)
-        print(f"product: {product}")
-        deleteProduct = service.productDelete(product)
+        result = testInstance.execute(protocolNumber, tuple(requestForm.__dict__.values()))
+        print(result)
+        print(f"type(result): {type(result)}")
+        # responseGeneratorService = ResponseGeneratorServiceImpl.getInstance()
+        #
+        # responseGenerator = responseGeneratorService.findResponseGenerator(protocolNumber)
+        # print(result)
+        # responseForm = responseGenerator(result)
+        # print(f"responseForm: {responseForm}")
 
-    def testUpdate(self):
+    def testUpdateProduct(self):
+        initAccountDomain()
+        initProductDomain()
+        initOrderDomain()
+
+        initCustomProtocol()
+
+        testInstance = CustomProtocolRepositoryImpl.getInstance()
+        requestGeneratorService = RequestGeneratorServiceImpl.getInstance()
         updateData = {
-            "productNumber": 10,
-            "productTitle": "222",
-            "productDetails": "222",
-            "productPrice": 222
+            "__productNumber": 10,
+            "__productTitle": "222",
+            "__productDetails": "222",
+            "__productPrice": 222
         }
+        protocolNumber = 8
 
-        requestUpdate = ProductUpdateRequest(**updateData)
-        print(f"requestUpdate: {requestUpdate}")
-        service = ProductServiceImpl.getInstance()
-        result = service.productUpdate(requestUpdate)
-        # self.assertIsNotNone(result)
+        requestGenerator = requestGeneratorService.findRequestGenerator(protocolNumber)
+        requestForm = requestGenerator(updateData)
+
+        result = testInstance.execute(protocolNumber, tuple(requestForm.__dict__.values()))
+        print(result)
+        print(f"type(result): {type(result)}")
+
 
 if __name__ == '__main__':
     unittest.main()
