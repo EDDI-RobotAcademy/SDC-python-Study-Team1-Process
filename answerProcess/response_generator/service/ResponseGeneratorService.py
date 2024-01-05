@@ -54,3 +54,7 @@ class ResponseGeneratorService(abc.ABC):
     @abc.abstractmethod
     def generateProductOrderRemoveResponse(self, arguments):
         pass
+
+    @abc.abstractmethod
+    def generateProgramQuitResponse(self, arguments):
+        pass
