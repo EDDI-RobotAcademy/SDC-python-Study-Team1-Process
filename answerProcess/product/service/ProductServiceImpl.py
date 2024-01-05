@@ -85,12 +85,12 @@ class ProductServiceImpl(ProductService):
 
         if currentSeller == accountId:
             result = self.__productRepository.deleteProductByProductNumber(productDeleteRequest)
-            if result == True:
+            if result is True:
                 return ProductDeleteResponse(True)
             else:
                 return ProductDeleteResponse(False)
         else:
-            return False
+            return ProductDeleteResponse(False)
 
 
     def productUpdate(self, *args, **kwargs):
@@ -104,10 +104,9 @@ class ProductServiceImpl(ProductService):
 
         if currentSeller == accountId:
             result = self.__productRepository.updateProductInfo(productUpdateRequest)
-            if result == True:
+            if result is True:
                 return ProductUpdateResponse(True)
             else:
                 return ProductUpdateResponse(False)
         else:
-            return False
-
+            return ProductUpdateResponse(False)
