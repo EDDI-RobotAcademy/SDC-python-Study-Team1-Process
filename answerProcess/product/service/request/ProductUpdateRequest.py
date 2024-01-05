@@ -22,21 +22,6 @@ class ProductUpdateRequest:
             self.__productTitle = kwargs["__productTitle"]
             self.__productDetails = kwargs["__productDetails"]
             self.__productPrice = kwargs["__productPrice"]
-
-    # def __init__(self, productNumber=-1, productName=None, description=None, seller=None, price=0, **kwargs):
-    #     if productName is not None and description is not None:
-    #         self.__productNumber = productNumber
-    #         self.__productName = productName
-    #         self.__description = description
-    #         self.__seller = seller
-    #         self.__price = price
-    #     elif "__productName" in kwargs and "__description" in kwargs:
-    #         self.__productNumber = kwargs["__productNumber"]
-    #         self.__productName = kwargs["__productName"]
-    #         self.__description = kwargs["__description"]
-    #         self.__seller = kwargs["__seller"]
-    #         self.__price = kwargs["__price"]
-
     @classmethod
     def createFromTuple(cls, inputTuple):
         return cls(*inputTuple)

@@ -4,7 +4,7 @@ import unittest
 from account.entity.Account import Account
 from account.service.AccountServiceImpl import AccountServiceImpl
 from custom_protocol.repository.CustomProtocolRepositoryImpl import CustomProtocolRepositoryImpl
-from main import initCustomProtocol
+from main import initCustomProtocol, initOrderDomain, initProductDomain, initAccountDomain
 from mysql.MySQLDatabase import MySQLDatabase
 from request_generator.service.RequestGeneratorServiceImpl import RequestGeneratorServiceImpl
 from response_generator.service.ResponseGeneratorServiceImpl import ResponseGeneratorServiceImpl
@@ -21,10 +21,13 @@ class TestAccountRepository(unittest.TestCase):
         pass
 
     def testregisterAccount(self):
+        initAccountDomain()
+        initProductDomain()
+        initOrderDomain()
         initCustomProtocol()
         testInstance = CustomProtocolRepositoryImpl.getInstance()
         requestGeneratorService = RequestGeneratorServiceImpl.getInstance()
-        accountData = {'__accountId': 'Id', '__password': 'pw'}
+        accountData = {'__accountId': 'junghwan', '__password': 'pw'}
         protocolNumber = 1
 
         requestGenerator = requestGeneratorService.findRequestGenerator(protocolNumber)
@@ -37,11 +40,14 @@ class TestAccountRepository(unittest.TestCase):
 
 
     def testLoginAccount(self):
+        initAccountDomain()
+        initProductDomain()
+        initOrderDomain()
         initCustomProtocol()
         testInstance = CustomProtocolRepositoryImpl.getInstance()
         requestGeneratorService = RequestGeneratorServiceImpl.getInstance()
         responseGeneratorService = ResponseGeneratorServiceImpl.getInstance()
-        accountData = {'__accountId': 'Id', '__password': 'pw'}
+        accountData = {'__accountId': 'junghwan', '__password': 'pw'}
         protocolNumber = 2
 
         requestGenerator = requestGeneratorService.findRequestGenerator(protocolNumber)
@@ -54,11 +60,14 @@ class TestAccountRepository(unittest.TestCase):
         print(responseForm)
 
     def testLogoutAccount(self):
+        initAccountDomain()
+        initProductDomain()
+        initOrderDomain()
         initCustomProtocol()
         testInstance = CustomProtocolRepositoryImpl.getInstance()
         requestGeneratorService = RequestGeneratorServiceImpl.getInstance()
         responseGeneratorService = ResponseGeneratorServiceImpl.getInstance()
-        accountData = {'__accountSessionId': 6}
+        accountData = {'__accountSessionId': 17}
         protocolNumber = 3
 
         requestGenerator = requestGeneratorService.findRequestGenerator(protocolNumber)

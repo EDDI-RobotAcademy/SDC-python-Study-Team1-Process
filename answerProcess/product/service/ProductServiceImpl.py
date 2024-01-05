@@ -75,17 +75,39 @@ class ProductServiceImpl(ProductService):
 
 
     def productDelete(self, *args, **kwargs):
+        print(f"productDelete 실행")
         cleanedElements = args[0]
         productDeleteRequest = ProductDeleteRequest(*cleanedElements)
-        repository = self.__productRepository
-        result = repository.deleteProductByProductNumber(productDeleteRequest)
-        return result
+        currentProductNumber = productDeleteRequest.getProductNumber()
+        currentProductInfo = self.__productRepository.findProductByProductNumber(currentProductNumber)
+        currentSeller = currentProductInfo.getSeller()
+        accountId = self.__accountRepository.findById(self.__sessionRepository.getIdBySessionId()).getAccountId()
+
+        if currentSeller == accountId:
+            result = self.__productRepository.deleteProductByProductNumber(productDeleteRequest)
+            if result == True:
+                return ProductDeleteResponse(True)
+            else:
+                return ProductDeleteResponse(False)
+        else:
+            return False
 
 
     def productUpdate(self, *args, **kwargs):
+        print(f"productUpdate 실행")
         cleanedElements = args[0]
         productUpdateRequest = ProductUpdateRequest(*cleanedElements)
-        result = self.__productRepository.updateProductInfo(productUpdateRequest)
+        currentProductNumber = productUpdateRequest.getProductNumber()
+        currentProductInfo = self.__productRepository.findProductByProductNumber(currentProductNumber)
+        currentSeller = currentProductInfo.getSeller()
+        accountId = self.__accountRepository.findById(self.__sessionRepository.getIdBySessionId()).getAccountId()
 
-        if result == True:
-            return self.__productRepository.findProductByProductNumber(productUpdateRequest.getProductNumber())
+        if currentSeller == accountId:
+            result = self.__productRepository.updateProductInfo(productUpdateRequest)
+            if result == True:
+                return ProductUpdateResponse(True)
+            else:
+                return ProductUpdateResponse(False)
+        else:
+            return False
+
