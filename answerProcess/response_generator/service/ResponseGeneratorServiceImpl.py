@@ -33,7 +33,11 @@ class ResponseGeneratorServiceImpl(ResponseGeneratorService):
             cls.__responseFormGenerationTable[
                 CustomProtocol.PRODUCT_READ.value] = cls.__instance.generateProductReadResponse
             cls.__responseFormGenerationTable[
+                CustomProtocol.PRODUCT_MODIFY.value] = cls.__instance.generateProductUpdateResponse
+            cls.__responseFormGenerationTable[
                 CustomProtocol.PRODUCT_PURCHASE.value] = cls.__instance.generateProductOrderRegisterResponse
+            cls.__responseFormGenerationTable[
+                CustomProtocol.PRODUCT_REMOVE.value] = cls.__instance.generateProductRemoveResponse
             cls.__responseFormGenerationTable[
                 CustomProtocol.ORDER_LIST.value] = cls.__instance.generateProductOrderListResponse
 
@@ -90,8 +94,16 @@ class ResponseGeneratorServiceImpl(ResponseGeneratorService):
     def generateProductListResponse(self, arguments):
         print("ProductListResponse 생성")
         return arguments
+
     def generateProductRegisterResponse(self, arguments):
         print("ProductRegisterResponse 생성")
+        if arguments.getIsSuccess() is True:
+            return True
+        else:
+            return False
+
+    def generateProductUpdateResponse(self, arguments):
+        print("ProductUpdateResponse 생성")
         if arguments.getIsSuccess() is True:
             return True
         else:
@@ -115,6 +127,13 @@ class ResponseGeneratorServiceImpl(ResponseGeneratorService):
 
     def generateProductOrderRegisterResponse(self, arguments):
         print("ProductOrderRegisterResponse 생성")
+        if arguments.getIsSuccess() is True:
+            return True
+        else:
+            return False
+
+    def generateProductRemoveResponse(self, arguments):
+        print("ProductRemoveResponse 생성")
         if arguments.getIsSuccess() is True:
             return True
         else:
