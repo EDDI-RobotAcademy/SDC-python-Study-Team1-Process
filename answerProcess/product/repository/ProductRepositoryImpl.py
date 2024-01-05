@@ -54,8 +54,7 @@ class ProductRepositoryImpl(ProductRepository):
 
         dbSession = sessionmaker(bind=self.__instance.engine)
         session = dbSession()
-        print(dir(productNumber))
-        print(f"productNumber: {productNumber}")
+
         return session.query(Product).filter_by(_Product__productNumber=productNumber).first()
 
     def findAllProducts(self):
@@ -69,27 +68,22 @@ class ProductRepositoryImpl(ProductRepository):
         session = dbSession()
 
         product = session.query(Product).filter_by(_Product__productNumber=request.getProductNumber()).first()
-        if product:
+        if product is not None:
             session.delete(product)
             session.commit()
             return True
-        return False
+        else:
+            return False
 
     def updateProductInfo(self, product):
         dbSession = sessionmaker(bind=self.__instance.engine)
         session = dbSession()
 
         existingProduct = session.query(Product).filter_by(_Product__productNumber=product.getProductNumber()).first()
-        print(f"existingProduct: {existingProduct}")
 
-        if existingProduct:
+        if existingProduct is not None:
             existingProduct.editProduct(product.getProductTitle(),product.getProductPrice(), product.getProductDetails())
             session.commit()
             return True
-        return False
-
-    def findByUserInputKeyword(self, keyword):
-        dbSession = sessionmaker(bind=self.__instance.engine)
-        session = dbSession()
-
-        return session.query(Product).filter(Product._Product__productTitle.ilike(f"%{keyword}%")).all()
+        else:
+            return False

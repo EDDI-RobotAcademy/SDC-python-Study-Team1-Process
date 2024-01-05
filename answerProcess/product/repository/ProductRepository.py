@@ -15,6 +15,3 @@ class ProductRepository(abc.ABC):
     @abc.abstractmethod
     def deleteProductByProductNumber(self, productNumber):
         pass
-    @abc.abstractmethod
-    def findByUserInputKeyword(self, keyword):
-        pass
