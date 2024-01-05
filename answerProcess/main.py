@@ -14,6 +14,7 @@ from product.service.ProductServiceImpl import ProductServiceImpl
 from product_order.repository.ProductOrderRepositoryImpl import ProductOrderRepositoryImpl
 from product_order.service.ProductOrderService import ProductOrderService
 from product_order.service.ProductOrderServiceImpl import ProductOrderServiceImpl
+from program.service.ProgramServiceImpl import ProgramServiceImpl
 from server_socket.repository.ServerSocketRepositoryImpl import ServerSocketRepositoryImpl
 from server_socket.service.ServerSocketServiceImpl import ServerSocketServiceImpl
 from task_manage.repository.TaskManageRepositoryImpl import TaskManageRepositoryImpl
@@ -60,6 +61,7 @@ def initCustomProtocol():
     accountService = AccountServiceImpl.getInstance()
     productService = ProductServiceImpl.getInstance()
     productOrderService = ProductOrderServiceImpl.getInstance()
+    programService = ProgramServiceImpl.getInstance()
 
     print(f"enum value test: {CustomProtocol.ACCOUNT_REGISTER.value}")
     customProtocolService.registerCustomProtocol(
@@ -114,6 +116,10 @@ def initCustomProtocol():
         CustomProtocol.ORDER_REMOVE.value,
         productOrderService.orderRemove
     )
+    customProtocolService.registerCustomProtocol(
+        CustomProtocol.EXIT.value,
+        programService.programQuit
+    )
 
 
 def initAccountDomain():
@@ -136,6 +142,10 @@ def initOrderDomain():
     productOrderRepository = ProductOrderRepositoryImpl.getInstance()
     ProductOrderServiceImpl(accountRepository, sessionRepository, productRepository, productOrderRepository)
 
+def initProgramDomin():
+    accountRepository = AccountRepositoryImpl.getInstance()
+    sessionRepository = SessionRepositoryImpl.getInstance()
+    ProgramServiceImpl(accountRepository, sessionRepository)
 
 def initEachDomain():
     # initMysqlInstance()
@@ -144,6 +154,7 @@ def initEachDomain():
     initAccountDomain()
     initProductDomain()
     initOrderDomain()
+    initProgramDomin()
 
     initServerSocketDomain()
     initTaskManageDomain()
