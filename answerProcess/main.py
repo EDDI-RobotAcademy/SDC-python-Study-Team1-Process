@@ -107,6 +107,10 @@ def initCustomProtocol():
         productOrderService.orderList
     )
     customProtocolService.registerCustomProtocol(
+        CustomProtocol.ORDER_READ.value,
+        productOrderService.orderRead
+    )
+    customProtocolService.registerCustomProtocol(
         CustomProtocol.ORDER_REMOVE.value,
         productOrderService.orderRemove
     )
