@@ -41,7 +41,12 @@ class ReceiverRepositoryImpl(ReceiverRepository):
                 receivedRequest = clientSocket.recv(1024)
 
                 if not receivedRequest:
-                    clientSocket.closeSocket()
+                    print("ReceiverRepositoryImpl: 소켓종료")
+                    # transmitter에게 접속이 종료되었다고 알려야합니다.
+                    transmitQueue.put(0)
+
+
+                    clientSocket.close()
                     break
 
                 receivedForm  = json.loads(receivedRequest)

@@ -35,20 +35,19 @@ class ProductOrderServiceImpl(ProductOrderService):
         productorderListRequest = ProductOrderListRequest(*cleanedElements)
 
         sessionId = productorderListRequest.getSessionId()
-        orderByAccountList = self.__productOrderRepository.findAllProductIdByAccountId(sessionId)
-
+        productIdList = self.__productOrderRepository.findAllProductIdByAccountId(sessionId)
+        print("productIdList: ", productIdList)
         orderList = []
 
-        for order in orderByAccountList:
-            productId = order.getProductNumber()
-            foundProduct = self.__productRepository.findProductByProductNumber(productId)
+        for order in productIdList:
+            foundProduct = self.__productRepository.findProductByProductNumber(order)
 
             response = ProductOrderListResponse(
                 foundProduct.getProductNumber(),
                 foundProduct.getProductTitle(),
                 foundProduct.getProductPrice()
             )
-            orderList.append(response)
+            orderList.append(dict(response))
 
         print(f"orderList: {orderList}")
         return orderList
