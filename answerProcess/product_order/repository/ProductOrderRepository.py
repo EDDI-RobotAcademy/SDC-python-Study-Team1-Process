@@ -13,3 +13,6 @@ class ProductOrderRepository(abc.ABC):
 
     def removeProductsByAccountId(self, accountId, productNumber):
         pass
+
+    def removeAllProductsByAccountId(self, accountId):
+        pass

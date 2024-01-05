@@ -125,7 +125,9 @@ def initCustomProtocol():
 def initAccountDomain():
     accountRepository = AccountRepositoryImpl()
     sessionRepository = SessionRepositoryImpl()
-    AccountServiceImpl(accountRepository, sessionRepository)
+    productRepository = ProductRepositoryImpl()
+    productOrderRepository = ProductOrderRepositoryImpl()
+    AccountServiceImpl(accountRepository, sessionRepository, productRepository, productOrderRepository)
 
 
 def initProductDomain():

@@ -15,3 +15,8 @@ class ProductRepository(abc.ABC):
     @abc.abstractmethod
     def deleteProductByProductNumber(self, productNumber):
         pass
+    def deleteAllProductBySeller(self, seller):
+        pass
+    @abc.abstractmethod
+    def updateProductInfo(self, product):
+        pass

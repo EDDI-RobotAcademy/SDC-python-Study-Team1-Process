@@ -61,6 +61,7 @@ class AccountRepositoryImpl(AccountRepository):
         dbSession = sessionmaker(bind=self.__instance.engine)
         session = dbSession()
 
+
         return session.query(Account).filter_by(_Account__id=id).first()
 
     def findByAccountId(self, accountId):

@@ -75,6 +75,17 @@ class ProductRepositoryImpl(ProductRepository):
         else:
             return False
 
+    def deleteAllProductBySeller(self, seller):
+        dbSession = sessionmaker(bind=self.__instance.engine)
+        session = dbSession()
+
+        foundProduct = session.query(Product).filter_by(_Product__seller=seller).all()
+
+        if foundProduct:
+            for product in foundProduct:
+                session.delete(product)
+                session.commit()
+
     def updateProductInfo(self, product):
         dbSession = sessionmaker(bind=self.__instance.engine)
         session = dbSession()

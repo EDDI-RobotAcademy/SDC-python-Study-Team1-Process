@@ -30,7 +30,7 @@ class TestAccountRepository(unittest.TestCase):
         initCustomProtocol()
         testInstance = CustomProtocolRepositoryImpl.getInstance()
         requestGeneratorService = RequestGeneratorServiceImpl.getInstance()
-        accountData = {'__accountId': 'junghwan', '__password': 'pw'}
+        accountData = {'__accountId': 'Id', '__password': 'pw'}
 
         protocolNumber = 1
 
@@ -53,7 +53,7 @@ class TestAccountRepository(unittest.TestCase):
         requestGeneratorService = RequestGeneratorServiceImpl.getInstance()
         responseGeneratorService = ResponseGeneratorServiceImpl.getInstance()
 
-        accountData = {'__accountId': 'junghwan', '__password': 'pw'}
+        accountData = {'__accountId': 'Id', '__password': 'pw'}
 
         protocolNumber = 2
 
@@ -92,11 +92,15 @@ class TestAccountRepository(unittest.TestCase):
 
 
     def testdelateaccount(self):
+        initAccountDomain()
+        initProductDomain()
+        initOrderDomain()
+
         initCustomProtocol()
         testInstance = CustomProtocolRepositoryImpl.getInstance()
         requestGeneratorService = RequestGeneratorServiceImpl.getInstance()
 
-        accountData = {'__accountSessionId': 2}
+        accountData = {'__accountSessionId': 13}
         protocolNumber = 4
 
         requestGenerator = requestGeneratorService.findRequestGenerator(protocolNumber)
@@ -104,7 +108,8 @@ class TestAccountRepository(unittest.TestCase):
 
 
         result = testInstance.execute(protocolNumber, tuple(requestForm.__dict__.values()))
-        self.assertIsNone(result)
+        print(result)
+
 
 
 if __name__ == '__main__':

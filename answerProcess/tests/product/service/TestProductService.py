@@ -55,8 +55,8 @@ class TestProductService(unittest.TestCase):
         testInstance = CustomProtocolRepositoryImpl.getInstance()
         requestGeneratorService = RequestGeneratorServiceImpl.getInstance()
         productData = {
-            '__productTitle': '아',
-            '__productDetails': 'ㅇㅇㄹ',
+            '__productTitle': '망할1',
+            '__productDetails': '어렵다',
             '__productPrice': 10000}
         protocolNumber = 6
 
