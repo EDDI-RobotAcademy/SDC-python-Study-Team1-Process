@@ -109,7 +109,7 @@ class TestProductService(unittest.TestCase):
         testInstance = CustomProtocolRepositoryImpl.getInstance()
         requestGeneratorService = RequestGeneratorServiceImpl.getInstance()
         productdata = {
-            '__productNumber': 3
+            '__productNumber': 13
         }
         protocolNumber = 10
 
@@ -137,9 +137,9 @@ class TestProductService(unittest.TestCase):
         requestGeneratorService = RequestGeneratorServiceImpl.getInstance()
         updateData = {
             "__productNumber": 13,
-            "__productTitle": "222",
-            "__productDetails": "222",
-            "__productPrice": 222
+            "__productTitle": "111",
+            "__productDetails": "111",
+            "__productPrice": 111
         }
         protocolNumber = 8
 

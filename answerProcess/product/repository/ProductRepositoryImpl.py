@@ -1,5 +1,6 @@
 from sqlalchemy.orm import sessionmaker
 
+from account.entity.AccountSession import AccountSession
 from mysql.MySQLDatabase import MySQLDatabase
 from sqlalchemy.exc import SQLAlchemyError
 
@@ -71,13 +72,15 @@ class ProductRepositoryImpl(ProductRepository):
         if product:
             session.delete(product)
             session.commit()
-            return ProductDeleteResponse(True)
-        return ProductDeleteResponse(False)
+            return True
+        return False
 
     def updateProductInfo(self, product):
         dbSession = sessionmaker(bind=self.__instance.engine)
         session = dbSession()
+
         existingProduct = session.query(Product).filter_by(_Product__productNumber=product.getProductNumber()).first()
+        print(f"existingProduct: {existingProduct}")
 
         if existingProduct:
             existingProduct.editProduct(product.getProductTitle(),product.getProductPrice(), product.getProductDetails())
