@@ -71,5 +71,24 @@ class TestProductOrderService(unittest.TestCase):
         responseForm = responseGenerator(result)
         print(f"responseForm: {responseForm}")
 
+    def testOrderDelete(self):
+        initAccountDomain()
+        initProductDomain()
+        initOrderDomain()
+
+        initCustomProtocol()
+        testInstance = CustomProtocolRepositoryImpl.getInstance()
+        requestGeneratorService = RequestGeneratorServiceImpl.getInstance()
+
+        orderData = {'__accountSessionId': 7,
+            '__productNumber': 3}
+        protocolNumber = 13
+
+        requestGenerator = requestGeneratorService.findRequestGenerator(protocolNumber)
+        requestForm = requestGenerator(orderData)
+
+        result = testInstance.execute(protocolNumber, tuple(requestForm.__dict__.values()))
+        print(result)
+
     if __name__ == '__main__':
         unittest.main()

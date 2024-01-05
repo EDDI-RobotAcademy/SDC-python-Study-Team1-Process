@@ -11,6 +11,7 @@ from product.service.request.ProductRegisterRequest import ProductRegisterReques
 from product.service.request.ProductUpdateRequest import ProductUpdateRequest
 from product_order.service.request.ProductOrderListRequest import ProductOrderListRequest
 from product_order.service.request.ProductOrderRegisterRequest import ProductOrderRegisterRequest
+from product_order.service.request.ProductOrderRemoveRequest import ProductOrderRemoveRequest
 from request_generator.service.RequestGeneratorService import RequestGeneratorService
 
 
@@ -41,6 +42,8 @@ class RequestGeneratorServiceImpl(RequestGeneratorService):
                 CustomProtocol.PRODUCT_REMOVE.value] = cls.__instance.generateProductRemoveRequest
             cls.__requestFormGenerationTable[
                 CustomProtocol.ORDER_LIST.value] = cls.__instance.generateProductOrderListRequest
+            cls.__requestFormGenerationTable[
+                CustomProtocol.ORDER_REMOVE.value] = cls.__instance.generateProductOrderRemoveRequest
 
         return cls.__instance
 
@@ -126,6 +129,13 @@ class RequestGeneratorServiceImpl(RequestGeneratorService):
     def generateProductOrderListRequest(self, arguments):
         print("ProductOrderListRequest 생성")
         return ProductOrderListRequest(
+            __accountSessionId=arguments["__accountSessionId"]
+        )
+
+    def generateProductOrderRemoveRequest(self, arguments):
+        print("ProductOrderRemoveRequest 생성")
+        return ProductOrderRemoveRequest(
+            __productNumber=arguments["__productNumber"],
             __accountSessionId=arguments["__accountSessionId"]
         )
 

@@ -3,6 +3,8 @@ from product_order.entity.ProductOrder import  ProductOrder
 from product_order.service.ProductOrderService import ProductOrderService
 from product_order.service.request.ProductOrderListRequest import ProductOrderListRequest
 from product_order.service.request.ProductOrderRegisterRequest import ProductOrderRegisterRequest
+from product_order.service.request.ProductOrderRemoveRequest import ProductOrderRemoveRequest
+from product_order.service.response.ProductOrderRemoveResponse import ProductOrderRemoveResponse
 from product_order.service.response.ProductOrderListResponse import ProductOrderListResponse
 from product_order.service.response.ProductOrderRegisterResponse import ProductOrderRegisterResponse
 
@@ -76,11 +78,23 @@ class ProductOrderServiceImpl(ProductOrderService):
 
 
 
-    def orderDelete(self, *args, **kwargs):
+    def orderRemove(self, *args, **kwargs):
         print("orderDelete()")
 
         cleanedElements = args[0]
         print(f"cleanedElements: {cleanedElements}")
+
+        productOrderRemoveRequest = ProductOrderRemoveRequest(*cleanedElements)
+
+        accountSessionId = productOrderRemoveRequest.getAccountId()
+        productNumber = productOrderRemoveRequest.getProductNumber()
+
+        result = self.__productOrderRepository.removeProductsByAccountId(accountSessionId, productNumber)
+
+        if result is True:
+            return ProductOrderRemoveResponse(True)
+        else:
+            return ProductOrderRemoveResponse(False)
 
 
 

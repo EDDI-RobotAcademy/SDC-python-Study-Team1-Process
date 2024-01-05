@@ -51,21 +51,22 @@ class ProductOrderRepositoryImpl(ProductOrderRepository):
 
         return productIdList
 
-    def removeProductsByAccountId(self, sessionId, productId):
+    def removeProductsByAccountId(self, accountId, productNumber):
         dbSession = sessionmaker(bind=self.__instance.engine)
         session = dbSession()
 
-        foundProductOrder = session.query(ProductOrder).filter_by(_ProductOrder__accountId=sessionId,
-                                                         _ProductOrder__productNumber=productId).all()
+
+
+        foundProductOrder = session.query(ProductOrder).filter_by(_ProductOrder__accountId=accountId,
+                                                                  _ProductOrder__productNumber=productNumber).all()
 
         if foundProductOrder:
             for product in foundProductOrder:
                 session.delete(product)
                 session.commit()
             response = True
-            print("주문 취소 완료")
         else:
             response = False
-            print("주문을 취소할 수 없습니다.")
 
         return response
+
