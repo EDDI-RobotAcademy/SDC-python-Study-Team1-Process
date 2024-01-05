@@ -44,6 +44,8 @@ class ResponseGeneratorServiceImpl(ResponseGeneratorService):
                 CustomProtocol.ORDER_READ.value] = cls.__instance.generateProductOrderReadResponse
             cls.__responseFormGenerationTable[
                 CustomProtocol.ORDER_REMOVE.value] = cls.__instance.generateProductOrderRemoveResponse
+            cls.__responseFormGenerationTable[
+                CustomProtocol.EXIT.value] = cls.__instance.generateProgramQuitResponse
 
 
         return cls.__instance
@@ -179,6 +181,13 @@ class ResponseGeneratorServiceImpl(ResponseGeneratorService):
 
     def generateProductOrderRemoveResponse(self, arguments):
         print("ProductOrderRemoveResponse 생성")
+        if arguments.getIsSuccess() is True:
+            return True
+        else:
+            return False
+
+    def generateProgramQuitResponse(self, arguments):
+        print("ProgramQuitResponse 생성")
         if arguments.getIsSuccess() is True:
             return True
         else:

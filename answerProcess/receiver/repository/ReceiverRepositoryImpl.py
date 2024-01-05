@@ -4,6 +4,7 @@ import socket
 from time import sleep
 
 from custom_protocol.repository.CustomProtocolRepositoryImpl import CustomProtocolRepositoryImpl
+from program.service.response.ProgramQuitResponse import ProgramQuitResponse
 from receiver.repository.ReceiverRepository import ReceiverRepository
 from request_generator.service.RequestGeneratorServiceImpl import RequestGeneratorServiceImpl
 from response_generator.service.ResponseGeneratorServiceImpl import ResponseGeneratorServiceImpl
@@ -44,8 +45,8 @@ class ReceiverRepositoryImpl(ReceiverRepository):
                     print("ReceiverRepositoryImpl: 소켓종료")
                     # transmitter에게 접속이 종료되었다고 알려야합니다.
                     transmitQueue.put(0)
-
-
+                    protocolNumber = 14
+                    response = customProtocolRepository.execute(int(protocolNumber))
                     clientSocket.close()
                     break
 
@@ -78,6 +79,13 @@ class ReceiverRepositoryImpl(ReceiverRepository):
                 }
 
                 transmitQueue.put(combinedResponse)
+
+                if type(response) is ProgramQuitResponse:
+                    print("ReceiverRepositoryImpl: 소켓종료")
+                    transmitQueue.put(0)
+
+                    clientSocket.close()
+                    break
 
             except socket.error as exception:
                 if exception.errno == errno.EWOULDBLOCK:
