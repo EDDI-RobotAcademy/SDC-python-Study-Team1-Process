@@ -2,8 +2,10 @@
 from product_order.entity.ProductOrder import  ProductOrder
 from product_order.service.ProductOrderService import ProductOrderService
 from product_order.service.request.ProductOrderListRequest import ProductOrderListRequest
+from product_order.service.request.ProductOrderReadRequest import ProductOrderReadRequest
 from product_order.service.request.ProductOrderRegisterRequest import ProductOrderRegisterRequest
 from product_order.service.request.ProductOrderRemoveRequest import ProductOrderRemoveRequest
+from product_order.service.response.ProductOrderReadResponse import ProductOrderReadResponse
 from product_order.service.response.ProductOrderRemoveResponse import ProductOrderRemoveResponse
 from product_order.service.response.ProductOrderListResponse import ProductOrderListResponse
 from product_order.service.response.ProductOrderRegisterResponse import ProductOrderRegisterResponse
@@ -66,6 +68,8 @@ class ProductOrderServiceImpl(ProductOrderService):
 
         accountSessionId = productOrderRegisterRequest.getAccountId()
         productNumber = productOrderRegisterRequest.getProductNumber()
+        if accountSessionId is None or productNumber is None:
+            return ProductOrderRegisterResponse(False)
         order = ProductOrder(accountSessionId, productNumber)
         print(f"type(order): {type(order)}")
 
@@ -95,6 +99,28 @@ class ProductOrderServiceImpl(ProductOrderService):
             return ProductOrderRemoveResponse(True)
         else:
             return ProductOrderRemoveResponse(False)
+
+
+    def orderRead(self, *args, **kwargs):
+        cleanedElements = args[0]
+        print(f"cleanedElements: {cleanedElements}")
+
+        productOrderReadRequest = ProductOrderReadRequest(*cleanedElements)
+
+        foundProduct = self.__productRepository.findProductByProductNumber(productOrderReadRequest.getProductNumber())
+
+        if foundProduct:
+            productReadResponse = ProductOrderReadResponse(
+                productOrderReadRequest.getProductNumber(),
+                foundProduct.getProductTitle(),
+                foundProduct.getProductPrice(),
+                foundProduct.getProductDetails(),
+                foundProduct.getSeller(),
+            )
+            return productReadResponse
+        else:
+            print("상품을 찾을 수 없습니다.")
+            return None
 
 
 

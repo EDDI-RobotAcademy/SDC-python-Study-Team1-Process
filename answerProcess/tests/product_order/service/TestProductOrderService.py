@@ -80,8 +80,8 @@ class TestProductOrderService(unittest.TestCase):
         testInstance = CustomProtocolRepositoryImpl.getInstance()
         requestGeneratorService = RequestGeneratorServiceImpl.getInstance()
 
-        orderData = {'__accountSessionId': 7,
-            '__productNumber': 3}
+        orderData = {'__accountSessionId': -1,
+            '__productNumber': 23}
         protocolNumber = 13
 
         requestGenerator = requestGeneratorService.findRequestGenerator(protocolNumber)
@@ -89,6 +89,37 @@ class TestProductOrderService(unittest.TestCase):
 
         result = testInstance.execute(protocolNumber, tuple(requestForm.__dict__.values()))
         print(result)
+        responseGeneratorService = ResponseGeneratorServiceImpl.getInstance()
+
+        responseGenerator = responseGeneratorService.findResponseGenerator(protocolNumber)
+        print(result)
+        responseForm = responseGenerator(result)
+        print(f"responseForm: {responseForm}")
+
+    def testProductOrderRead(self):
+        initAccountDomain()
+        initProductDomain()
+        initOrderDomain()
+
+        initCustomProtocol()
+
+        testInstance = CustomProtocolRepositoryImpl.getInstance()
+        requestGeneratorService = RequestGeneratorServiceImpl.getInstance()
+        orderData = {'__accountSessionId': 5,
+                    '__productOrderNumber': 9}
+        protocolNumber = 12
+
+        requestGenerator = requestGeneratorService.findRequestGenerator(protocolNumber)
+        requestForm = requestGenerator(orderData)
+
+        result = testInstance.execute(protocolNumber, tuple(requestForm.__dict__.values()))
+        print(result)
+        responseGeneratorService = ResponseGeneratorServiceImpl.getInstance()
+
+        responseGenerator = responseGeneratorService.findResponseGenerator(protocolNumber)
+        print(result)
+        responseForm = responseGenerator(result)
+        print(f"responseForm: {responseForm}")
 
     if __name__ == '__main__':
         unittest.main()

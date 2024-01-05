@@ -40,6 +40,10 @@ class ResponseGeneratorServiceImpl(ResponseGeneratorService):
                 CustomProtocol.PRODUCT_REMOVE.value] = cls.__instance.generateProductRemoveResponse
             cls.__responseFormGenerationTable[
                 CustomProtocol.ORDER_LIST.value] = cls.__instance.generateProductOrderListResponse
+            cls.__responseFormGenerationTable[
+                CustomProtocol.ORDER_READ.value] = cls.__instance.generateProductOrderReadResponse
+            cls.__responseFormGenerationTable[
+                CustomProtocol.ORDER_REMOVE.value] = cls.__instance.generateProductOrderRemoveResponse
 
 
         return cls.__instance
@@ -111,10 +115,17 @@ class ResponseGeneratorServiceImpl(ResponseGeneratorService):
 
     def generateProductReadResponse(self, arguments):
         print("ProductReadResponse 생성")
+        if arguments is None:
+            productResponseData = {
+            '__productNumber': None,
+            '__productTitle': None,
+            '__productPrice': None,
+            '__productDetails': None,
+            '__seller': None
+            }
+            return productResponseData
         print(f"arguments: {arguments}")
         resutl = dict(arguments)
-
-        print(f"arguments['__productNumber']")
 
         productResponseData = {
             '__productNumber': resutl['__productNumber'],
@@ -142,6 +153,36 @@ class ResponseGeneratorServiceImpl(ResponseGeneratorService):
     def generateProductOrderListResponse(self, arguments):
         print("ProductOrderListResponse 생성")
         return arguments
+
+    def generateProductOrderReadResponse(self, arguments):
+        print("ProductOrderReadResponse 생성")
+        if arguments is None:
+            productOrderResponseData = {
+                '__productNumber': None,
+                '__productTitle': None,
+                '__productPrice': None,
+                '__productDetails': None,
+                '__seller': None
+            }
+            return productOrderResponseData
+        print(f"arguments: {arguments}")
+        resutl = dict(arguments)
+
+        productOrderResponseData = {
+            '__productNumber': resutl['__productNumber'],
+            '__productTitle': resutl['__productTitle'],
+            '__productPrice': resutl['__productPrice'],
+            '__productDetails': resutl['__productDetails'],
+            '__seller': resutl['__seller']
+        }
+        return productOrderResponseData
+
+    def generateProductOrderRemoveResponse(self, arguments):
+        print("ProductOrderRemoveResponse 생성")
+        if arguments.getIsSuccess() is True:
+            return True
+        else:
+            return False
 
 
 
