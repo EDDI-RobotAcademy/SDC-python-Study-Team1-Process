@@ -55,8 +55,6 @@ class ProductOrderRepositoryImpl(ProductOrderRepository):
         dbSession = sessionmaker(bind=self.__instance.engine)
         session = dbSession()
 
-
-
         foundProductOrder = session.query(ProductOrder).filter_by(_ProductOrder__accountId=accountId,
                                                                   _ProductOrder__productNumber=productNumber).all()
 
@@ -69,4 +67,15 @@ class ProductOrderRepositoryImpl(ProductOrderRepository):
             response = False
 
         return response
+
+    def removeAllProductsByAccountId(self, accountId):
+        dbSession = sessionmaker(bind=self.__instance.engine)
+        session = dbSession()
+
+        foundProductOrder = session.query(ProductOrder).filter_by(_ProductOrder__accountId=accountId).all()
+
+        if foundProductOrder:
+            for product in foundProductOrder:
+                session.delete(product)
+                session.commit()
 

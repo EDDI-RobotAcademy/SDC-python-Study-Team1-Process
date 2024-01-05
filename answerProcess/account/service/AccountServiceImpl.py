@@ -15,17 +15,20 @@ from account.service.response.AccountLogoutResponse import AccountLogoutResponse
 class AccountServiceImpl(AccountService):
     __instance = None
 
-    def __new__(cls, accountRepository, sessionRepository):
+    def __new__(cls, accountRepository, sessionRepository, productRepository, productOrderRepository):
         if cls.__instance is None:
             cls.__instance = super().__new__(cls)
             cls.__instance.__accountRepository = accountRepository
             cls.__instance.__sessionRepository = sessionRepository
+            cls.__instance.__productRepository = productRepository
+            cls.__instance.__productOrderRepository = productOrderRepository
         return cls.__instance
 
     @classmethod
-    def getInstance(cls, accountRepository=None, sessionRepository=None):
+    def getInstance(cls, accountRepository=None, sessionRepository=None,
+                    productRepository=None, productOrderRepository=None):
         if cls.__instance is None:
-            cls.__instance = cls(accountRepository, sessionRepository)
+            cls.__instance = cls(accountRepository, sessionRepository, productRepository, productOrderRepository)
         return cls.__instance
 
     def registerAccount(self, *args, **kwargs):
@@ -47,13 +50,21 @@ class AccountServiceImpl(AccountService):
         print(cleanedElements)
 
         accountDeleteRequest = AccountDeleteRequest(*cleanedElements)
+
         foundAccount = self.__accountRepository.findById(accountDeleteRequest.getAccountSessionId())
         print(f"foundAccount: {foundAccount}")
+
         if foundAccount is None:
             return AccountDeleteResponse(False)
 
+        self.__productOrderRepository.removeAllProductsByAccountId(foundAccount.getId())
+        seller = self.__accountRepository.findById(self.__sessionRepository.getIdBySessionId()).getAccountId()
+        self.__productRepository.deleteAllProductBySeller(seller)
         self.__sessionRepository.deleteBySessionId(foundAccount.getId())
         self.__accountRepository.deleteById(foundAccount.getId())
+
+
+
 
         return AccountDeleteResponse(True)
 

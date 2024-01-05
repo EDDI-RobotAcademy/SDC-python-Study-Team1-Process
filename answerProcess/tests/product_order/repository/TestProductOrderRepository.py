@@ -37,6 +37,10 @@ class TestProductOrderRepository(unittest.TestCase):
 
         self.assertTrue(result)
 
+    def testRemoveAllProductsByAccountId(self):
+        repository = ProductOrderRepositoryImpl.getInstance()
+        repository.removeAllProductsByAccountId(7)
+
 
     if __name__ == '__main__':
         unittest.main()

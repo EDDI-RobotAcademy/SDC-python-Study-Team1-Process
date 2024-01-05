@@ -54,6 +54,10 @@ class TestProductRepository(unittest.TestCase):
         # deletedProduct = repository.findProductByProductNumber("2")
         # self.assertIsNone(deletedProduct)
 
+    def testDeleteAllProductBySeller(self):
+        repository = ProductRepositoryImpl.getInstance()
+        repository.deleteAllProductBySeller("junghwan")
+
     def testUpdate(self):
         repository = ProductRepositoryImpl.getInstance()
         request = ProductUpdateRequest(7, "111", "111", 111)

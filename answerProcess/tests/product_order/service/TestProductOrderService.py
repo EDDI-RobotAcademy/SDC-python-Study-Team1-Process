@@ -26,8 +26,8 @@ class TestProductOrderService(unittest.TestCase):
         requestGeneratorService = RequestGeneratorServiceImpl.getInstance()
 
         productPurchaseRequestData = {
-            '__accountSessionId': 22,
-            '__productNumber': 7
+            '__accountSessionId': 13,
+            '__productNumber': 3
         }
         protocolNumber = 9
 

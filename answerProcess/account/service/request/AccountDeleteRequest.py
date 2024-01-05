@@ -7,9 +7,6 @@ from account.entity.AccountSession import AccountSession
 class AccountDeleteRequest:
     __accountSessionId: int
 
-    def toSession(self):
-        return AccountSession(self.__accountSessionId)
-
     def __init__(self, accountSessionId = None, **kwargs):
         if accountSessionId is not None:
             self.__accountSessionId = accountSessionId
