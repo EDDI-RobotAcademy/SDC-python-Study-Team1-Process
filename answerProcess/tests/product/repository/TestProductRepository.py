@@ -4,6 +4,7 @@ from mysql.MySQLDatabase import MySQLDatabase
 from product.service.ProductServiceImpl import ProductServiceImpl
 from product.entity.Product import Product
 from product.repository.ProductRepositoryImpl import ProductRepositoryImpl
+from product.service.request.ProductUpdateRequest import ProductUpdateRequest
 
 
 class TestProductRepository(unittest.TestCase):
@@ -55,36 +56,9 @@ class TestProductRepository(unittest.TestCase):
 
     def testUpdate(self):
         repository = ProductRepositoryImpl.getInstance()
-        request = ProductUpdateRequest(8, "111", "111", 111)
+        request = ProductUpdateRequest(7, "111", "111", 111)
         result = repository.updateProductInfo(request)
         # self.assertTrue(result)
-
-    #
-    # def testFindById(self):
-    #     repository = AccountRepositoryImpl.getInstance()
-    #     accountData = {
-    #         "accountId": "test_user",
-    #         "password": "test_password"
-    #     }
-    #     account = Account(**accountData)
-    #     repository.save(account)
-    #
-    #     retrievedAccount = repository.findById(account.getId())
-    #
-    #     self.assertIsNotNone(retrievedAccount)
-    #     self.assertEqual(retrievedAccount.getAccountId(), accountData["accountId"])
-    #
-    # def testSameNameSaveAccount(self):
-    #     repository = AccountRepositoryImpl.getInstance()
-    #     account_data = {
-    #         "accountId": "test_user",
-    #         "password": "test_password"
-    #     }
-    #     account = Account(**account_data)
-    #
-    #     result = repository.save(account)
-    #
-    #     self.assertFalse(result)
 
 
 if __name__ == '__main__':
