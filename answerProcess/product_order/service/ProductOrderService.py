@@ -10,3 +10,11 @@ class ProductOrderService(abc.ABC):
     def orderRegister(self):
         pass
 
+    @abc.abstractmethod
+    def orderRemove(self, *args, **kwargs):
+        pass
+
+    @abc.abstractmethod
+    def orderRead(self, *args, **kwargs):
+        pass
+    
