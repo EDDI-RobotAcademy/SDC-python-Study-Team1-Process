@@ -48,6 +48,7 @@ class ProductServiceImpl(ProductService):
                 )
                 list.append(dict(response))
             return list
+
         else:
             return None
 
