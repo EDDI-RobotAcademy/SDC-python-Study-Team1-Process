@@ -134,7 +134,8 @@ def initProductDomain():
     accountRepository = AccountRepositoryImpl.getInstance()
     sessionRepository = SessionRepositoryImpl.getInstance()
     productRepository = ProductRepositoryImpl()
-    ProductServiceImpl(accountRepository, sessionRepository, productRepository)
+    productOrderRepository = ProductOrderRepositoryImpl().getInstance()
+    ProductServiceImpl(accountRepository, sessionRepository, productRepository, productOrderRepository)
 
 
 def initOrderDomain():

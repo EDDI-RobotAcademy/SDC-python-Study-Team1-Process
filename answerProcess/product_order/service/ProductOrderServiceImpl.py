@@ -107,7 +107,7 @@ class ProductOrderServiceImpl(ProductOrderService):
         accountSessionId = productOrderRemoveRequest.getAccountId()
         productNumber = productOrderRemoveRequest.getProductNumber()
 
-        result = self.__productOrderRepository.removeProductsByAccountId(accountSessionId, productNumber)
+        result = self.__productOrderRepository.removeProductsOrderByAccountId(accountSessionId, productNumber)
 
         if result is True:
             orderList = []
