@@ -78,13 +78,14 @@ class ProductServiceImpl(ProductService):
         print(f"productDelete 실행")
         cleanedElements = args[0]
         productDeleteRequest = ProductDeleteRequest(*cleanedElements)
+
         currentProductNumber = productDeleteRequest.getProductNumber()
         currentProductInfo = self.__productRepository.findProductByProductNumber(currentProductNumber)
         currentSeller = currentProductInfo.getSeller()
         accountId = self.__accountRepository.findById(self.__sessionRepository.getIdBySessionId()).getAccountId()
 
         if currentSeller == accountId:
-            result = self.__productRepository.deleteProductByProductNumber(productDeleteRequest)
+            result = self.__productRepository.deleteProductByProductNumber(currentProductNumber)
             if result is True:
                 return ProductDeleteResponse(True)
             else:
@@ -97,6 +98,7 @@ class ProductServiceImpl(ProductService):
         print(f"productUpdate 실행")
         cleanedElements = args[0]
         productUpdateRequest = ProductUpdateRequest(*cleanedElements)
+
         currentProductNumber = productUpdateRequest.getProductNumber()
         currentProductInfo = self.__productRepository.findProductByProductNumber(currentProductNumber)
         currentSeller = currentProductInfo.getSeller()

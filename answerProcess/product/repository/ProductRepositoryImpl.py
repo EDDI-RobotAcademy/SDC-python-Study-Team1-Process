@@ -1,16 +1,10 @@
 from sqlalchemy.orm import sessionmaker
 
-from account.entity.AccountSession import AccountSession
 from mysql.MySQLDatabase import MySQLDatabase
 from sqlalchemy.exc import SQLAlchemyError
 
 from product.entity.Product import Product
 from product.repository.ProductRepository import ProductRepository
-from product.service.request.ProductDeleteRequest import ProductDeleteRequest
-from product.service.response.ProductDeleteResponse import ProductDeleteResponse
-from product.service.response.ProductListResponse import ProductListResponse
-from product.service.response.ProductUpdateResponse import ProductUpdateResponse
-
 
 class ProductRepositoryImpl(ProductRepository):
     __instance = None
@@ -63,11 +57,11 @@ class ProductRepositoryImpl(ProductRepository):
 
         return session.query(Product).all()
 
-    def deleteProductByProductNumber(self, request:ProductDeleteRequest):
+    def deleteProductByProductNumber(self, productNumber):
         dbSession = sessionmaker(bind=self.__instance.engine)
         session = dbSession()
 
-        product = session.query(Product).filter_by(_Product__productNumber=request.getProductNumber()).first()
+        product = session.query(Product).filter_by(_Product__productNumber=productNumber).first()
         if product is not None:
             session.delete(product)
             session.commit()
@@ -87,10 +81,12 @@ class ProductRepositoryImpl(ProductRepository):
                 session.commit()
 
     def updateProductInfo(self, product):
+        print(f"product: {product}")
         dbSession = sessionmaker(bind=self.__instance.engine)
         session = dbSession()
 
         existingProduct = session.query(Product).filter_by(_Product__productNumber=product.getProductNumber()).first()
+        print(f"existingProduct: {existingProduct}")
 
         if existingProduct is not None:
             existingProduct.editProduct(product.getProductTitle(),product.getProductPrice(), product.getProductDetails())
