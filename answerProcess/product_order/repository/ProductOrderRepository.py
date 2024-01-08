@@ -11,8 +11,11 @@ class ProductOrderRepository(abc.ABC):
     def findAllProductIdByAccountId(self, accountId):
         pass
 
-    def removeProductsByAccountId(self, accountId, productNumber):
+    def removeProductsOrderByAccountId(self, accountId, productNumber):
         pass
 
-    def removeAllProductsByAccountId(self, accountId):
+    def removeAllProductsOrdersByAccountId(self, accountId):
+        pass
+
+    def removeAllProductsOrderByProductNumber(self, productNumber):
         pass

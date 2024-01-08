@@ -13,18 +13,21 @@ from product.service.response.ProductUpdateResponse import ProductUpdateResponse
 class ProductServiceImpl(ProductService):
     __instance = None
 
-    def __new__(cls, accountRepository, sessionRepository, productRepository):
+
+    def __new__(cls, accountRepository, sessionRepository, productRepository, productOrderRepository):
         if cls.__instance is None:
             cls.__instance = super().__new__(cls)
             cls.__instance.__productRepository = productRepository
             cls.__instance.__accountRepository = accountRepository
             cls.__instance.__sessionRepository = sessionRepository
+            cls.__instance.__productOrderRepository = productOrderRepository
         return cls.__instance
 
     @classmethod
-    def getInstance(cls, accountRepository=None, sessionRepository=None, productRepository=None):
+    def getInstance(cls, accountRepository=None, sessionRepository=None,
+                    productRepository=None, productOrderRepository=None):
         if cls.__instance is None:
-            cls.__instance = cls(accountRepository,sessionRepository,productRepository)
+            cls.__instance = cls(accountRepository,sessionRepository,productRepository, productOrderRepository)
         return cls.__instance
 
     def productRegister(self, *args, **kwargs):
@@ -95,6 +98,7 @@ class ProductServiceImpl(ProductService):
 
         if currentSeller == accountId:
             result = self.__productRepository.deleteProductByProductNumber(currentProductNumber)
+            self.__productOrderRepository.removeAllProductsOrderByProductNumber(currentProductNumber)
             if result is True:
                 productList = self.__productRepository.findAllProducts()
                 list = []

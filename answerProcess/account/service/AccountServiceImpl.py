@@ -57,7 +57,7 @@ class AccountServiceImpl(AccountService):
         if foundAccount is None:
             return AccountDeleteResponse(False)
 
-        self.__productOrderRepository.removeAllProductsByAccountId(foundAccount.getId())
+        self.__productOrderRepository.removeAllProductsOrdersByAccountId(foundAccount.getId())
         seller = self.__accountRepository.findById(self.__sessionRepository.getIdBySessionId()).getAccountId()
         self.__productRepository.deleteAllProductBySeller(seller)
         self.__sessionRepository.deleteBySessionId(foundAccount.getId())
