@@ -35,9 +35,18 @@ class ProductServiceImpl(ProductService):
 
         registedProduct = self.__productRepository.save(productRegisterRequest.toProduct())
         if registedProduct is not None:
-            return ProductRegisterResponse(True)
+            productList = self.__productRepository.findAllProducts()
+            list = []
+            for Product in productList:
+                response = ProductListResponse(
+                    Product.getProductNumber(),
+                    Product.getProductTitle(),
+                    Product.getProductPrice()
+                )
+                list.append(dict(response))
+            return list
         else:
-            return ProductRegisterResponse(False)
+            return None
 
 
     def productRead(self, *args, **kwargs):
@@ -87,12 +96,18 @@ class ProductServiceImpl(ProductService):
         if currentSeller == accountId:
             result = self.__productRepository.deleteProductByProductNumber(currentProductNumber)
             if result is True:
-                return ProductDeleteResponse(True)
+                productList = self.__productRepository.findAllProducts()
+                list = []
+                for Product in productList:
+                    response = ProductListResponse(
+                        Product.getProductNumber(),
+                        Product.getProductTitle(),
+                        Product.getProductPrice()
+                    )
+                    list.append(dict(response))
+                return list
             else:
-                return ProductDeleteResponse(False)
-        else:
-            return ProductDeleteResponse(False)
-
+                return None
 
     def productUpdate(self, *args, **kwargs):
         print(f"productUpdate 실행")
@@ -107,8 +122,17 @@ class ProductServiceImpl(ProductService):
         if currentSeller == accountId:
             result = self.__productRepository.updateProductInfo(productUpdateRequest)
             if result is True:
-                return ProductUpdateResponse(True)
-            else:
-                return ProductUpdateResponse(False)
-        else:
-            return ProductUpdateResponse(False)
+                foundProduct = self.__productRepository.findProductByProductNumber(
+                    productUpdateRequest.getProductNumber())
+                if foundProduct:
+                    productUpdateResponse = ProductUpdateResponse(
+                        productUpdateRequest.getProductNumber(),
+                        foundProduct.getProductTitle(),
+                        foundProduct.getProductPrice(),
+                        foundProduct.getProductDetails(),
+                        foundProduct.getSeller(),
+                    )
+                    return productUpdateResponse
+                else:
+                    print("상품을 찾을 수 없습니다.")
+        return None
