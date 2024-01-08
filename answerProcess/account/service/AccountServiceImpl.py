@@ -63,9 +63,6 @@ class AccountServiceImpl(AccountService):
         self.__sessionRepository.deleteBySessionId(foundAccount.getId())
         self.__accountRepository.deleteById(foundAccount.getId())
 
-
-
-
         return AccountDeleteResponse(True)
 
     def loginAccount(self, *args, **kwargs):

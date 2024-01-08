@@ -8,11 +8,7 @@ class AccountRepository(abc.ABC):
         pass
 
     @abc.abstractmethod
-    def getBoolWithFindByAccountId(self, accountId):
-        pass
-
-    @abc.abstractmethod
-    def findByAccountId(self, accountId):
+    def update(self, account):
         pass
 
     @abc.abstractmethod
@@ -20,8 +16,17 @@ class AccountRepository(abc.ABC):
         pass
 
     @abc.abstractmethod
+    def findByAccountId(self, accountId):
+        pass
+
+    @abc.abstractmethod
+    def deleteByAccountId(self, accountId):
+        pass
+
+    @abc.abstractmethod
     def deleteById(self, Id):
         pass
 
-    def deleteByAccountId(self, accountId):
+    @abc.abstractmethod
+    def getBoolWithFindByAccountId(self, accountId):
         pass
