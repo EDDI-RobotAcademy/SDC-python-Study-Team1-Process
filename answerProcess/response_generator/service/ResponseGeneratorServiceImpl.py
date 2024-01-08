@@ -103,17 +103,30 @@ class ResponseGeneratorServiceImpl(ResponseGeneratorService):
 
     def generateProductRegisterResponse(self, arguments):
         print("ProductRegisterResponse 생성")
-        if arguments.getIsSuccess() is True:
-            return True
-        else:
-            return False
+        return arguments
 
     def generateProductUpdateResponse(self, arguments):
         print("ProductUpdateResponse 생성")
-        if arguments.getIsSuccess() is True:
-            return True
-        else:
-            return False
+        if arguments is None:
+            productResponseData = {
+            '__productNumber': None,
+            '__productTitle': None,
+            '__productPrice': None,
+            '__productDetails': None,
+            '__seller': None
+            }
+            return productResponseData
+        print(f"arguments: {arguments}")
+        resutl = dict(arguments)
+
+        productResponseData = {
+            '__productNumber': resutl['__productNumber'],
+            '__productTitle': resutl['__productTitle'],
+            '__productPrice': resutl['__productPrice'],
+            '__productDetails': resutl['__productDetails'],
+            '__seller': resutl['__seller']
+        }
+        return productResponseData
 
     def generateProductReadResponse(self, arguments):
         print("ProductReadResponse 생성")
@@ -156,10 +169,7 @@ class ResponseGeneratorServiceImpl(ResponseGeneratorService):
 
     def generateProductRemoveResponse(self, arguments):
         print("ProductRemoveResponse 생성")
-        if arguments.getIsSuccess() is True:
-            return True
-        else:
-            return False
+        return arguments
 
     def generateProductOrderListResponse(self, arguments):
         print("ProductOrderListResponse 생성")

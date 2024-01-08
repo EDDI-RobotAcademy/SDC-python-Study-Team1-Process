@@ -7,7 +7,7 @@ class ProductRegisterResponse:
     __productTitle: str
     __productPrice: int
 
-    def __init__(self,productNumber: int, productTitle: str, productPrice: int):
+    def __init__(self, productNumber: int, productTitle: str, productPrice: int):
         self.__productNumber = productNumber
         self.__productTitle = productTitle
         self.__productPrice = productPrice
