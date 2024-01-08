@@ -3,7 +3,16 @@ from dataclasses import dataclass
 
 @dataclass
 class ProductRegisterResponse:
-    __isSuccess: bool
+    __productNumber: int
+    __productTitle: str
+    __productPrice: int
 
-    def getIsSuccess(self):
-        return self.__isSuccess
+    def __init__(self,productNumber: int, productTitle: str, productPrice: int):
+        self.__productNumber = productNumber
+        self.__productTitle = productTitle
+        self.__productPrice = productPrice
+
+    def __iter__(self):
+        yield "__productNumber", self.__productNumber
+        yield "__productTitle", self.__productTitle
+        yield "__productPrice", self.__productPrice
