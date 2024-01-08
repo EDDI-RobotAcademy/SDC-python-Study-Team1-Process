@@ -20,6 +20,7 @@ class TestProductOrderService(unittest.TestCase):
         initAccountDomain()
         initProductDomain()
         initOrderDomain()
+        initProductDomain()
 
         initCustomProtocol()
         testInstance = CustomProtocolRepositoryImpl.getInstance()
@@ -48,6 +49,8 @@ class TestProductOrderService(unittest.TestCase):
         initAccountDomain()
         initProductDomain()
         initOrderDomain()
+        initProductDomain()
+
 
         initCustomProtocol()
         testInstance = CustomProtocolRepositoryImpl.getInstance()

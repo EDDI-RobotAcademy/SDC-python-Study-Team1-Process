@@ -1,5 +1,6 @@
 
-from product_order.entity.ProductOrder import  ProductOrder
+from product_order.entity.ProductOrder import ProductOrder
+from product.entity.Product import Product
 from product_order.service.ProductOrderService import ProductOrderService
 from product_order.service.request.ProductOrderListRequest import ProductOrderListRequest
 from product_order.service.request.ProductOrderReadRequest import ProductOrderReadRequest
@@ -43,8 +44,11 @@ class ProductOrderServiceImpl(ProductOrderService):
         print("productIdList: ", productIdList)
         orderList = []
 
-        for order in productIdList:
-            foundProduct = self.__productRepository.findProductByProductNumber(order)
+        for productNumber in productIdList:
+            print("productNumber: ", productNumber)
+            foundProduct = self.__productRepository.findProductByProductNumber(productNumber)
+
+            print("foundProduct: ", foundProduct)
 
             response = ProductOrderListResponse(
                 foundProduct.getProductNumber(),
@@ -69,17 +73,27 @@ class ProductOrderServiceImpl(ProductOrderService):
         accountSessionId = productOrderRegisterRequest.getAccountId()
         productNumber = productOrderRegisterRequest.getProductNumber()
         if accountSessionId is None or productNumber is None:
-            return ProductOrderRegisterResponse(False)
-        order = ProductOrder(accountSessionId, productNumber)
-        print(f"type(order): {type(order)}")
+            return None
+        productOrder = ProductOrder(accountSessionId, productNumber)
+        print(f"type(productOrder): {type(productOrder)}")
 
-        self.__productOrderRepository.saveProductOrderInfo(order)
+        self.__productOrderRepository.saveProductOrderInfo(productOrder)
 
-        if order:
-            return ProductOrderRegisterResponse(True)
+        if productOrder:
+            foundProduct = self.__productRepository.findProductByProductNumber(productNumber)
+            if foundProduct:
+                productOrderRegisterResponse = ProductOrderRegisterResponse(
+                    productNumber,
+                    foundProduct.getProductTitle(),
+                    foundProduct.getProductPrice(),
+                    foundProduct.getProductDetails(),
+                    foundProduct.getSeller(),
+                )
+                return productOrderRegisterResponse
+            else:
+                return None
         else:
-            return ProductOrderRegisterResponse(False)
-
+            return None
 
 
     def orderRemove(self, *args, **kwargs):
@@ -96,9 +110,25 @@ class ProductOrderServiceImpl(ProductOrderService):
         result = self.__productOrderRepository.removeProductsByAccountId(accountSessionId, productNumber)
 
         if result is True:
-            return ProductOrderRemoveResponse(True)
+            orderList = []
+
+            productIdList = self.__productOrderRepository.findAllProductIdByAccountId(accountSessionId)
+
+            for productNumber in productIdList:
+                print("productNumber: ", productNumber)
+                foundProduct = self.__productRepository.findProductByProductNumber(productNumber)
+
+                print("foundProduct: ", foundProduct)
+
+                response = ProductOrderRemoveResponse(
+                    foundProduct.getProductNumber(),
+                    foundProduct.getProductTitle(),
+                    foundProduct.getProductPrice()
+                )
+                orderList.append(dict(response))
+            return orderList
         else:
-            return ProductOrderRemoveResponse(False)
+            return None
 
 
     def orderRead(self, *args, **kwargs):
